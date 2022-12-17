@@ -1,6 +1,6 @@
-# Welcome to the Engineer's Social Network!
+# Welcome to the programmers chat site!
 
-This social network is specifically designed for engineers to connect and share ideas.
+This messasging app specifically designed for coders to connect and share ideas.
 
 ## Setup
 
