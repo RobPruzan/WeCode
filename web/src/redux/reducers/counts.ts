@@ -20,7 +20,6 @@ export const CountReducer = (
 ) => {
   switch (action.type) {
     case CountActions.INCREMENT:
-      console.log('hit');
       return {
         ...state,
         count: state.count + 1,
