@@ -19,6 +19,7 @@ cd backend
 3. Run the following commands to migrate the database and start the server:
 ```
 python3 manage.py makemigrations
+python3 manage.py migrate
 python3 manage.py runserver
 ```
 #### Typescript
