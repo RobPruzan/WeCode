@@ -1,65 +1,36 @@
-/* Initialize app to be responsive to different display ratios */
-@media (min-width: 768px) {
-  /* For tablets and desktop devices */
-  html {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 767px) {
-  /* For mobile devices */
-  html {
-    font-size: 14px;
-  }
-}
-
-/* Set the font type */
+/* Default font */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* Create a 3-column grid */
-.grid {
-  display: grid;
-  grid-template-columns: 2fr 3fr 3fr;
-  grid-gap: 0;
-  height: 100%;
-}
-
-/* Remove padding and margin from columns */
-.grid > * {
-  border: 1px solid black;
-  padding: 0;
-  margin: 0;
-}
-
-/* Fit the grid to the entire page */
-.grid {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-header {
-  height: 10vh;
+/* Navbar at the top */
+nav {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.5em;
-  background-color: #eee;
-}
-.nested-grid {
-  display: grid;
-  grid-template-rows: 2fr 1fr;
-  height: 100%;
+  align-items: center;
+  height: 60px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.bottom-half {
-  background-color: black;
+/* Two columns */
+.columns {
+  display: flex;
+  height: 100vh;
 }
 
-/* selector for messgage where on hover the class gets slightly darker */
-.message:hover {
-  background-color: #eee;
+.columns > div {
+  flex: 1;
+  /* Black border for debugging */
+  border: 1px solid black;
+}
+
+/* First column is 1fr */
+.columns > div:first-child {
+  flex: 1;
+}
+
+/* Second column is 3fr */
+.columns > div:last-child {
+  flex: 3;
 }
