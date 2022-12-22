@@ -5,6 +5,26 @@ This messasging app specifically designed for coders to connect and share ideas.
 ## Setup
 
 To get started, make sure you have Python and Typescript installed on your machine.
+### Database 
+Install neccesary dependencies for django postgres intergration (with brew)
+```
+brew install postgresql
+```
+Start up postgres
+```
+brew services start postgresql
+```
+Create user and password
+```
+psql postgres
+postgres=# CREATE USER <user> WITH PASSWORD '<password>'
+postgres=# GRANT ALL PRIVILEGES ON DATABASE postgres TO <user>;
+```
+To confirm the role exists run the following commands and the role should appear
+```
+psql postgres
+\ds
+```
 
 #### Python
 
@@ -15,6 +35,19 @@ pip install -r requirements.txt
 2. Navigate to the backend directory:
 ```
 cd backend
+```
+In settings.py replace your DATABASES with:
+```
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "postgres",
+        "USER": "<username>",
+        "PASSWORD": "<password>",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
 ```
 3. Run the following commands to migrate the database and start the server:
 ```
