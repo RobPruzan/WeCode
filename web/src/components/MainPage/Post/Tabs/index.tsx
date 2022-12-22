@@ -30,20 +30,41 @@ export const PostTabs = ({ className }: TabsProps) => {
 
   return (
     <>
-      <Card className={className}>
+      <div
+        className={className}
+        style={{
+          background: '#141414',
+          border: '1px solid #43bbff',
+        }}
+      >
         <Tabs
           value={activeTab}
           onChange={handleChange}
           aria-label="tabs"
           variant="fullWidth"
+          sx={{
+            background: '#141414',
+            //  inactive tab underline color should be white
+          }}
         >
           <Tab
             value={TabType.TEXT}
             icon={<TextFieldsIcon />}
             aria-label="text"
+            //  inactive tab underline color should be white and active is #000000
+            sx={{
+              color: 'gray',
+            }}
           />
 
-          <Tab value={TabType.CODE} icon={<CodeIcon />} aria-label="code" />
+          <Tab
+            sx={{
+              color: 'gray',
+            }}
+            value={TabType.CODE}
+            icon={<CodeIcon />}
+            aria-label="code"
+          />
           {/* <TabPanel value={'Text'}>
             <h1>Text</h1>
           </TabPanel> */}
@@ -54,7 +75,7 @@ export const PostTabs = ({ className }: TabsProps) => {
         </Tabs>
         {activeTab === TabType.TEXT && <TextTab />}
         {activeTab === TabType.CODE && <CodeTab />}
-      </Card>
+      </div>
     </>
   );
 };
