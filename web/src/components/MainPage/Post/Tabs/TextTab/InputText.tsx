@@ -7,8 +7,7 @@ export const InputText = () => {
       className="p-2 "
       id="outlined-multiline-static"
       multiline
-      rows={4}
-      defaultValue="Default Value"
+      rows={6}
       variant="standard"
       //  unfocused color of the outline should be white
       sx={{
