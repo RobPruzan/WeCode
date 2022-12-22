@@ -7,11 +7,11 @@ class User(models.Model):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.CharField(max_length=2000, default="")
-    date = models.DateTimeField(auto_now_add=True)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    comments = models.IntegerField(default=0)
-    langauge = models.CharField(max_length=200, default="")
-    hasCode = models.BooleanField(null=False, default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    content = models.CharField(max_length=2000, default="", blank=True, null=True)
+    code = models.CharField(max_length=2000, default="", blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    likes = models.IntegerField(default=0, blank=True, null=True)
+    dislikes = models.IntegerField(default=0, blank=True, null=True)
+    comments = models.IntegerField(default=0, blank=True, null=True)
+    langauge = models.CharField(max_length=200, default="", blank=True, null=True)

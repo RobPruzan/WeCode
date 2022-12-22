@@ -1,9 +1,10 @@
 from rest_framework import generics
 from django.shortcuts import render
-from .models import User
-from .serializers import UserSerializer
+from .models import Post, User
+from .serializers import PostSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from print_color import print
 
 # Create your views here.
 class UserView(generics.CreateAPIView):
@@ -25,5 +26,16 @@ class ReactView(APIView):
 
 class PostContent(APIView):
     def post(self, request):
-        print("POST REQUEST", request.data)
+        content = request.data.get("content")
+        code = request.data.get("code")
+        # save request data to Post model
+        post = Post(content=content, code=code)
+        post.save()
+        print(Post.objects.all(), color="green")
+
         return Response("THIS IS A TEST")
+
+    def get(self, request):
+        postData = Post.objects.all()
+        serializer = PostSerializer(postData, many=True)
+        return Response(serializer.data)

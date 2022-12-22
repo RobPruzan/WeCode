@@ -12,7 +12,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import ReduxCount from './components/ReduxCount';
-import MainPage from './components/MainPage';
+import MainPage from './components/MainPage/MainPage';
 
 const App = () => {
   return (
