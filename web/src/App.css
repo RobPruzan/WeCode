@@ -1,6 +1,9 @@
 /* Default font */
+/* website background is #141414 */
+
 body {
   font-family: 'Montserrat', sans-serif;
+  background-color: #141414;
 }
 
 /* Navbar at the top */
@@ -8,21 +11,25 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
-  background-color: white;
+  height: 80px;
+  border: 1px solid #43bbff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  background-color: #141414;
 }
 
 /* Two columns */
 .columns {
   display: flex;
   height: 100vh;
+  background-color: #141414;
 }
 
 .columns > div {
   flex: 1;
   /* Black border for debugging */
-  border: 1px solid black;
+  /* border: 1px solid 43BBFF; */
+  /* border with color of #43BBFF */
+  border: 1px solid #43bbff;
 }
 
 /* First column is 1fr */
