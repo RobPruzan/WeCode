@@ -5,6 +5,7 @@ import axios from 'axios';
 export type PostContent = {
   user?: string;
   content: string;
+  code?: string;
   likes?: number;
   dislikes?: number;
   comments?: number;
@@ -18,7 +19,7 @@ export class WeCodeApi {
     this.baseUrl = process.env.REACT_APP_API_URL;
   }
   // post request for sending content
-  public async SendPost(postContent?: PostContent) {
+  public async sendPost(postContent?: PostContent) {
     console.log('clicked', this.baseUrl);
     const response = await axios.post(
       `${this.baseUrl}/post_content`,
@@ -27,6 +28,13 @@ export class WeCodeApi {
     console.log(response.data);
     return response.data;
   }
+
+  public async getPosts(): Promise<PostContent[]> {
+    const response = await axios.get(`${this.baseUrl}/post_content`);
+    console.log(response.data);
+    return response.data;
+  }
 }
+
 const WeCode = new WeCodeApi();
 export default WeCode;

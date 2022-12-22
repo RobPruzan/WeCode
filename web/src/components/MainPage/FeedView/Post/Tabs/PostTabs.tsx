@@ -1,16 +1,11 @@
-import React, { SyntheticEvent, useState } from 'react';
-import { Card } from 'react-bootstrap';
-import Button from '@mui/material/Button';
+import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import PhoneIcon from '@mui/icons-material/Phone';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
 import CodeIcon from '@mui/icons-material/Code';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
-import Box from '@mui/material/Box';
-import { TextTab } from './TextTab';
-import { CodeTab } from './CodeTab';
+import { TextTab } from './TextTab/TextTab';
+import { CodeTab } from './CodeTab/CodeTab';
+import { PostContent } from '../../../../../services/connections';
 
 export enum TabType {
   'TEXT',
@@ -19,9 +14,18 @@ export enum TabType {
 
 export type TabsProps = {
   className?: string;
+  setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
+  isPostLoading: boolean;
 };
-export const PostTabs = ({ className }: TabsProps) => {
+export const PostTabs = ({
+  className,
+  setPostedContent,
+  isPostLoading,
+}: TabsProps) => {
   //  handling for matieral ui tabs
+  const [currentPostInfo, setCurrentPostInfo] = useState<PostContent>({
+    content: '',
+  });
   const [activeTab, setActiveTab] = useState(0);
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue);
@@ -73,8 +77,20 @@ export const PostTabs = ({ className }: TabsProps) => {
             <h1>Code</h1>
           </TabPanel> */}
         </Tabs>
-        {activeTab === TabType.TEXT && <TextTab />}
-        {activeTab === TabType.CODE && <CodeTab />}
+        {activeTab === TabType.TEXT && (
+          <TextTab
+            currentPostInfo={currentPostInfo}
+            setCurrentPostInfo={setCurrentPostInfo}
+            setPostedContent={setPostedContent}
+          />
+        )}
+        {activeTab === TabType.CODE && (
+          <CodeTab
+            currentPostInfo={currentPostInfo}
+            setCurrentPostInfo={setCurrentPostInfo}
+            setPostedContent={setPostedContent}
+          />
+        )}
       </div>
     </>
   );

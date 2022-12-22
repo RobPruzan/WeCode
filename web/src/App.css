@@ -40,4 +40,5 @@ nav {
 /* Second column is 3fr */
 .columns > div:last-child {
   flex: 3;
+  overflow: scroll;
 }
