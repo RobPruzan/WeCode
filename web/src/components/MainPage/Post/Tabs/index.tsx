@@ -9,6 +9,8 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import CodeIcon from '@mui/icons-material/Code';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import Box from '@mui/material/Box';
+import { TextTab } from './TextTab';
+import { CodeTab } from './CodeTab';
 
 export enum TabType {
   'TEXT',
@@ -20,24 +22,38 @@ export type TabsProps = {
 };
 export const PostTabs = ({ className }: TabsProps) => {
   //  handling for matieral ui tabs
-  const [value, setValue] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue);
-    setValue(newValue);
+    setActiveTab(newValue);
   };
 
   return (
     <>
       <Card className={className}>
         <Tabs
-          value={value}
+          value={activeTab}
           onChange={handleChange}
           aria-label="tabs"
           variant="fullWidth"
         >
-          <Tab value="Text" icon={<TextFieldsIcon />} aria-label="text" />
-          <Tab value="Code" icon={<CodeIcon />} aria-label="code" />
+          <Tab
+            value={TabType.TEXT}
+            icon={<TextFieldsIcon />}
+            aria-label="text"
+          />
+
+          <Tab value={TabType.CODE} icon={<CodeIcon />} aria-label="code" />
+          {/* <TabPanel value={'Text'}>
+            <h1>Text</h1>
+          </TabPanel> */}
+          {/* <TabPanel value="lol" /> */}
+          {/* <TabPanel value={'Code'}>
+            <h1>Code</h1>
+          </TabPanel> */}
         </Tabs>
+        {activeTab === TabType.TEXT && <TextTab />}
+        {activeTab === TabType.CODE && <CodeTab />}
       </Card>
     </>
   );
