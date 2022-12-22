@@ -1,9 +1,9 @@
 import React from 'react';
-import Messages from './Messages';
 import { PostTabs } from './Post/Tabs';
 import CodeIcon from '@mui/icons-material/Code';
 import { MenuItem } from '@mui/material';
 import { Home, Menu } from '@mui/icons-material';
+import { PostedContents } from './PostedContents';
 
 const MainPage = () => {
   return (
@@ -22,7 +22,8 @@ const MainPage = () => {
         <div className="columns">
           <div>Column 1</div>
           <div>
-            <PostTabs className="mx-5 mt-2" />
+            <PostTabs className="mx-5 mt-2 mb-5" />
+            <PostedContents className="mx-5" />
           </div>
         </div>
       </div>

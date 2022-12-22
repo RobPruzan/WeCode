@@ -25,5 +25,5 @@ class ReactView(APIView):
 
 class PostContent(APIView):
     def post(self, request):
-        print("POST REQUEST")
+        print("POST REQUEST", request.data)
         return Response("THIS IS A TEST")
