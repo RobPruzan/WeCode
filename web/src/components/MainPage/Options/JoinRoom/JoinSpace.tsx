@@ -31,6 +31,7 @@ const JoinSpace = () => {
         selection={selectedSpace}
         options={tempOptions}
         handleChange={handleChange}
+        labelName="Select Space"
       />
       <JoinSpaceButton selectedSpace={selectedSpace} />
     </div>
