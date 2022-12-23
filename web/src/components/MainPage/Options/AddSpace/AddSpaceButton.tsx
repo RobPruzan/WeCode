@@ -1,10 +1,12 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button } from '@mui/material';
 
 export const AddSpaceButtons = () => {
   return (
     <>
-      <Button variant="outlined">Add Space</Button>
+      <Button className="my-2" variant="outlined">
+        Add Space
+      </Button>
     </>
   );
 };

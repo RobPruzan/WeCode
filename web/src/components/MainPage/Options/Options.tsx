@@ -12,9 +12,9 @@ export const Options = () => {
       <PrimaryCard>
         <JoinSpace />
       </PrimaryCard>
-      {/* <PrimaryCard>
+      <PrimaryCard>
         <AddSpace />
-      </PrimaryCard> */}
+      </PrimaryCard>
     </div>
   );
 };
