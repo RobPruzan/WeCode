@@ -28,14 +28,15 @@ class PostContent(APIView):
     def post(self, request):
         content = request.data.get("content")
         code = request.data.get("code")
+        room = request.data.get("room")
         # save request data to Post model
-        post = Post(content=content, code=code)
+        post = Post(content=content, code=code, room=room)
         post.save()
         print(Post.objects.all(), color="green")
-
-        return Response("THIS IS A TEST")
+        return Response("Post Created")
 
     def get(self, request):
-        postData = Post.objects.all()
+        room = request.data.get("room")
+        postData = Post.objects.filter(room=room)
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)

@@ -19,18 +19,20 @@ export class WeCodeApi {
     this.baseUrl = process.env.REACT_APP_API_URL;
   }
   // post request for sending content
-  public async sendPost(postContent?: PostContent) {
+  public async sendPost(
+    postContent?: PostContent,
+    room = 'Main'
+  ): Promise<void> {
     console.log('clicked', this.baseUrl);
     const response = await axios.post(
       `${this.baseUrl}/post_content`,
       postContent
     );
     console.log(response.data);
-    return response.data;
   }
 
-  public async getPosts(): Promise<PostContent[]> {
-    const response = await axios.get(`${this.baseUrl}/post_content`);
+  public async getPosts(room = 'Main'): Promise<PostContent[]> {
+    const response = await axios.get(`${this.baseUrl}/post_content/${room}}`);
     console.log(response.data);
     return response.data;
   }

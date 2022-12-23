@@ -31,6 +31,7 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
         theme="vs-dark"
         height="20vh"
         defaultLanguage="javascript"
+        options={{ fixedOverflowWidgets: true }}
       />
 
       <SendPost {...props} />

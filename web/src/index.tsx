@@ -13,6 +13,10 @@ const theme = createTheme({
     secondary: {
       main: '#141414',
     },
+    // make the font monserrat for the whole app
+  },
+  typography: {
+    fontFamily: 'Montserrat',
   },
 });
 

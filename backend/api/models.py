@@ -15,3 +15,4 @@ class Post(models.Model):
     dislikes = models.IntegerField(default=0, blank=True, null=True)
     comments = models.IntegerField(default=0, blank=True, null=True)
     langauge = models.CharField(max_length=200, default="", blank=True, null=True)
+    room = models.CharField(max_length=200, default="", blank=True, null=True)
