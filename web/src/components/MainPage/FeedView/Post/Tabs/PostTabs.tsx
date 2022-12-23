@@ -29,7 +29,6 @@ export const PostTabs = ({
   });
   const [activeTab, setActiveTab] = useState(0);
   const handleChange = (event: SyntheticEvent, newValue: number) => {
-    console.log(newValue);
     setActiveTab(newValue);
   };
 

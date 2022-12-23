@@ -14,23 +14,16 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 export type PostedContentProps = {
   className?: string;
   singlePostedContent: PostInfo;
+  key: number;
 };
 export const PostedContent = ({
   className,
   singlePostedContent,
+  key,
 }: PostedContentProps) => {
   const [upVotes, setUpVotes] = useState(0);
   return (
-    // <div
-    //   style={{ color: 'white'}}
-    //   className={`border border-black border-2 rounded-xl p-2 ${className} `}
-    // >
-    //   {singlePostedContent.content}
-    //   <hr />
-    //   {singlePostedContent.code}
-    // </div>
-    // same thing as before but white white space pre-wrap
-    <div>
+    <div key={key}>
       <Card
         sx={{
           color: 'white',

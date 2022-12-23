@@ -7,38 +7,43 @@ export type Space = {
 };
 export interface SpaceState {
   space: Space | null;
+  spaceName: string;
 }
 
-export const DEFAULT_POST_LOADING_STATE: SpaceState = {
+export const DEFAULT_SPACE_STATE: SpaceState = {
   space: null,
+  // TODO remove
+  spaceName: 'Main',
 };
 
 export enum SpaceActions {
-  SetSpace = 'postLoading/SET_SPACE',
-  RemoveSpace = 'postLoading/REMOVE_SPACE',
+  SetSpace = 'spaces/SET_SPACE',
+  RemoveSpace = 'spaces/REMOVE_SPACE',
 }
 
 interface SetSpaceAction {
   type: SpaceActions.SetSpace;
-  payload: { space: Space };
+  payload: { spaceName: Space };
 }
 interface RemoveSpaceAction {
   type: SpaceActions.RemoveSpace;
 }
 
 export const SpaceReducer = (
-  state: SpaceState = DEFAULT_POST_LOADING_STATE,
+  state: SpaceState = DEFAULT_SPACE_STATE,
   action: SetSpaceAction | RemoveSpaceAction
 ) => {
   switch (action.type) {
     case SpaceActions.SetSpace:
       return {
         ...state,
-        space: action.payload.space,
+
+        spaceName: action.payload.spaceName,
       };
     case SpaceActions.RemoveSpace:
       return {
         ...state,
+
         space: null,
       };
     default:

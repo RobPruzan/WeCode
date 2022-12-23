@@ -7,16 +7,20 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
+import { SpaceActions } from '../../../../redux/reducers/spaces';
+import { useState } from 'react';
+import { JoinRoomButton } from './JoinRoomButton';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 export default function ControlledOpenSelect() {
-  const [space, setSpace] = React.useState<string | number>('');
+  const [selectedSpace, setSelectedSpace] = useState<string>('Main');
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   // const test = useSelector(({ spaceState }: RootState) => spaceState.space);
-  const handleChange = (event: SelectChangeEvent<typeof space>) => {
-    // dispatch({ type: 'SET_SPACE', payload: event.target.value });
-    setSpace(event.target.value);
+  const space = useSelector(({ spaceState }: RootState) => spaceState.space);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedSpace(event.target.value);
   };
 
   const handleClose = () => {
@@ -62,15 +66,16 @@ export default function ControlledOpenSelect() {
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={space}
+          value={selectedSpace}
           label="Age"
           onChange={handleChange}
           MenuProps={MenuProps}
         >
-          <MenuItem value={10}>Main</MenuItem>
-          <MenuItem value={20}>CSE 115</MenuItem>
-          <MenuItem value={30}>CSE 250</MenuItem>
+          <MenuItem value={'Main'}>Main</MenuItem>
+          <MenuItem value={'CSE 115'}>CSE 115</MenuItem>
+          <MenuItem value={'CSE 250'}>CSE 250</MenuItem>
         </Select>
+        <JoinRoomButton selectedSpace={selectedSpace} />
       </FormControl>
     </div>
   );

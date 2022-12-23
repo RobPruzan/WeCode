@@ -16,3 +16,6 @@ class Post(models.Model):
     comments = models.IntegerField(default=0, blank=True, null=True)
     langauge = models.CharField(max_length=200, default="", blank=True, null=True)
     room = models.CharField(max_length=200, default="", blank=True, null=True)
+
+    def str(self):
+        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, dislikes: {self.dislikes}, comments: {self.comments}, langauge: {self.langauge}, room: {self.room}"

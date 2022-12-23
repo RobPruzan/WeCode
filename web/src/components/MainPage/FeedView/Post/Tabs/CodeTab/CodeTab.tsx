@@ -13,7 +13,6 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
     props.setCurrentPostInfo({ ...props.currentPostInfo, code: newCodeValue });
   };
 
-  useEffect(() => console.log(inputCode), [inputCode]);
   return (
     <div>
       {/* <Editor
