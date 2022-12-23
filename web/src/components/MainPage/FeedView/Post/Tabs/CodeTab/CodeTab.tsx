@@ -8,23 +8,21 @@ import { DropDown } from '../../../../Options/DropDown';
 import { SelectChangeEvent } from '@mui/material';
 import { FLAIRS } from '../PostTabs';
 export const SUPPORTED_LANGUAGES = [
-  'javascript',
-  'typescript',
-  'python',
-  'java',
-  'c',
-  'cpp',
-  'csharp',
-  'go',
-  'ruby',
-  'rust',
-  'swift',
-  'php',
-  'sql',
-  'kotlin',
-  'scala',
-  'bash',
-  'powershell',
+  'Javascript',
+
+  'Python',
+  'Java',
+  'C',
+  'CPP',
+  'Csharp',
+  'Go',
+  'Ruby',
+  'Rust',
+  'Swift',
+  'PHP',
+  'SQL',
+  'Kotlin',
+  'Scala',
 ];
 
 export type CodeTabProps = TextTabProps & {

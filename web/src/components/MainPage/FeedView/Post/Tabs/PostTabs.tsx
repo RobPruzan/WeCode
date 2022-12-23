@@ -14,12 +14,12 @@ export enum TabType {
   'CODE',
 }
 export const FLAIRS = [
-  'help',
-  'discussion',
-  'question',
-  'showcase',
-  'announcement',
-  'news',
+  'Help',
+  'Discussion',
+  'Question',
+  'Showcase',
+  'Announcement',
+  'News',
 ];
 export type TabsProps = {
   className?: string;

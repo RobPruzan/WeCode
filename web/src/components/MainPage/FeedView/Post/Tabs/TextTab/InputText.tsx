@@ -19,6 +19,11 @@ export const InputText = ({
       id="outlined-multiline-static"
       sx={{
         color: 'white',
+        '& .MuiInput-underline:before': { borderBottomColor: 'gray' },
+        '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+          borderBottomColor: 'white',
+        },
+
         background: '#141414',
         fontFamily: 'inherit',
       }}

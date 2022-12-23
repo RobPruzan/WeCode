@@ -4,8 +4,12 @@ import { useDispatch } from 'react-redux';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 export type JoinSpaceButtonProps = {
   selectedSpace: string;
+  className?: string;
 };
-export const JoinSpaceButton = ({ selectedSpace }: JoinSpaceButtonProps) => {
+export const JoinSpaceButton = ({
+  selectedSpace,
+  className,
+}: JoinSpaceButtonProps) => {
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch({
@@ -14,7 +18,7 @@ export const JoinSpaceButton = ({ selectedSpace }: JoinSpaceButtonProps) => {
     });
   };
   return (
-    <Button variant="outlined" onClick={handleClick}>
+    <Button className={className} variant="outlined" onClick={handleClick}>
       Join Space
     </Button>
   );
