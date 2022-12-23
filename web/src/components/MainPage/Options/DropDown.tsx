@@ -8,6 +8,7 @@ export type DropDownProps = {
   className?: string;
   selection: string;
   options: string[];
+  labelName: string;
   handleChange: (event: SelectChangeEvent) => void;
 };
 const ITEM_HEIGHT = 48;
@@ -17,6 +18,7 @@ export const DropDown = ({
   selection,
   handleChange,
   options,
+  labelName,
 }: DropDownProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -39,7 +41,9 @@ export const DropDown = ({
   return (
     <div>
       <FormControl sx={{ m: 1, width: '15em' }} className={className}>
-        <InputLabel id="demo-controlled-open-select-label">Space</InputLabel>
+        <InputLabel focused={true} id="demo-controlled-open-select-label">
+          {labelName}
+        </InputLabel>
         <Select
           sx={{
             color: 'white',
