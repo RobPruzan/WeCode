@@ -7,12 +7,20 @@ import { TextTab } from './TextTab/TextTab';
 import { CodeTab } from './CodeTab/CodeTab';
 import { PostContent } from '../../../../../services/connections';
 import { UpDownVoting } from '../../PostedContents/UpDownVoting';
+import { SelectChangeEvent } from '@mui/material';
 
 export enum TabType {
   'TEXT',
   'CODE',
 }
-
+export const FLAIRS = [
+  'help',
+  'discussion',
+  'question',
+  'showcase',
+  'announcement',
+  'news',
+];
 export type TabsProps = {
   className?: string;
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
@@ -29,6 +37,12 @@ export const PostTabs = ({
   const [activeTab, setActiveTab] = useState(0);
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
+  };
+  const flairChangeHandler = (event: SelectChangeEvent<string>) => {
+    setCurrentPostInfo({
+      ...currentPostInfo,
+      flair: event.target.value,
+    });
   };
 
   return (
@@ -79,6 +93,7 @@ export const PostTabs = ({
             currentPostInfo={currentPostInfo}
             setCurrentPostInfo={setCurrentPostInfo}
             setPostedContent={setPostedContent}
+            flairChangeHandler={flairChangeHandler}
           />
         )}
         {activeTab === TabType.CODE && (
@@ -86,6 +101,7 @@ export const PostTabs = ({
             currentPostInfo={currentPostInfo}
             setCurrentPostInfo={setCurrentPostInfo}
             setPostedContent={setPostedContent}
+            flairChangeHandler={flairChangeHandler}
           />
         )}
       </div>

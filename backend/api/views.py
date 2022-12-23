@@ -27,25 +27,26 @@ class ReactView(APIView):
 
 class PostContent(APIView):
     def post(self, request, *args, **kwargs):
-        content = request.data.get("content")
-        code = request.data.get("code")
+        # content = request.data.get("content")
+        # code = request.data.get("code")
         room = kwargs.get("room")
-        print(room, color="blue")
-        # save request data to Post model
-        post = Post(content=content, code=code, room=room)
-        post.save()
-        print(post.room, color="green")
-        pprint(post)
+        print(request.data, color="red")
+
+        # post = Post(content=content, code=code, room=room)
+        # post.save()
+
+        post = Post.objects.create(**request.data, room=room)
+
+        print(post, color="red")
         return Response("Post Created")
 
     def get(self, request, *args, **kwargs):
 
         room = kwargs.get("room")
-        # regex to filter out { and }
+
         room = room.replace("}", "")
-        print(room, color="red")
+
         postData = Post.objects.filter(room=room)
 
-        print(postData, color="green")
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)

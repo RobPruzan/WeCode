@@ -1,11 +1,11 @@
 import axios from 'axios';
-
+// TODO remove optional fields
 export type PostContent = {
   user?: string;
   content: string;
   code?: string;
-  likes?: number;
-  dislikes?: number;
+  flair?: string;
+  upvotes?: number;
   comments?: number;
   langauge?: string;
   hasCode?: boolean;
@@ -20,6 +20,10 @@ export class WeCodeApi {
     postContent?: PostContent,
     room = 'Main'
   ): Promise<void> {
+    console.log(
+      'Post content in connection post request function',
+      postContent
+    );
     const response = await axios.post(
       `${this.baseUrl}/post_content/${room}`,
       postContent

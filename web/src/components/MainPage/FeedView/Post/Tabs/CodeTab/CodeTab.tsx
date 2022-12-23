@@ -6,6 +6,7 @@ import { TextTabProps } from '../TextTab/TextTab';
 import CodeLanguage from './CodeLanguage';
 import { DropDown } from '../../../../Options/DropDown';
 import { SelectChangeEvent } from '@mui/material';
+import { FLAIRS } from '../PostTabs';
 export const SUPPORTED_LANGUAGES = [
   'javascript',
   'typescript',
@@ -26,25 +27,12 @@ export const SUPPORTED_LANGUAGES = [
   'powershell',
 ];
 
-export const FLAIRS = [
-  'help',
-  'discussion',
-  'question',
-  'showcase',
-  'announcement',
-  'news',
-];
 export type CodeTabProps = TextTabProps & {
   programmingLanguage?: string;
 };
 export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
   const [selectedLanguage, setSelectedLanguage] =
     useState<string>('javascript');
-  const [flair, setFlair] = useState<string>('');
-
-  const flairChangeHandler = (event: SelectChangeEvent<string>) => {
-    setFlair(event.target.value);
-  };
 
   const codeChangeHandler = (newValue?: string) => {
     const newCodeValue = newValue ? newValue : '';
@@ -64,16 +52,19 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
         language={selectedLanguage}
         options={{ fixedOverflowWidgets: true }}
       />
-      <div className="d-flex ">
+      {/* flex wrap and shrink*/}
+      <div className="d-flex flex-wrap">
         <CodeLanguage
           languages={SUPPORTED_LANGUAGES}
-          setSelectedLanguage={setSelectedLanguage}
-          selectedLanguage={selectedLanguage}
+          // setSelectedLanguage={setSelectedLanguage}
+          // selectedLanguage={selectedLanguage}
+          currentPostInfo={props.currentPostInfo}
+          setCurrentPostInfo={props.setCurrentPostInfo}
         />
         <DropDown
-          selection={flair}
+          selection={props.currentPostInfo.flair ?? ''}
           options={FLAIRS}
-          handleChange={flairChangeHandler}
+          handleChange={props.flairChangeHandler}
           labelName="Flair"
         />
       </div>

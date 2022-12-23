@@ -23,13 +23,7 @@ export const SendPost = ({
     try {
       dispatch({ type: PostLoadingActions.SetIsLoading });
 
-      await WeCode.sendPost(
-        {
-          content: currentPostInfo.content,
-          code: currentPostInfo.code,
-        },
-        space.spaceName
-      );
+      await WeCode.sendPost(currentPostInfo, space.spaceName);
       setPostedContent(prev => [currentPostInfo, ...prev]);
       setCurrentPostInfo(prev => ({ ...prev, content: '', code: '' }));
     } catch (err) {
