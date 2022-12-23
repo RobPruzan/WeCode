@@ -6,6 +6,7 @@ import TextFieldsIcon from '@mui/icons-material/TextFields';
 import { TextTab } from './TextTab/TextTab';
 import { CodeTab } from './CodeTab/CodeTab';
 import { PostContent } from '../../../../../services/connections';
+import { UpDownVoting } from '../../PostedContents/UpDownVoting';
 
 export enum TabType {
   'TEXT',
@@ -33,7 +34,7 @@ export const PostTabs = ({
   };
 
   return (
-    <>
+    <div>
       <div
         className={className}
         style={{
@@ -92,6 +93,6 @@ export const PostTabs = ({
           />
         )}
       </div>
-    </>
+    </div>
   );
 };

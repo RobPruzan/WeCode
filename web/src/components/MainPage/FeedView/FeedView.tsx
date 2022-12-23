@@ -24,10 +24,11 @@ const FeedView = () => {
   return (
     <>
       <PostTabs
-        className="mx-5 mt-2 mb-5"
+        className="mx-5 mt-3 mb-5"
         setPostedContent={setPostedContent}
         isPostLoading={isPostLoading}
       />
+
       <PostedContents
         className="mx-5"
         postedContent={postedContent}
