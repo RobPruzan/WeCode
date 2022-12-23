@@ -12,9 +12,12 @@ const FeedView = () => {
   const isPostLoading = useSelector(
     (postLoadingState: RootState) => postLoadingState.postLoadingState.loading
   );
+  // const spaces = useSelector(
+  //   (spacesState: RootState) => spacesState.spaceState.space
+  // );
   const hydrateFeed = async () => {
-    const res = await WeCode.getPosts();
-    setPostedContent(res);
+    const res = await WeCode.getPosts('Test');
+    setPostedContent(res.reverse());
   };
 
   useEffect(() => {

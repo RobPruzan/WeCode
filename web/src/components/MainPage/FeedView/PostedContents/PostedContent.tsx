@@ -39,6 +39,7 @@ export const PostedContent = ({
           borderRadius: '10px',
           padding: '10px',
           whiteSpace: 'pre-wrap',
+          overflowWrap: 'break-word',
         }}
         className={className}
       >
