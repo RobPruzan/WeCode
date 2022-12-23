@@ -6,7 +6,7 @@ import {
 } from '../../../../services/connections';
 import { CodeBlock, dracula } from 'react-code-blocks';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-// import differentdark themes for react syntax highlighter
+
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
 import { UpDownVoting } from './UpDownVoting';

@@ -13,7 +13,7 @@ const FeedView = () => {
   );
 
   const space = useSelector((spaceState: RootState) => spaceState.spaceState);
-  // const [postedContent, {error, isLoading}] =
+
   const hydrateFeed = async () => {
     const res = await WeCode.getPosts(space.spaceName);
     setPostedContent(res.reverse());
