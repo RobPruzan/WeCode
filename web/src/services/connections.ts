@@ -23,17 +23,16 @@ export class WeCodeApi {
     postContent?: PostContent,
     room = 'Main'
   ): Promise<void> {
-    console.log('clicked', this.baseUrl);
     const response = await axios.post(
-      `${this.baseUrl}/post_content`,
+      `${this.baseUrl}/post_content/${room}`,
       postContent
     );
-    console.log(response.data);
   }
 
   public async getPosts(room = 'Main'): Promise<PostContent[]> {
+    console.log('Room Value in connection get request function', room);
     const response = await axios.get(`${this.baseUrl}/post_content/${room}}`);
-    console.log(response.data);
+
     return response.data;
   }
 }

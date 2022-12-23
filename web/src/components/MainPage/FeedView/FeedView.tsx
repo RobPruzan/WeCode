@@ -4,25 +4,24 @@ import { RootState } from '../../../redux/store';
 import WeCode, { PostContent } from '../../../services/connections';
 import { PostTabs } from './Post/Tabs/PostTabs';
 import { PostedContents } from './PostedContents/PostedContents';
+import { useQuery } from 'react-query';
 
 const FeedView = () => {
-  const [postedContent, setPostedContent] = useState<PostContent[]>([
-    { content: 'test' },
-  ]);
+  const [postedContent, setPostedContent] = useState<PostContent[]>([]);
   const isPostLoading = useSelector(
     (postLoadingState: RootState) => postLoadingState.postLoadingState.loading
   );
-  // const spaces = useSelector(
-  //   (spacesState: RootState) => spacesState.spaceState.space
-  // );
+
+  const space = useSelector((spaceState: RootState) => spaceState.spaceState);
+  // const [postedContent, {error, isLoading}] =
   const hydrateFeed = async () => {
-    const res = await WeCode.getPosts('Test');
+    const res = await WeCode.getPosts(space.spaceName);
     setPostedContent(res.reverse());
   };
 
   useEffect(() => {
     hydrateFeed();
-  }, []);
+  }, [space.spaceName]);
 
   return (
     <>

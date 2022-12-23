@@ -20,7 +20,7 @@ export const store = createStore(
   combineReducers({
     countState: CountReducer,
     postLoadingState: PostLoadingReducer,
-    spacesState: SpaceReducer,
+    spaceState: SpaceReducer,
   }),
   composeWithDevTools(applyMiddleware())
 );

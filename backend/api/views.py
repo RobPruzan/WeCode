@@ -1,3 +1,4 @@
+from pprint import pprint
 from rest_framework import generics
 from django.shortcuts import render
 from .models import Post, User
@@ -25,18 +26,26 @@ class ReactView(APIView):
 
 
 class PostContent(APIView):
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         content = request.data.get("content")
         code = request.data.get("code")
-        room = request.data.get("room")
+        room = kwargs.get("room")
+        print(room, color="blue")
         # save request data to Post model
         post = Post(content=content, code=code, room=room)
         post.save()
-        print(Post.objects.all(), color="green")
+        print(post.room, color="green")
+        pprint(post)
         return Response("Post Created")
 
-    def get(self, request):
-        room = request.data.get("room")
+    def get(self, request, *args, **kwargs):
+
+        room = kwargs.get("room")
+        # regex to filter out { and }
+        room = room.replace("}", "")
+        print(room, color="red")
         postData = Post.objects.filter(room=room)
+
+        print(postData, color="green")
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)

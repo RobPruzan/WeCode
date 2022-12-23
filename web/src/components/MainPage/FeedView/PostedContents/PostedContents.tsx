@@ -17,8 +17,12 @@ export const PostedContents = ({
     // <Card sx={hei}>stuff inside here</Card>
     // card with height of 10% of screen
     <>
-      {postedContent.map(singlePostedContent => (
-        <PostedContent className="mx-5 mb-5" {...{ singlePostedContent }} />
+      {postedContent.map((singlePostedContent, idx) => (
+        <PostedContent
+          className="mx-5 mb-5"
+          key={idx}
+          {...{ singlePostedContent }}
+        />
       ))}
     </>
   );
