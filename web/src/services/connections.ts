@@ -1,5 +1,3 @@
-// api class which takes from web.env file the API_URL and assigns it to this.baseUrl
-// import axios
 import axios from 'axios';
 
 export type PostContent = {
@@ -18,7 +16,6 @@ export class WeCodeApi {
   constructor() {
     this.baseUrl = process.env.REACT_APP_API_URL;
   }
-  // post request for sending content
   public async sendPost(
     postContent?: PostContent,
     room = 'Main'

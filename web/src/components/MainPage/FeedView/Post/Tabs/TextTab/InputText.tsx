@@ -17,7 +17,6 @@ export const InputText = ({
       value={currentPostInfo.content}
       className="p-2 "
       id="outlined-multiline-static"
-      // make the font monserrat
       sx={{
         color: 'white',
         background: '#141414',
@@ -26,8 +25,6 @@ export const InputText = ({
       multiline
       rows={6}
       variant="standard"
-      //  unfocused color of the outline should be white
-
       InputProps={{
         style: {
           color: 'white',

@@ -14,8 +14,6 @@ export const PostedContents = ({
   isPostLoading,
 }: PostedContentsProps) => {
   return (
-    // <Card sx={hei}>stuff inside here</Card>
-    // card with height of 10% of screen
     <>
       {postedContent.map((singlePostedContent, idx) => (
         <PostedContent

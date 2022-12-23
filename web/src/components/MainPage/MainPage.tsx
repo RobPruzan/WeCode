@@ -14,14 +14,14 @@ const MainPage = () => {
       <div>
         {/* Navbar */}
         <nav className="justify-content-between d-flex p-2">
-          <div>
+          <div style={{ color: 'white' }}>
             We Code
-            <CodeIcon color="primary" fontSize="large" className="m-1" />
+            <CodeIcon fontSize="large" className="m-1" />
           </div>
           <div className="m-2">
             {/* <AccountCircleIcon color="primary" /> */}
             {/* same account circle but thats bigger */}
-            <AccountCircleIcon color="primary" fontSize="large" />
+            <AccountCircleIcon fontSize="large" />
           </div>
         </nav>
         {/* Two columns */}

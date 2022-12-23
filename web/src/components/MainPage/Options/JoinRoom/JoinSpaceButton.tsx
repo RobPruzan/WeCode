@@ -2,10 +2,10 @@ import { Button } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
-export type JoinRoomButtonProps = {
+export type JoinSpaceButtonProps = {
   selectedSpace: string;
 };
-export const JoinRoomButton = ({ selectedSpace }: JoinRoomButtonProps) => {
+export const JoinSpaceButton = ({ selectedSpace }: JoinSpaceButtonProps) => {
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch({
@@ -13,5 +13,9 @@ export const JoinRoomButton = ({ selectedSpace }: JoinRoomButtonProps) => {
       payload: { spaceName: selectedSpace },
     });
   };
-  return <Button onClick={handleClick}>Join Room</Button>;
+  return (
+    <Button variant="outlined" onClick={handleClick}>
+      Join Space
+    </Button>
+  );
 };

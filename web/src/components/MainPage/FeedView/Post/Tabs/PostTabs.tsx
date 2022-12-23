@@ -23,7 +23,6 @@ export const PostTabs = ({
   setPostedContent,
   isPostLoading,
 }: TabsProps) => {
-  //  handling for matieral ui tabs
   const [currentPostInfo, setCurrentPostInfo] = useState<PostContent>({
     content: '',
   });
@@ -48,14 +47,12 @@ export const PostTabs = ({
           variant="fullWidth"
           sx={{
             background: '#141414',
-            //  inactive tab underline color should be white
           }}
         >
           <Tab
             value={TabType.TEXT}
             icon={<TextFieldsIcon />}
             aria-label="text"
-            //  inactive tab underline color should be white and active is #000000
             sx={{
               color: 'gray',
             }}
