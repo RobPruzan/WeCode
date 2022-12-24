@@ -11,6 +11,7 @@ import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
 import { UpDownVoting } from './UpDownVoting';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import CommentIcon from '@mui/icons-material/Comment';
 export type PostedContentProps = {
   className?: string;
   singlePostedContent: PostInfo;
@@ -47,6 +48,12 @@ export const PostedContent = ({
             {singlePostedContent.code}
           </SyntaxHighlighter>
         )}
+        <div
+          style={{ cursor: 'pointer' }}
+          onClick={() => alert('You tried to comment')}
+        >
+          <CommentIcon />
+        </div>
       </Card>
       {/* <div style={{ clear: 'both' }}> */}
       {/* </div> */}
