@@ -22,9 +22,9 @@ const AddSpace = () => {
           '.MuiOutlinedInput-notchedOutline': {
             borderColor: 'rgba(67, 187, 255, 0.25)',
           },
-          // '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          //   borderColor: 'rgba(67, 187, 255, 0.25)',
-          // },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'rgba(67, 187, 255, 0.25)',
+          },
           '&:hover .MuiOutlinedInput-notchedOutline': {
             borderColor: 'rgba(67, 187, 255, 1)',
           },
