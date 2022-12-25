@@ -27,7 +27,7 @@ psql <db_name>
 To confirm the role exists run the following commands and the role should appear
 ```
 psql <db_name>
-\ds
+\du
 ```
 
 #### Python
@@ -36,29 +36,41 @@ psql <db_name>
 ```
 pip install -r requirements.txt
 ```
-2. Navigate to the backend directory:
-```
-cd backend
-```
-In settings.py replace your DATABASES with:
+## Django X Postgres
+We need to connect django to our Postrgres DB
+
+To do this navigate to local_settings.py
+From root of the project navigate to backend/backend
+
+Within local_settings.py place your DB information used earlier to create your DB
 ```
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "<db_name>",
-        "USER": "<username>",
+        "USER": "<user_name>",
         "PASSWORD": "<password>",
         "HOST": "localhost",
         "PORT": "5432",
     }
 }
 ```
-3. Run the following commands to migrate the database and start the server:
+
+3. Run the following commands to migrate the database:
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate
+```
+### Starting the server
+To start the django server run this command:
+```
 python3 manage.py runserver
 ```
+If this command fails for any reason make sure you:
+- Have installed the neccesary dependencies
+- Are in your virtualenv (if you are using one)
+- Are in the right directory (WeCode/backend)
+- Spelled the command correctly 
 #### Typescript
 
 1. Navigate to the web directory:
