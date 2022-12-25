@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryCard } from '../../PrimaryCard';
-import AddSpace from './AddSpace/AddSpace';
+import CreateSpace from './CreateSpace/CreateSpace';
 
 import JoinSpace from './JoinRoom/JoinSpace';
 
@@ -13,7 +13,7 @@ export const Options = () => {
         <JoinSpace />
       </PrimaryCard>
       <PrimaryCard>
-        <AddSpace />
+        <CreateSpace />
       </PrimaryCard>
     </div>
   );

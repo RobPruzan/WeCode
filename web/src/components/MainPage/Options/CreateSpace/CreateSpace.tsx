@@ -1,9 +1,9 @@
 import { SelectChangeEvent, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { DropDown } from '../DropDown';
-import { AddSpaceButtons } from './AddSpaceButton';
+import { CreateSpaceButton } from './CreateSpaceButton';
 
-const AddSpace = () => {
+const CreateSpace = () => {
   const [addSpaceSelection, setAddSpaceSelection] = useState<string>();
   // sx={{ m: 1, width: '15em' }}
   return (
@@ -44,9 +44,9 @@ const AddSpace = () => {
           },
         }}
       />
-      <AddSpaceButtons />
+      <CreateSpaceButton />
     </div>
   );
 };
 
-export default AddSpace;
+export default CreateSpace;
