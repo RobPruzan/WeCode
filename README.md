@@ -14,15 +14,19 @@ Start up postgres
 ```
 brew services start postgresql
 ```
+Create db
+```
+createdb <db_name>
+```
 Create user and password
 ```
-psql postgres
-postgres=# CREATE USER <user> WITH PASSWORD '<password>'
-postgres=# GRANT ALL PRIVILEGES ON DATABASE postgres TO <user>;
+psql <db_name>
+<db_name>=# CREATE USER <user> WITH PASSWORD '<password>'
+<db_name>=# GRANT ALL PRIVILEGES ON DATABASE postgres TO <user>;
 ```
 To confirm the role exists run the following commands and the role should appear
 ```
-psql postgres
+psql <db_name>
 \ds
 ```
 
@@ -41,7 +45,7 @@ In settings.py replace your DATABASES with:
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
+        "NAME": "<db_name>",
         "USER": "<username>",
         "PASSWORD": "<password>",
         "HOST": "localhost",
