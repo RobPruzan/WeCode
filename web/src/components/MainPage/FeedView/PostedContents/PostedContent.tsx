@@ -15,16 +15,17 @@ import CommentIcon from '@mui/icons-material/Comment';
 export type PostedContentProps = {
   className?: string;
   singlePostedContent: PostInfo;
-  key: number;
+  keyValue: number;
 };
 export const PostedContent = ({
   className,
   singlePostedContent,
-  key,
+  keyValue,
 }: PostedContentProps) => {
+  console.log('key is', keyValue);
   const [upVotes, setUpVotes] = useState(0);
   return (
-    <div key={key}>
+    <div key={`PostedContent: ${keyValue}`}>
       <Card
         sx={{
           color: 'white',

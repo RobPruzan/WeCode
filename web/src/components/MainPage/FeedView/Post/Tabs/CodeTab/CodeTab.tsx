@@ -25,12 +25,14 @@ export const SUPPORTED_LANGUAGES = [
   'Scala',
 ];
 
+export const DEFAULT_PROGRAMMING_LANGUAGE = 'Javascript';
+
 export type CodeTabProps = TextTabProps & {
   programmingLanguage?: string;
 };
 export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
-  const [selectedLanguage, setSelectedLanguage] =
-    useState<string>('javascript');
+  // const [selectedLanguage, setSelectedLanguage] =
+  //   useState<string>('Javascript');
 
   const codeChangeHandler = (newValue?: string) => {
     const newCodeValue = newValue ? newValue : '';
@@ -47,23 +49,26 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
         onChange={codeChangeHandler}
         theme="vs-dark"
         height="20vh"
-        language={selectedLanguage}
+        language={
+          props.currentPostInfo.langauge
+            ? props.currentPostInfo.langauge
+            : DEFAULT_PROGRAMMING_LANGUAGE
+        }
         options={{ fixedOverflowWidgets: true }}
       />
-      {/* flex wrap and shrink*/}
+
       <div className="d-flex flex-wrap">
         <CodeLanguage
           languages={SUPPORTED_LANGUAGES}
-          // setSelectedLanguage={setSelectedLanguage}
-          // selectedLanguage={selectedLanguage}
           currentPostInfo={props.currentPostInfo}
           setCurrentPostInfo={props.setCurrentPostInfo}
         />
         <DropDown
-          selection={props.currentPostInfo.flair ?? ''}
+          selection={props.currentPostInfo.flair}
           options={FLAIRS}
           handleChange={props.flairChangeHandler}
           labelName="Flair"
+          defaultValue="Discussion"
         />
       </div>
 

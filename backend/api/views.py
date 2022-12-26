@@ -25,7 +25,7 @@ class ReactView(APIView):
             return Response(serializer.data)
 
 
-class PostContent(APIView):
+class PostContentView(APIView):
     def post(self, request, *args, **kwargs):
         # content = request.data.get("content")
         # code = request.data.get("code")
@@ -50,3 +50,18 @@ class PostContent(APIView):
 
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)
+
+
+class UserView(APIView):
+    def get(self, request, *args, **kwargs):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+
+        # for user in serializer.data:
+        #     print(user["name"], color="blue")
+        user_names = [
+            {"label": user.get("name", "No Username Found"), "id": user.get("id", 0)}
+            for user in serializer.data
+        ]
+
+        return Response(user_names)

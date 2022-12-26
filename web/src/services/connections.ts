@@ -10,6 +10,18 @@ export type PostContent = {
   langauge?: string;
   hasCode?: boolean;
 };
+
+export type User = {
+  id: number;
+  name: string;
+  photo: Blob;
+};
+
+export type UserName = {
+  id: number;
+  name: string;
+};
+
 export class WeCodeApi {
   baseUrl?: string;
 
@@ -31,9 +43,16 @@ export class WeCodeApi {
   }
 
   public async getPosts(room = 'Main'): Promise<PostContent[]> {
+    console.log('base url', this.baseUrl);
     console.log('Room Value in connection get request function', room);
     const response = await axios.get(`${this.baseUrl}/post_content/${room}}`);
 
+    return response.data;
+  }
+
+  public async getUsers(): Promise<UserName[]> {
+    console.log('base url', this.baseUrl);
+    const response = await axios.get(`${this.baseUrl}/users`);
     return response.data;
   }
 }

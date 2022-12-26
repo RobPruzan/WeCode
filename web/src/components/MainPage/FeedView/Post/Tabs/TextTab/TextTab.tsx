@@ -5,6 +5,9 @@ import { DropDown } from '../../../../Options/DropDown';
 import { SendPost } from '../../Buttons/SendPost';
 import { FLAIRS } from '../PostTabs';
 import { InputText } from './InputText';
+
+const defaultFlair = 'Discussion';
+
 export type TextTabProps = {
   setCurrentPostInfo: Dispatch<SetStateAction<PostContent>>;
   currentPostInfo: PostContent;
@@ -25,10 +28,11 @@ export const TextTab = ({
         currentPostInfo={currentPostInfo}
       />
       <DropDown
-        selection={currentPostInfo.flair ?? ''}
+        selection={currentPostInfo.flair}
         options={FLAIRS}
         handleChange={flairChangeHandler}
         labelName="Flair"
+        defaultValue="Discussion"
       />
       <SendPost
         setCurrentPostInfo={setCurrentPostInfo}
