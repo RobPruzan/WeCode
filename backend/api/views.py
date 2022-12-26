@@ -51,7 +51,7 @@ class SpacesView(APIView):
         description = request.data.get("description", "")
         name = request.data.get("name", "")
         members = request.data.get("members", "")
-        members = [User.objects.get(id=member) for member in members]
+        members = [User.objects.get(id=member.get("id")) for member in members]
         space = Space.objects.create(description=description, name=name)
         space.members.set(members)
         space.save()

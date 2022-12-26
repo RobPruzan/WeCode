@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import CodeIcon from '@mui/icons-material/Code';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
-import { TextTab } from './TextTab/TextTab';
-import { CodeTab } from './CodeTab/CodeTab';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 import { PostContent } from '../../../../../services/connections';
+import { CodeTab } from './CodeTab/CodeTab';
+import { TextTab } from './TextTab/TextTab';
 
 import { SelectChangeEvent } from '@mui/material';
 

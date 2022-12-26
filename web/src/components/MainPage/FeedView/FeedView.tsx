@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import WeCode, { PostContent } from '../../../services/connections';
+import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
 import { PostTabs } from './Post/Tabs/PostTabs';
 import { PostedContents } from './PostedContents/PostedContents';
-import { useQuery } from 'react-query';
-import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
 
 const FeedView = () => {
   const [postedContent, setPostedContent] = useState<PostContent[]>([]);
@@ -36,6 +35,7 @@ const FeedView = () => {
       <PostedContents
         className="mx-5"
         postedContent={postedContent}
+        setPostedContent={setPostedContent}
         isPostLoading={isPostLoading}
       />
     </>

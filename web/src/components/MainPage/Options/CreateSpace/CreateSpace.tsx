@@ -1,13 +1,11 @@
-import { SelectChangeEvent, TextField } from '@mui/material';
-import React, { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import React, { ChangeEvent, useState } from 'react';
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 import { RootState } from '../../../../redux/store';
 import WeCode from '../../../../services/connections';
 import { CustomTextField } from '../../../CustomTextField';
 import { TypeAheadOption } from '../../../utils/TypeAhead';
-import { DropDown } from '../DropDown';
 import { CreateSpaceButton } from './CreateSpaceButton';
 import { SpaceDescription } from './SpaceDescription';
 import { SpaceUsers } from './SpaceUsers';
@@ -22,7 +20,7 @@ export type ChangeHandler = (
 
 export type SpaceInfo = {
   name: string;
-  members: string[];
+  members: TypeAheadOption[];
   description: string;
 };
 
@@ -67,8 +65,8 @@ const CreateSpace = () => {
     event: React.SyntheticEvent<Element, Event>,
     newValue: TypeAheadOption[]
   ) => {
-    const users = newValue.map(user => user.id);
-    setSpaceInfo(prev => ({ ...prev, members: users }));
+    // const users = newValue.map(user => user.id);
+    setSpaceInfo(prev => ({ ...prev, members: newValue }));
   };
 
   const submitHandler = async () => {

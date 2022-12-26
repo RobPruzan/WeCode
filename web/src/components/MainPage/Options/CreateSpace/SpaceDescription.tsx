@@ -1,4 +1,3 @@
-import React from 'react';
 import { CustomTextField } from '../../../CustomTextField';
 import { ChangeHandler } from './CreateSpace';
 export type SpaceDescriptionProps = {

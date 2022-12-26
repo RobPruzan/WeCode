@@ -1,5 +1,5 @@
 import { SelectChangeEvent } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { PostContent } from '../../../../../../services/connections';
 import { DropDown } from '../../../../Options/DropDown';
 import { SendPost } from '../../Buttons/SendPost';
