@@ -38,9 +38,6 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
     const newCodeValue = newValue ? newValue : '';
     props.setCurrentPostInfo({ ...props.currentPostInfo, code: newCodeValue });
   };
-  useEffect(() => {
-    console.log('programmingLanguage', programmingLanguage);
-  }, [programmingLanguage]);
 
   return (
     <div>

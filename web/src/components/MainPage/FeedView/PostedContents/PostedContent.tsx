@@ -22,7 +22,6 @@ export const PostedContent = ({
   singlePostedContent,
   keyValue,
 }: PostedContentProps) => {
-  console.log('key is', keyValue);
   const [upVotes, setUpVotes] = useState(0);
   return (
     <div key={`PostedContent: ${keyValue}`}>

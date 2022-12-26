@@ -3,11 +3,15 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+export type MenuData = {
+  value: string | number;
+  option: string;
+};
 export type DropDownProps = {
   className?: string;
-  selection?: string;
-  options: string[];
+  selection?: string | number;
+  menuData?: MenuData[];
+  options?: string[];
   labelName: string;
   defaultValue?: string;
   style?: React.CSSProperties;
@@ -19,6 +23,7 @@ export const DropDown = ({
   className,
   selection,
   handleChange,
+  menuData,
   options,
   labelName,
   defaultValue,
@@ -51,7 +56,6 @@ export const DropDown = ({
         <Select
           className="w-100"
           sx={{
-            // width: '200%',
             ...style,
             color: 'white',
             '.MuiOutlinedInput-notchedOutline': {
@@ -72,17 +76,28 @@ export const DropDown = ({
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={selection}
+          value={String(selection)}
           defaultValue={defaultValue}
           label="Age"
           onChange={handleChange}
           MenuProps={MenuProps}
         >
-          {options.map((option, idx) => (
-            <MenuItem key={`MenuItem-${idx}`} value={option}>
-              {option}
+          {/* {menuData?.map((data, idx) => (
+            <MenuItem key={`MenuItem-${idx}`} value={data }>
+              {data.option}
             </MenuItem>
-          ))}
+          ))} */}
+          {menuData
+            ? menuData.map((data, idx) => (
+                <MenuItem key={`MenuItem-${idx}`} value={data.value}>
+                  {data.option}
+                </MenuItem>
+              ))
+            : options?.map((option, idx) => (
+                <MenuItem key={`MenuItem-${idx}`} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
         </Select>
       </FormControl>
     </div>

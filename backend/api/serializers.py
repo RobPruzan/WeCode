@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, User
+from .models import Post, Space, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,23 +9,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    # serialize the user foriegn key using the user serializer
     user = UserSerializer()
 
     class Meta:
-        #   serializer for this class with these fields
-        #       user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-
-        #    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-        # content = models.CharField(max_length=2000, default="", blank=True, null=True)
-        # code = models.CharField(max_length=2000, default="", blank=True, null=True)
-        # date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-        # likes = models.IntegerField(default=0, blank=True, null=True)
-        # dislikes = models.IntegerField(default=0, blank=True, null=True)
-        # comments = models.IntegerField(default=0, blank=True, null=True)
-        # langauge = models.CharField(max_length=200, default="", blank=True, null=True)
-        # classname = Post
-        # fields = ("user", "content", "code", "date", "likes", "dislikes", "comments", "langauge")
         model = Post
         fields = (
             "user",
@@ -37,3 +23,21 @@ class PostSerializer(serializers.ModelSerializer):
             "comments",
             "langauge",
         )
+
+
+class SpaceSerializer(serializers.ModelSerializer):
+    members = UserSerializer(many=True)
+
+    class Meta:
+        model = Space
+        fields = ("id", "name", "description", "date", "members")
+
+    # This function is called when we call the serializer to serialize the data
+    # We can override this function to add extra data to the serialized data
+    # In this case we are adding the number of members to the serialized data
+    def to_representation(self, instance):
+        # Call the parent class to get the serialized data
+        representation = super().to_representation(instance)
+        # Add the number of members to the serialized data
+        representation["num_members"] = instance.members.count()
+        return representation
