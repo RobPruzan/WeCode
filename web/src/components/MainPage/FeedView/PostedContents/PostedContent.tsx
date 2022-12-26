@@ -43,7 +43,7 @@ export const PostedContent = ({
         setUpOrDownVote(null);
       }
       if (upOrDownVote === 'down') {
-        setUpVotes(prev => prev + 1);
+        setUpVotes(prev => prev + 2);
         setUsedVote(true);
         setUpOrDownVote('up');
       }
@@ -61,7 +61,7 @@ export const PostedContent = ({
         setUpOrDownVote(null);
       }
       if (upOrDownVote === 'up') {
-        setUpVotes(prev => prev - 1);
+        setUpVotes(prev => prev - 2);
         setUsedVote(true);
         setUpOrDownVote('down');
       }
