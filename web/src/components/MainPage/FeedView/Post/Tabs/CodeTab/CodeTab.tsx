@@ -8,32 +8,29 @@ import { DropDown } from '../../../../Options/DropDown';
 import { SelectChangeEvent } from '@mui/material';
 import { FLAIRS } from '../PostTabs';
 export const SUPPORTED_LANGUAGES = [
-  'Javascript',
+  'javascript',
 
-  'Python',
-  'Java',
-  'C',
-  'CPP',
-  'Csharp',
-  'Go',
-  'Ruby',
-  'Rust',
-  'Swift',
-  'PHP',
-  'SQL',
-  'Kotlin',
-  'Scala',
+  'python',
+  'java',
+  'c',
+  'cpp',
+  'csharp',
+  'go',
+  'ruby',
+  'rust',
+  'swift',
+  'php',
+  'sql',
+  'kotlin',
+  'scala',
 ];
 
-export const DEFAULT_PROGRAMMING_LANGUAGE = 'Javascript';
+export const DEFAULT_PROGRAMMING_LANGUAGE = 'javascript';
 
 export type CodeTabProps = TextTabProps & {
   programmingLanguage?: string;
 };
 export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
-  // const [selectedLanguage, setSelectedLanguage] =
-  //   useState<string>('Javascript');
-
   const codeChangeHandler = (newValue?: string) => {
     const newCodeValue = newValue ? newValue : '';
     props.setCurrentPostInfo({ ...props.currentPostInfo, code: newCodeValue });

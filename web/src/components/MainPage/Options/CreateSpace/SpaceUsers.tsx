@@ -9,8 +9,13 @@ import { TypAheadChangeHandler } from './CreateSpace';
 export type SpaceUsersProps = {
   className?: string;
   changeHandler: TypAheadChangeHandler;
+  members: string[];
 };
-export const SpaceUsers = ({ className, changeHandler }: SpaceUsersProps) => {
+export const SpaceUsers = ({
+  className,
+  changeHandler,
+  members,
+}: SpaceUsersProps) => {
   // useQuery for getting users using getUsers
   const { data, error, isLoading } = useQuery('users', () => WeCode.getUsers());
 
@@ -25,6 +30,7 @@ export const SpaceUsers = ({ className, changeHandler }: SpaceUsersProps) => {
     <div className={className}>
       {data && (
         <TypeAhead
+          members={members}
           label="Select Users"
           options={data}
           changeHandler={changeHandler}

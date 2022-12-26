@@ -77,17 +77,12 @@ export const DropDown = ({
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={String(selection)}
+          value={selection ? String(selection) : undefined}
           defaultValue={defaultValue}
           label="Age"
           onChange={handleChange}
           MenuProps={MenuProps}
         >
-          {/* {menuData?.map((data, idx) => (
-            <MenuItem key={`MenuItem-${idx}`} value={data }>
-              {data.option}
-            </MenuItem>
-          ))} */}
           {menuData
             ? menuData.map((data, idx) => (
                 <MenuItem key={`MenuItem-${idx}`} value={data.value}>

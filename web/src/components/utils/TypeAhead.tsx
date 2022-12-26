@@ -18,10 +18,12 @@ export type TypeAheadProps = UseAutocompleteProps<
 > & {
   label: string;
   changeHandler: TypAheadChangeHandler;
+  members: string[];
 };
 export const TypeAhead = ({
   label,
   changeHandler,
+  members,
   ...props
 }: TypeAheadProps) => {
   return (
