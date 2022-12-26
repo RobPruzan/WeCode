@@ -31,15 +31,41 @@ export const PostedContent = ({
   const [upOrDownVote, setUpOrDownVote] = useState<'up' | 'down' | null>(null);
   const handleUpVote = () => {
     console.log('is used vote', usedVote);
-    if (!usedVote || upOrDownVote === 'down') {
+    // if (!usedVote || upOrDownVote === 'down') {
+    //   setUpVotes(prev => prev + 1);
+    //   setUsedVote(true);
+    //   setUpOrDownVote('up');
+    // }
+    if (usedVote) {
+      if (upOrDownVote === 'up') {
+        setUpVotes(prev => prev - 1);
+        setUsedVote(false);
+        setUpOrDownVote(null);
+      }
+      if (upOrDownVote === 'down') {
+        setUpVotes(prev => prev + 1);
+        setUsedVote(true);
+        setUpOrDownVote('up');
+      }
+    } else {
       setUpVotes(prev => prev + 1);
       setUsedVote(true);
       setUpOrDownVote('up');
     }
   };
   const handleDownVote = () => {
-    console.log('is used vote', usedVote);
-    if (!usedVote || upOrDownVote === 'up') {
+    if (usedVote) {
+      if (upOrDownVote === 'down') {
+        setUpVotes(prev => prev + 1);
+        setUsedVote(false);
+        setUpOrDownVote(null);
+      }
+      if (upOrDownVote === 'up') {
+        setUpVotes(prev => prev - 1);
+        setUsedVote(true);
+        setUpOrDownVote('down');
+      }
+    } else {
       setUpVotes(prev => prev - 1);
       setUsedVote(true);
       setUpOrDownVote('down');
