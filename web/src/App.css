@@ -15,7 +15,6 @@ body {
   overflow: hidden;
 }
 
-/* Navbar at the top */
 nav {
   display: flex;
   justify-content: space-between;
@@ -35,19 +34,18 @@ nav {
 
 .columns > div {
   flex: 1;
-  /* Black border for debugging */
-  /* border: 1px solid 43BBFF; */
-  /* border with color of #43BBFF */
   border: 1px solid #43bbff;
+  /* min-width: fit-content; */
 }
 
-/* First column is 1fr */
 .columns > div:first-child {
   flex: 1;
+  overflow-y: scroll;
+  min-width: fit-content;
 }
 
-/* Second column is 3fr */
 .columns > div:last-child {
   flex: 3;
   overflow: scroll;
+  flex-shrink: calc(100% - 300px);
 }

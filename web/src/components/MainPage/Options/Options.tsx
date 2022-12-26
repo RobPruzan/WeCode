@@ -2,7 +2,7 @@ import React from 'react';
 import { PrimaryCard } from '../../PrimaryCard';
 import CreateSpace from './CreateSpace/CreateSpace';
 
-import JoinSpace from './JoinRoom/JoinSpace';
+import JoinSpace from './JoinSpace/JoinSpace';
 
 export const Options = () => {
   return (

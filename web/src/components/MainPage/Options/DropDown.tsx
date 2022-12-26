@@ -6,9 +6,11 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export type DropDownProps = {
   className?: string;
-  selection: string;
+  selection?: string;
   options: string[];
   labelName: string;
+  defaultValue?: string;
+  style?: React.CSSProperties;
   handleChange: (event: SelectChangeEvent) => void;
 };
 const ITEM_HEIGHT = 48;
@@ -19,6 +21,8 @@ export const DropDown = ({
   handleChange,
   options,
   labelName,
+  defaultValue,
+  style,
 }: DropDownProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -40,12 +44,15 @@ export const DropDown = ({
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: '15em' }} className={className}>
+      <FormControl sx={{ m: 1 }} className={className}>
         <InputLabel focused={true} id="demo-controlled-open-select-label">
           {labelName}
         </InputLabel>
         <Select
+          className="w-100"
           sx={{
+            // width: '200%',
+            ...style,
             color: 'white',
             '.MuiOutlinedInput-notchedOutline': {
               borderColor: 'rgba(67, 187, 255, 0.25)',
@@ -66,6 +73,7 @@ export const DropDown = ({
           onClose={handleClose}
           onOpen={handleOpen}
           value={selection}
+          defaultValue={defaultValue}
           label="Age"
           onChange={handleChange}
           MenuProps={MenuProps}

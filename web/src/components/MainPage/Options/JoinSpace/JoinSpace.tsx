@@ -11,10 +11,13 @@ import { SpaceActions } from '../../../../redux/reducers/spaces';
 import { useState } from 'react';
 import { JoinSpaceButton } from './JoinSpaceButton';
 import { DropDown } from '../DropDown';
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
+
+export const JOIN_SPACE_DEFAULT_VALUE = 'Main';
+
 const JoinSpace = () => {
-  const [selectedSpace, setSelectedSpace] = useState<string>('Main');
+  const [selectedSpace, setSelectedSpace] = useState<string>(
+    JOIN_SPACE_DEFAULT_VALUE
+  );
   // const [open, setOpen] = React.useState(false);
   // const dispatch = useDispatch();
 
@@ -32,6 +35,9 @@ const JoinSpace = () => {
         options={tempOptions}
         handleChange={handleChange}
         labelName="Select Space"
+        style={{
+          minWidth: '15em',
+        }}
       />
       <JoinSpaceButton className="m-2" selectedSpace={selectedSpace} />
     </div>

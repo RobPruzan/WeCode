@@ -18,7 +18,7 @@ export const PostedContents = ({
       {postedContent.map((singlePostedContent, idx) => (
         <PostedContent
           className="mx-5 mb-5"
-          key={idx}
+          keyValue={idx}
           {...{ singlePostedContent }}
         />
       ))}
