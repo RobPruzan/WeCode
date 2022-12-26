@@ -16,14 +16,14 @@ const FeedView = () => {
   const space = useSelector((spaceState: RootState) => spaceState.spaceState);
 
   const hydrateFeed = async () => {
-    const res = await WeCode.getPosts(space.spaceId ?? PUBLIC_SPACE);
+    const res = await WeCode.getPosts(space.currentSpaceId ?? PUBLIC_SPACE);
 
     setPostedContent(res.reverse());
   };
 
   useEffect(() => {
     hydrateFeed();
-  }, [space.spaceId]);
+  }, [space.currentSpaceId]);
 
   return (
     <>

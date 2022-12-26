@@ -9,46 +9,57 @@ export type Space = {
   updatedAt: string;
 };
 export interface SpaceState {
-  spaceId: number | null;
-  spaceName: string | null;
+  currentSpaceId: number | null;
+  availableSpaces: Space[] | null;
 }
 
 export const DEFAULT_SPACE_STATE: SpaceState = {
-  spaceId: null,
-  spaceName: null,
+  currentSpaceId: null,
+  availableSpaces: null,
   // TODO remove
 };
 
 export enum SpaceActions {
-  SetSpace = 'spaces/SET_SPACE',
-  RemoveSpace = 'spaces/REMOVE_SPACE',
+  SetCurrentSpace = 'spaces/SET_CURRENT_SPACE',
+  RemoveCurrentSpace = 'spaces/REMOVE_CURRENT_SPACE',
+  SetAvailableSpaces = 'spaces/SET_AVAILABLE_SPACES',
 }
 
-interface SetSpaceAction {
-  type: SpaceActions.SetSpace;
-  payload: { spaceId: number; spaceName: string };
+interface SetCurrentSpaceAction {
+  type: SpaceActions.SetCurrentSpace;
+  payload: { currentSpaceId: number };
 }
 interface RemoveSpaceAction {
-  type: SpaceActions.RemoveSpace;
+  type: SpaceActions.RemoveCurrentSpace;
+}
+
+interface SetAvailableSpacesAction {
+  type: SpaceActions.SetAvailableSpaces;
+  payload: { availableSpaces: Space[] };
 }
 
 export const SpaceReducer = (
   state: SpaceState = DEFAULT_SPACE_STATE,
-  action: SetSpaceAction | RemoveSpaceAction
+  action: SetCurrentSpaceAction | RemoveSpaceAction | SetAvailableSpacesAction
 ) => {
   switch (action.type) {
-    case SpaceActions.SetSpace:
+    case SpaceActions.SetCurrentSpace:
       return {
         ...state,
-
-        spaceId: action.payload.spaceId,
-        spaceName: action.payload.spaceName,
+        currentSpaceId: action.payload.currentSpaceId,
       };
-    case SpaceActions.RemoveSpace:
+
+    case SpaceActions.RemoveCurrentSpace:
       return {
         ...state,
+        currentSpaceId: null,
+      };
 
-        spaceId: null,
+    case SpaceActions.SetAvailableSpaces:
+      console.log('SetAvailableSpacesAction', action.payload.availableSpaces);
+      return {
+        ...state,
+        availableSpaces: action.payload.availableSpaces,
       };
     default:
       return state;

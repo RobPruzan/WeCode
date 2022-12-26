@@ -18,16 +18,22 @@ export const PUBLIC_SPACE = 1;
 
 const JoinSpace = () => {
   const [selectedSpaceId, setSelectedSpaceId] = useState<number>(PUBLIC_SPACE);
-  const [spaces, setSpaces] = useState<Space[]>([]);
-  const { data, error, isLoading } = useQuery('spaces', async () => {
-    const res = await WeCode.getSpaces();
-    setSpaces(res);
-  });
-  useEffect(() => {
+  const dispatch = useDispatch();
+  const availableSpaces = useSelector(
+    ({ spaceState }: RootState) => spaceState.availableSpaces
+  );
+  // const [spaces, setSpaces] = useState<Space[]>([]);
+  const { data, error, isLoading } = useQuery(
+    ['spaces', availableSpaces],
     async () => {
       const res = await WeCode.getSpaces();
-    };
-  }, []);
+      dispatch({
+        type: SpaceActions.SetAvailableSpaces,
+        payload: { availableSpaces: res },
+      });
+    }
+  );
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -37,14 +43,16 @@ const JoinSpace = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     console.log('dropdown event', event);
+
     setSelectedSpaceId(Number(event.target.value));
   };
 
-  const tempOptions = ['Main', 'CSE 115', 'CSE 116', 'CSE 220', 'CSE 250'];
-  const menuData: MenuData[] = spaces.map(space => ({
-    value: space.id,
-    option: space.name,
-  }));
+  const menuData: MenuData[] = availableSpaces
+    ? availableSpaces.map(space => ({
+        value: space.id,
+        option: space.name,
+      }))
+    : [];
   return (
     <div>
       <DropDown
@@ -55,6 +63,7 @@ const JoinSpace = () => {
         labelName="Select Space"
         style={{
           minWidth: '15em',
+          maxWidth: '50%',
         }}
       />
       <JoinSpaceButton className="m-2" spaceId={selectedSpaceId} />

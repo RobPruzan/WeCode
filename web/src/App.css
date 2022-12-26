@@ -19,7 +19,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  height: 15vh;
   border: 1px solid #43bbff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   background-color: #141414;
@@ -28,7 +28,7 @@ nav {
 /* Two columns */
 .columns {
   display: flex;
-  height: 100vh;
+  height: 85vh;
   background-color: #141414;
 }
 
@@ -44,8 +44,25 @@ nav {
   min-width: fit-content;
 }
 
-.columns > div:last-child {
+/* .columns > div:last-child {
   flex: 3;
   overflow: scroll;
   flex-shrink: calc(100% - 300px);
+} */
+/* if small screen, then overflowx scroll, else dont, along with same stuff as in commented code above */
+@media screen and (max-width: 1000px) {
+  .columns > div:last-child {
+    flex: 3;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-shrink: calc(100% - 300px);
+  }
+}
+@media screen and (min-width: 1000px) {
+  .columns > div:last-child {
+    flex: 3;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-shrink: calc(100% - 300px);
+  }
 }

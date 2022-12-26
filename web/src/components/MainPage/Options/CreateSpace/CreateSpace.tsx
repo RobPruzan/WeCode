@@ -1,5 +1,9 @@
 import { SelectChangeEvent, TextField } from '@mui/material';
 import React, { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { SpaceActions } from '../../../../redux/reducers/spaces';
+import { RootState } from '../../../../redux/store';
 import WeCode from '../../../../services/connections';
 import { CustomTextField } from '../../../CustomTextField';
 import { TypeAheadOption } from '../../../utils/TypeAhead';
@@ -22,15 +26,35 @@ export type SpaceInfo = {
   description: string;
 };
 
+const DEFAULT_SPACE_INFO = {
+  name: '',
+  members: [],
+  description: '',
+};
+
 const CreateSpace = () => {
-  const [spaceInfo, setSpaceInfo] = useState<SpaceInfo>({
-    name: '',
-    members: [],
-    description: '',
-  });
+  const [spaceInfo, setSpaceInfo] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
+  const dispatch = useDispatch();
+  const availableSpaces = useSelector(
+    ({ spaceState }: RootState) => spaceState.availableSpaces
+  );
+
+  const { isLoading, isSuccess, isError, data, error, mutate } = useMutation(
+    async (space: SpaceInfo) => {
+      const response = WeCode.createSpace(space);
+      return response;
+    }
+  );
+
   const handleNameChange: ChangeHandler = event => {
-    console.log('name change');
-    setSpaceInfo(prev => ({ ...prev, name: event.target.value }));
+    if (event.target.value.length > 20) {
+      setSpaceInfo(prev => ({
+        ...prev,
+        name: event.target.value.slice(0, 20),
+      }));
+    } else {
+      setSpaceInfo(prev => ({ ...prev, name: event.target.value }));
+    }
   };
 
   const handleDescriptionChange: ChangeHandler = event => {
@@ -45,26 +69,38 @@ const CreateSpace = () => {
     setSpaceInfo(prev => ({ ...prev, members: users }));
   };
 
-  const submitHandler = () => {
-    WeCode.createSpace(spaceInfo);
+  const submitHandler = async () => {
+    await mutate(spaceInfo);
+    const spaces = await WeCode.getSpaces();
+    console.log('pleas work spaces', spaces);
+    dispatch({
+      type: SpaceActions.SetAvailableSpaces,
+      payload: { availableSpaces: spaces },
+    });
+    setSpaceInfo(DEFAULT_SPACE_INFO);
   };
 
   return (
     <form style={{ width: '16em' }} className="p-2">
       <p className="h2 mx-2 mb-4">Create Space</p>
       <CustomTextField
+        value={spaceInfo.name}
         className="mb-2 w-100"
         label="Space Name"
         handleChange={handleNameChange}
       />
       <SpaceUsers className="my-2" changeHandler={handleUsersChange} />
       <SpaceDescription
+        value={spaceInfo.description}
         handleChange={handleDescriptionChange}
         className="my-2 w-100"
         isMultiline={true}
         rows={6}
       />
       <CreateSpaceButton
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        isError={isError}
         className="my-2"
         spaceInfo={spaceInfo}
         submitHandler={submitHandler}

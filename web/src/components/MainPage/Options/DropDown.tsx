@@ -58,6 +58,7 @@ export const DropDown = ({
           sx={{
             ...style,
             color: 'white',
+
             '.MuiOutlinedInput-notchedOutline': {
               borderColor: 'rgba(67, 187, 255, 0.25)',
             },
