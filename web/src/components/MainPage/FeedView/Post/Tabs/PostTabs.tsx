@@ -6,7 +6,7 @@ import TextFieldsIcon from '@mui/icons-material/TextFields';
 import { TextTab } from './TextTab/TextTab';
 import { CodeTab } from './CodeTab/CodeTab';
 import { PostContent } from '../../../../../services/connections';
-import { UpDownVoting } from '../../PostedContents/UpDownVoting';
+
 import { SelectChangeEvent } from '@mui/material';
 
 export enum TabType {

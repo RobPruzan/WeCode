@@ -6,6 +6,7 @@ export type CustomTextFieldProps = {
   isMultiline?: boolean;
   rows?: number;
   handleChange: ChangeEventHandler;
+  value: string;
 };
 export const CustomTextField = ({
   label,
@@ -13,9 +14,11 @@ export const CustomTextField = ({
   isMultiline,
   rows,
   handleChange,
+  value,
 }: CustomTextFieldProps) => {
   return (
     <TextField
+      value={value}
       onChange={handleChange}
       className={className}
       label={label}
