@@ -5,6 +5,7 @@ import WeCode, { PostContent } from '../../../../../services/connections';
 import { useDispatch, useSelector } from 'react-redux';
 import { PostLoadingActions } from '../../../../../redux/reducers/postLoading';
 import { RootState } from '../../../../../redux/store';
+import { PUBLIC_SPACE } from '../../../Options/JoinSpace/JoinSpace';
 export type SendPostProps = {
   postInfo?: string;
   currentPostInfo: PostContent;
@@ -23,7 +24,7 @@ export const SendPost = ({
     try {
       dispatch({ type: PostLoadingActions.SetIsLoading });
 
-      await WeCode.sendPost(currentPostInfo, space.spaceName);
+      await WeCode.sendPost(currentPostInfo, space.spaceId ?? PUBLIC_SPACE);
       setPostedContent(prev => [currentPostInfo, ...prev]);
       setCurrentPostInfo(prev => ({ ...prev, content: '', code: '' }));
     } catch (err) {

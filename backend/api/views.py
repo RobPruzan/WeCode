@@ -1,8 +1,8 @@
 from pprint import pprint
 from rest_framework import generics
 from django.shortcuts import render
-from .models import Post, User
-from .serializers import PostSerializer, UserSerializer
+from .models import Post, Space, User
+from .serializers import PostSerializer, SpaceSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from print_color import print
@@ -13,41 +13,17 @@ class UserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
-class ReactView(APIView):
-    def get(self, request):
-        # output = [{"name": "John", "age": 27}, {"name": "Mary", "age": 25}]
-        return Response("THIS IS A TEST")
-
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-
-
 class PostContentView(APIView):
     def post(self, request, *args, **kwargs):
-        # content = request.data.get("content")
-        # code = request.data.get("code")
-        room = kwargs.get("room")
-        print(request.data, color="red")
-
-        # post = Post(content=content, code=code, room=room)
-        # post.save()
-
-        post = Post.objects.create(**request.data, room=room)
-
-        print(post, color="red")
+        space_id = kwargs.get("space_id")
+        space_id = int(space_id.replace("}", ""))
+        post = Post.objects.create(**request.data, space_id=space_id)
         return Response("Post Created")
 
     def get(self, request, *args, **kwargs):
-
-        room = kwargs.get("room")
-
-        room = room.replace("}", "")
-
-        postData = Post.objects.filter(room=room)
-
+        space_id = kwargs.get("space_id", 1)
+        space_id = int(space_id.replace("}", ""))
+        postData = Post.objects.filter(space_id=space_id)
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)
 
@@ -56,12 +32,28 @@ class UserView(APIView):
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
-
-        # for user in serializer.data:
-        #     print(user["name"], color="blue")
         user_names = [
             {"label": user.get("name", "No Username Found"), "id": user.get("id", 0)}
             for user in serializer.data
         ]
 
         return Response(user_names)
+
+
+class SpacesView(APIView):
+    def get(self, request, *args, **kwargs):
+        spaces = Space.objects.all()
+        serializer = SpaceSerializer(spaces, many=True)
+        print(serializer.data, color="red")
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        description = request.data.get("description", "")
+        name = request.data.get("name", "")
+        members = request.data.get("members", "")
+        members = [User.objects.get(id=member) for member in members]
+        space = Space.objects.create(description=description, name=name)
+        space.members.set(members)
+        space.save()
+        print(space, color="blue")
+        return Response("Space Created")

@@ -1,19 +1,22 @@
 import { TextField } from '@mui/material';
-import React from 'react';
+import React, { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 export type CustomTextFieldProps = {
   label: string;
   className?: string;
   isMultiline?: boolean;
   rows?: number;
+  handleChange: ChangeEventHandler;
 };
 export const CustomTextField = ({
   label,
   className,
   isMultiline,
   rows,
+  handleChange,
 }: CustomTextFieldProps) => {
   return (
     <TextField
+      onChange={handleChange}
       className={className}
       label={label}
       multiline={isMultiline}

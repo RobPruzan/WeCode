@@ -18,9 +18,6 @@ const CodeLanguage = ({
   const handleChange = (event: SelectChangeEvent<string>) => {
     setCurrentPostInfo({ ...currentPostInfo, langauge: event.target.value });
   };
-  useEffect(() => {
-    console.log('currentPostInfo', currentPostInfo.langauge);
-  }, [currentPostInfo.langauge]);
 
   return (
     <DropDown

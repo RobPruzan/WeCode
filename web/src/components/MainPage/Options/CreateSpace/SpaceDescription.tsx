@@ -1,15 +1,18 @@
 import React from 'react';
 import { CustomTextField } from '../../../CustomTextField';
+import { ChangeHandler } from './CreateSpace';
 export type SpaceDescriptionProps = {
   className?: string;
   isMultiline?: boolean;
   rows?: number;
+  handleChange: ChangeHandler;
 };
 
 export const SpaceDescription = ({
   className,
   isMultiline,
   rows,
+  handleChange,
 }: SpaceDescriptionProps) => {
   return (
     <>
@@ -17,7 +20,8 @@ export const SpaceDescription = ({
         label="Space Description"
         className={className}
         isMultiline={isMultiline}
-        rows={6}
+        handleChange={handleChange}
+        rows={rows}
       />
     </>
   );

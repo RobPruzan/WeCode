@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 // TODO remove optional fields
 export type PostContent = {
   user?: string;
@@ -22,6 +23,14 @@ export type UserName = {
   name: string;
 };
 
+export type Space = {
+  id: number;
+  name: string;
+  description: string;
+  num_members: number;
+  members: User[];
+};
+
 export class WeCodeApi {
   baseUrl?: string;
 
@@ -30,30 +39,35 @@ export class WeCodeApi {
   }
   public async sendPost(
     postContent?: PostContent,
-    room = 'Main'
+    space_id = 1
   ): Promise<void> {
-    console.log(
-      'Post content in connection post request function',
-      postContent
-    );
     const response = await axios.post(
-      `${this.baseUrl}/post_content/${room}`,
+      `${this.baseUrl}/post_content/${space_id}`,
       postContent
     );
   }
 
-  public async getPosts(room = 'Main'): Promise<PostContent[]> {
-    console.log('base url', this.baseUrl);
-    console.log('Room Value in connection get request function', room);
-    const response = await axios.get(`${this.baseUrl}/post_content/${room}}`);
+  public async getPosts(space_id = 1): Promise<PostContent[]> {
+    const response = await axios.get(
+      `${this.baseUrl}/post_content/${space_id}}`
+    );
 
     return response.data;
   }
 
   public async getUsers(): Promise<UserName[]> {
-    console.log('base url', this.baseUrl);
     const response = await axios.get(`${this.baseUrl}/users`);
     return response.data;
+  }
+
+  public async getSpaces(): Promise<Space[]> {
+    const response = await axios.get(`${this.baseUrl}/spaces`);
+
+    return response.data;
+  }
+
+  public async createSpace(spaceInfo: SpaceInfo): Promise<void> {
+    await axios.post(`${this.baseUrl}/spaces`, spaceInfo);
   }
 }
 

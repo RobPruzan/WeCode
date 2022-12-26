@@ -3,18 +3,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 export type JoinSpaceButtonProps = {
-  selectedSpace: string;
+  spaceId: number;
   className?: string;
 };
 export const JoinSpaceButton = ({
-  selectedSpace,
+  spaceId,
   className,
 }: JoinSpaceButtonProps) => {
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch({
       type: SpaceActions.SetSpace,
-      payload: { spaceName: selectedSpace },
+      payload: { spaceId: spaceId },
     });
   };
   return (

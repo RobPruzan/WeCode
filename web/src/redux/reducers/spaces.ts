@@ -1,19 +1,22 @@
+import { User } from '../../services/connections';
+
 export type Space = {
   id: number;
   name: string;
   description: string;
+  members: User[];
   createdAt: string;
   updatedAt: string;
 };
 export interface SpaceState {
-  space: Space | null;
-  spaceName: string;
+  spaceId: number | null;
+  spaceName: string | null;
 }
 
 export const DEFAULT_SPACE_STATE: SpaceState = {
-  space: null,
+  spaceId: null,
+  spaceName: null,
   // TODO remove
-  spaceName: 'Main',
 };
 
 export enum SpaceActions {
@@ -23,7 +26,7 @@ export enum SpaceActions {
 
 interface SetSpaceAction {
   type: SpaceActions.SetSpace;
-  payload: { spaceName: Space };
+  payload: { spaceId: number; spaceName: string };
 }
 interface RemoveSpaceAction {
   type: SpaceActions.RemoveSpace;
@@ -38,13 +41,14 @@ export const SpaceReducer = (
       return {
         ...state,
 
+        spaceId: action.payload.spaceId,
         spaceName: action.payload.spaceName,
       };
     case SpaceActions.RemoveSpace:
       return {
         ...state,
 
-        space: null,
+        spaceId: null,
       };
     default:
       return state;

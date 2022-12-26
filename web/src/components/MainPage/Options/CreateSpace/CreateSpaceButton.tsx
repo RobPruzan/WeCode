@@ -1,10 +1,19 @@
 import React from 'react';
 import { Button } from '@mui/material';
-
-export const CreateSpaceButton = () => {
+import { SpaceInfo } from './CreateSpace';
+export type CreateSpaceButtonProps = {
+  className?: string;
+  spaceInfo: SpaceInfo;
+  submitHandler: VoidFunction;
+};
+export const CreateSpaceButton = ({
+  className,
+  spaceInfo,
+  submitHandler,
+}: CreateSpaceButtonProps) => {
   return (
     <>
-      <Button className="my-2" variant="outlined">
+      <Button onClick={submitHandler} className={className} variant="outlined">
         Add Space
       </Button>
     </>

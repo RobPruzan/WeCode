@@ -8,38 +8,56 @@ import { makeStyles } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { JoinSpaceButton } from './JoinSpaceButton';
-import { DropDown } from '../DropDown';
+import { DropDown, MenuData } from '../DropDown';
+import { useQuery } from 'react-query';
+import WeCode, { Space } from '../../../../services/connections';
 
-export const JOIN_SPACE_DEFAULT_VALUE = 'Main';
+export const PUBLIC_SPACE = 1;
 
 const JoinSpace = () => {
-  const [selectedSpace, setSelectedSpace] = useState<string>(
-    JOIN_SPACE_DEFAULT_VALUE
-  );
-  // const [open, setOpen] = React.useState(false);
-  // const dispatch = useDispatch();
-
-  // const space = useSelector(({ spaceState }: RootState) => spaceState.space);
+  const [selectedSpaceId, setSelectedSpaceId] = useState<number>(PUBLIC_SPACE);
+  const [spaces, setSpaces] = useState<Space[]>([]);
+  const { data, error, isLoading } = useQuery('spaces', async () => {
+    const res = await WeCode.getSpaces();
+    setSpaces(res);
+  });
+  useEffect(() => {
+    async () => {
+      const res = await WeCode.getSpaces();
+    };
+  }, []);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {`${error}`}</div>;
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSelectedSpace(event.target.value);
+    console.log('dropdown event', event);
+    setSelectedSpaceId(Number(event.target.value));
   };
-  const tempOptions = ['Main', 'CSE 115', 'CSE 116', 'CSE 220', 'CSE 250'];
 
+  const tempOptions = ['Main', 'CSE 115', 'CSE 116', 'CSE 220', 'CSE 250'];
+  const menuData: MenuData[] = spaces.map(space => ({
+    value: space.id,
+    option: space.name,
+  }));
   return (
     <div>
       <DropDown
-        selection={selectedSpace}
-        options={tempOptions}
+        selection={selectedSpaceId}
+        menuData={menuData}
         handleChange={handleChange}
+        defaultValue={'Public'}
         labelName="Select Space"
         style={{
           minWidth: '15em',
         }}
       />
-      <JoinSpaceButton className="m-2" selectedSpace={selectedSpace} />
+      <JoinSpaceButton className="m-2" spaceId={selectedSpaceId} />
     </div>
   );
 };

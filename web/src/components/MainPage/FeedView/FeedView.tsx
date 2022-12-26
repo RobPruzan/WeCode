@@ -5,6 +5,7 @@ import WeCode, { PostContent } from '../../../services/connections';
 import { PostTabs } from './Post/Tabs/PostTabs';
 import { PostedContents } from './PostedContents/PostedContents';
 import { useQuery } from 'react-query';
+import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
 
 const FeedView = () => {
   const [postedContent, setPostedContent] = useState<PostContent[]>([]);
@@ -15,13 +16,14 @@ const FeedView = () => {
   const space = useSelector((spaceState: RootState) => spaceState.spaceState);
 
   const hydrateFeed = async () => {
-    const res = await WeCode.getPosts(space.spaceName);
+    const res = await WeCode.getPosts(space.spaceId ?? PUBLIC_SPACE);
+
     setPostedContent(res.reverse());
   };
 
   useEffect(() => {
     hydrateFeed();
-  }, [space.spaceName]);
+  }, [space.spaceId]);
 
   return (
     <>
