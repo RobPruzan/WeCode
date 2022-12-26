@@ -1,17 +1,11 @@
 import { Card } from '@mui/material';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import {
-  PostContent,
-  PostContent as PostInfo,
-} from '../../../../services/connections';
-import { CodeBlock, dracula } from 'react-code-blocks';
+import { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import { PostContent as PostInfo } from '../../../../services/connections';
 
-import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CommentIcon from '@mui/icons-material/Comment';
 import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
 import { UpDownVoting } from './UpDownVoting';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import CommentIcon from '@mui/icons-material/Comment';
 export type PostedContentProps = {
   className?: string;
   singlePostedContent: PostInfo;
@@ -38,7 +32,6 @@ export const PostedContent = ({
         className={className}
       >
         <div style={{ float: 'right', marginLeft: '1em' }}>
-          {' '}
           <UpDownVoting upVotes={upVotes} setUpVotes={setUpVotes} />
         </div>
         {singlePostedContent.content}

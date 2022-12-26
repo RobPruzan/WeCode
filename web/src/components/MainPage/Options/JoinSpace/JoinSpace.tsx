@@ -1,18 +1,13 @@
-import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/store';
-import { SpaceActions } from '../../../../redux/reducers/spaces';
-import { useEffect, useState } from 'react';
-import { JoinSpaceButton } from './JoinSpaceButton';
-import { DropDown, MenuData } from '../DropDown';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
-import WeCode, { Space } from '../../../../services/connections';
+import { useDispatch, useSelector } from 'react-redux';
+import { SpaceActions } from '../../../../redux/reducers/spaces';
+import { RootState } from '../../../../redux/store';
+import WeCode from '../../../../services/connections';
+import { PrimaryCard } from '../../../PrimaryCard';
+import { DropDown, MenuData } from '../DropDown';
+import { JoinSpaceButton } from './JoinSpaceButton';
 
 export const PUBLIC_SPACE = 1;
 
@@ -33,9 +28,15 @@ const JoinSpace = () => {
       });
     }
   );
-
   if (isLoading) {
-    return <div>Loading...</div>;
+    <PrimaryCard
+      style={{
+        minWidth: '15em',
+        maxWidth: '50%',
+      }}
+    >
+      <div>Loading...</div>
+    </PrimaryCard>;
   }
   if (error) {
     return <div>Error: {`${error}`}</div>;

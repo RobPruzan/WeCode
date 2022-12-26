@@ -1,5 +1,4 @@
 import { Button } from '@mui/material';
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 export type JoinSpaceButtonProps = {

@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react';
 import TextField from '@mui/material/TextField';
+import { Dispatch, SetStateAction } from 'react';
 import { PostContent } from '../../../../../../services/connections';
 export type InputTextProps = {
   setCurrentPostInfo: Dispatch<SetStateAction<PostContent>>;

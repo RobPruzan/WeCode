@@ -1,10 +1,10 @@
-import { Button } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
 import SendIcon from '@mui/icons-material/Send';
-import WeCode, { PostContent } from '../../../../../services/connections';
+import { Button } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PostLoadingActions } from '../../../../../redux/reducers/postLoading';
 import { RootState } from '../../../../../redux/store';
+import WeCode, { PostContent } from '../../../../../services/connections';
 import { PUBLIC_SPACE } from '../../../Options/JoinSpace/JoinSpace';
 export type SendPostProps = {
   postInfo?: string;

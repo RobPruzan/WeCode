@@ -2,6 +2,7 @@ import axios from 'axios';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 // TODO remove optional fields
 export type PostContent = {
+  id?: number;
   user?: string;
   content: string;
   code?: string;

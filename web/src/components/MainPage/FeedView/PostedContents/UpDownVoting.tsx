@@ -1,7 +1,6 @@
-import { Button } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { Dispatch, SetStateAction, useState } from 'react';
 export type UpDownVotingProps = {
   setUpVotes: Dispatch<SetStateAction<number>>;
   upVotes: number;
@@ -9,10 +8,6 @@ export type UpDownVotingProps = {
 export const UpDownVoting = ({ upVotes, setUpVotes }: UpDownVotingProps) => {
   return (
     <>
-      {/* UPVOTES DOWNVOTES HAS TO BE ON THE POSTEDCONTENT LEVEL */}
-      {/* <ThumbUpIcon />
-      <ThumbDownIcon/> */}
-      {/* thumbs up and down but they turn to click pointers on hover */}
       <p className="h4">{upVotes}</p>
       <div
         style={{ cursor: 'pointer' }}

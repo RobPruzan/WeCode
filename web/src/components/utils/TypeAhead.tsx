@@ -4,7 +4,6 @@ import {
   TextField,
   UseAutocompleteProps,
 } from '@mui/material';
-import React from 'react';
 import { TypAheadChangeHandler } from '../MainPage/Options/CreateSpace/CreateSpace';
 export type TypeAheadOption = {
   label: string;
@@ -18,7 +17,7 @@ export type TypeAheadProps = UseAutocompleteProps<
 > & {
   label: string;
   changeHandler: TypAheadChangeHandler;
-  members: string[];
+  members: TypeAheadOption[];
 };
 export const TypeAhead = ({
   label,
@@ -31,6 +30,7 @@ export const TypeAhead = ({
       <Autocomplete
         onChange={changeHandler}
         multiple
+        value={members}
         id="tags-outlined"
         options={props.options as TypeAheadOption[]}
         getOptionLabel={option => option.label}
