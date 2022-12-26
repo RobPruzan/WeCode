@@ -44,7 +44,7 @@ class SpacesView(APIView):
     def get(self, request, *args, **kwargs):
         spaces = Space.objects.all()
         serializer = SpaceSerializer(spaces, many=True)
-        print(serializer.data, color="red")
+        print(len(Space.objects.all()), color="green")
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
@@ -55,5 +55,6 @@ class SpacesView(APIView):
         space = Space.objects.create(description=description, name=name)
         space.members.set(members)
         space.save()
-        print(space, color="blue")
+        print(len(Space.objects.all()), color="blue")
+
         return Response("Space Created")

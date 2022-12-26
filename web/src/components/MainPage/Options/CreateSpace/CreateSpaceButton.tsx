@@ -40,8 +40,6 @@ export const CreateSpaceButton = ({
       >
         Add Space
       </Button>
-      {/* {isSuccess && <div>Space Created!</div>} */}
-      {/* show for 3 seconds */}
       {isSuccess && alert && <p className="m-2">Space Created!</p>}
     </>
   );

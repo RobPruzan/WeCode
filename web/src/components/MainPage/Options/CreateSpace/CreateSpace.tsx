@@ -41,7 +41,9 @@ const CreateSpace = () => {
 
   const { isLoading, isSuccess, isError, data, error, mutate } = useMutation(
     async (space: SpaceInfo) => {
-      const response = WeCode.createSpace(space);
+      console.log('calling mutate');
+      const response = await WeCode.createSpace(space);
+      console.log('what is the response after mutating', response);
       return response;
     }
   );
@@ -71,11 +73,10 @@ const CreateSpace = () => {
 
   const submitHandler = async () => {
     await mutate(spaceInfo);
-    const spaces = await WeCode.getSpaces();
-    console.log('pleas work spaces', spaces);
+
     dispatch({
       type: SpaceActions.SetAvailableSpaces,
-      payload: { availableSpaces: spaces },
+      payload: { availableSpaces: [...(availableSpaces ?? []), spaceInfo] },
     });
     setSpaceInfo(DEFAULT_SPACE_INFO);
   };
@@ -89,7 +90,11 @@ const CreateSpace = () => {
         label="Space Name"
         handleChange={handleNameChange}
       />
-      <SpaceUsers className="my-2" changeHandler={handleUsersChange} />
+      <SpaceUsers
+        className="my-2"
+        changeHandler={handleUsersChange}
+        members={spaceInfo.members}
+      />
       <SpaceDescription
         value={spaceInfo.description}
         handleChange={handleDescriptionChange}
