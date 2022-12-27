@@ -6,7 +6,9 @@ import { PostContent as PostInfo } from '../../../../services/connections';
 import CommentIcon from '@mui/icons-material/Comment';
 import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
 import { UpDownVoting } from './UpDownVoting';
-
+import ExpandIcon from '@mui/icons-material/Expand';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import { Comments } from './PostedActions/Comments';
 const cardStyle = {
   color: 'white',
   background: '#141414',
@@ -30,12 +32,6 @@ export const PostedContent = ({
   const [usedVote, setUsedVote] = useState(false);
   const [upOrDownVote, setUpOrDownVote] = useState<'up' | 'down' | null>(null);
   const handleUpVote = () => {
-    console.log('is used vote', usedVote);
-    // if (!usedVote || upOrDownVote === 'down') {
-    //   setUpVotes(prev => prev + 1);
-    //   setUsedVote(true);
-    //   setUpOrDownVote('up');
-    // }
     if (usedVote) {
       if (upOrDownVote === 'up') {
         setUpVotes(prev => prev - 1);
@@ -74,7 +70,7 @@ export const PostedContent = ({
   return (
     <div key={`PostedContent: ${keyValue}`}>
       <Card sx={cardStyle} className={className}>
-        <div style={{ float: 'right', marginLeft: '1em' }}>
+        <div style={{ float: 'right', marginLeft: '1em', marginBottom: '1em' }}>
           <UpDownVoting
             upVotes={upVotes}
             setUpVotes={setUpVotes}
@@ -84,25 +80,26 @@ export const PostedContent = ({
             upOrDownVote={upOrDownVote}
           />
         </div>
-        {singlePostedContent.content}
-        <hr />
+        <div style={{ color: 'white' }} className="mx-3">
+          {singlePostedContent.content}
+          {singlePostedContent.code && singlePostedContent.content && <hr />}
+        </div>
+
         {singlePostedContent.code && (
-          <>
-            <p>{singlePostedContent.langauge}</p>
+          <div className="m-3">
             <SyntaxHighlighter
               language={singlePostedContent.langauge}
               style={atomDark}
             >
               {singlePostedContent.code}
             </SyntaxHighlighter>
-          </>
+            <p>{singlePostedContent.langauge?.toUpperCase()}</p>
+          </div>
         )}
-        <div
-          style={{ cursor: 'pointer' }}
-          onClick={() => alert('You tried to comment')}
-        >
-          <CommentIcon />
-        </div>
+
+        <hr />
+
+        <Comments />
       </Card>
     </div>
   );

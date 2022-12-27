@@ -19,7 +19,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 15vh;
+  height: 12vh;
   border: 1px solid #43bbff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   background-color: #141414;
@@ -28,7 +28,7 @@ nav {
 /* Two columns */
 .columns {
   display: flex;
-  height: 85vh;
+  height: 88vh;
   background-color: #141414;
 }
 
@@ -38,7 +38,7 @@ nav {
   /* min-width: fit-content; */
 }
 
-.columns > div:first-child {
+/* .columns > div:first-child {
   flex: 1;
   overflow-y: scroll;
   min-width: fit-content;
@@ -48,4 +48,20 @@ nav {
   flex: 3;
   overflow: scroll;
   flex-shrink: calc(100% - 300px);
+} */
+/* three columns instead of 2, 2nd column is 2fr, other 2 are 1fr */
+.columns > div:first-child {
+  flex: 1;
+  overflow-y: scroll;
+  min-width: fit-content;
+}
+.columns > div:nth-child(2) {
+  flex: 2;
+  overflow: scroll;
+  flex-shrink: calc(100% - 300px);
+}
+.columns > div:last-child {
+  flex: 1;
+  overflow-y: scroll;
+  min-width: fit-content;
 }

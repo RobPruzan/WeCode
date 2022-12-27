@@ -30,6 +30,7 @@ const JoinSpace = () => {
   );
   if (isLoading) {
     <PrimaryCard
+      className="p-3"
       style={{
         minWidth: '15em',
         maxWidth: '50%',

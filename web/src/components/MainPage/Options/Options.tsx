@@ -1,7 +1,7 @@
 import { PrimaryCard } from '../../PrimaryCard';
 import CreateSpace from './CreateSpace/CreateSpace';
 import { CurrentSpace } from './CurrentSpace';
-
+const primarCardStyle = { maxWidth: '18em' };
 import JoinSpace from './JoinSpace/JoinSpace';
 
 export const Options = () => {
@@ -9,11 +9,11 @@ export const Options = () => {
     <div className="d-flex flex-column align-items-center pt-3">
       {/* div with #43bbff border rounded */}
 
-      <PrimaryCard>
+      <PrimaryCard style={primarCardStyle} className="p-3">
         <CurrentSpace className="h3  mb-3 d-flex justify-content-center" />
         <JoinSpace />
       </PrimaryCard>
-      <PrimaryCard className="mw-25">
+      <PrimaryCard style={primarCardStyle} className="p-3">
         <CreateSpace />
       </PrimaryCard>
     </div>

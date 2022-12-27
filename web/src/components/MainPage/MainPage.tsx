@@ -8,7 +8,7 @@ const MainPage = () => {
     <div className="App">
       <div>
         <nav className="justify-content-between d-flex p-2">
-          <div style={{ color: 'white' }}>
+          <div style={{ color: 'white', fontSize: '1.5rem' }}>
             We Code
             <CodeIcon fontSize="large" className="m-1" />
           </div>
@@ -17,9 +17,15 @@ const MainPage = () => {
           </div>
         </nav>
         <div className="columns">
-          <Options />
+          <div>
+            <Options />
+          </div>
+
           <div>
             <FeedView />
+          </div>
+          <div className="d-flex justify-content-center ">
+            <p className="h3">Filters</p>
           </div>
         </div>
       </div>
