@@ -13,6 +13,15 @@ export type PostContent = {
   hasCode?: boolean;
 };
 
+export type Comment = {
+  id: number;
+  user: string;
+  content: string;
+  reply_to?: PostContent;
+  upVotes?: number;
+  comments?: Comment[];
+};
+
 export type User = {
   id: number;
   name: string;
@@ -69,6 +78,11 @@ export class WeCodeApi {
 
   public async createSpace(spaceInfo: SpaceInfo): Promise<void> {
     await axios.post(`${this.baseUrl}/spaces`, spaceInfo);
+  }
+
+  public async getComments(post_id: number): Promise<Comment[]> {
+    const response = await axios.get(`${this.baseUrl}/comments/${post_id}`);
+    return response.data;
   }
 }
 

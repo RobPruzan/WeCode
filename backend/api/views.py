@@ -1,8 +1,14 @@
 from pprint import pprint
+from tokenize import Comment
 from rest_framework import generics
 from django.shortcuts import render
 from .models import Post, Space, User
-from .serializers import PostSerializer, SpaceSerializer, UserSerializer
+from .serializers import (
+    CommentSerializer,
+    PostSerializer,
+    SpaceSerializer,
+    UserSerializer,
+)
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from print_color import print
@@ -26,6 +32,9 @@ class PostContentView(APIView):
         postData = Post.objects.filter(space_id=space_id)
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)
+
+    def put(self, request, *args, **kwargs):
+        pass
 
 
 class UserView(APIView):
@@ -58,3 +67,28 @@ class SpacesView(APIView):
         print(len(Space.objects.all()), color="blue")
 
         return Response("Space Created")
+
+
+class CommentsView(APIView):
+    def get(self, request, *args, **kwargs):
+        post_id = kwargs.get("post_id")
+        post_id = int(post_id.replace("}", ""))
+        post = Post.objects.get(id=post_id)
+        comments = post.comments.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        post_id = kwargs.get("post_id")
+        post_id = int(post_id.replace("}", "")) if post_id else None
+        reply_to = request.data.get("reply_to", None)
+        reply_to = int(reply_to.replace("}", "")) if reply_to else None
+        if post_id:
+            post = Post.objects.get(id=post_id)
+            Comment.objects.create(**request.data, post=post, reply_to_id=reply_to)
+            post.save()
+            return Response("Comment Created")
+
+        else:
+            Comment.objects.create(**request.data, reply_to_id=reply_to)
+        return Response("Comment Created")

@@ -38,3 +38,15 @@ class Space(models.Model):
     # to get all the spaces for a user we can query the User.spaces_set.all() which will return all the spaces the user is a member of
     # We don't have to specifically query the space_user table, the ORM will do that for us
     members = models.ManyToManyField(User, blank=True)
+
+
+class Comment(models.Model):
+    content = models.CharField(max_length=2000, default="", blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True)
+    reply_to = models.ForeignKey(
+        "self", on_delete=models.CASCADE, blank=True, null=True
+    )
+    comments = models.ManyToManyField("self", blank=True)
+    up_votes = models.IntegerField(default=0, blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)

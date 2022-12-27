@@ -80,13 +80,6 @@ export const PostTabs = ({
             icon={<CodeIcon />}
             aria-label="code"
           />
-          {/* <TabPanel value={'Text'}>
-            <h1>Text</h1>
-          </TabPanel> */}
-          {/* <TabPanel value="lol" /> */}
-          {/* <TabPanel value={'Code'}>
-            <h1>Code</h1>
-          </TabPanel> */}
         </Tabs>
         {activeTab === TabType.TEXT && (
           <TextTab

@@ -21,11 +21,15 @@ export const TextTab = ({
   setCurrentPostInfo,
   flairChangeHandler,
 }: TextTabProps) => {
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentPostInfo(prev => ({ ...prev, content: event.target.value }));
+  };
   return (
     <>
       <InputText
-        setCurrentPostInfo={setCurrentPostInfo}
-        currentPostInfo={currentPostInfo}
+        changeHandler={changeHandler}
+        value={currentPostInfo.content}
+        rows={6}
       />
       <DropDown
         selection={currentPostInfo.flair}

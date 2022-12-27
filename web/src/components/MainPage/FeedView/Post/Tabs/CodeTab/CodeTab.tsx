@@ -49,17 +49,17 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
       />
 
       <div className="d-flex flex-wrap">
-        <CodeLanguage
-          languages={SUPPORTED_LANGUAGES}
-          currentPostInfo={props.currentPostInfo}
-          setCurrentPostInfo={props.setCurrentPostInfo}
-        />
         <DropDown
           selection={props.currentPostInfo.flair}
           options={FLAIRS}
           handleChange={props.flairChangeHandler}
           labelName="Flair"
           defaultValue="Discussion"
+        />
+        <CodeLanguage
+          languages={SUPPORTED_LANGUAGES}
+          currentPostInfo={props.currentPostInfo}
+          setCurrentPostInfo={props.setCurrentPostInfo}
         />
       </div>
 
