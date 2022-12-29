@@ -56,7 +56,6 @@ export const SpaceReducer = (
       };
 
     case SpaceActions.SetAvailableSpaces:
-      console.log('SetAvailableSpacesAction', action.payload.availableSpaces);
       return {
         ...state,
         availableSpaces: action.payload.availableSpaces,

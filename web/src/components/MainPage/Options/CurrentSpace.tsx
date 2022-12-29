@@ -10,7 +10,6 @@ export const CurrentSpace = ({ className }: CurrentSpaceProps) => {
   const currentSpaceName = spaceState.availableSpaces?.find(
     space => space.id === spaceState.currentSpaceId
   )?.name;
-  console.log('Current space name->', currentSpaceName);
 
   return (
     <>
