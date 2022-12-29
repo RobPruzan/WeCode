@@ -12,14 +12,15 @@ import { JoinSpaceButton } from './JoinSpaceButton';
 export const PUBLIC_SPACE = 1;
 
 const JoinSpace = () => {
-  const [selectedSpaceId, setSelectedSpaceId] = useState<number>(PUBLIC_SPACE);
-  const dispatch = useDispatch();
-  const availableSpaces = useSelector(
-    ({ spaceState }: RootState) => spaceState.availableSpaces
+  const spaceState = useSelector(({ spaceState }: RootState) => spaceState);
+  const [selectedSpaceId, setSelectedSpaceId] = useState<number>(
+    spaceState?.currentSpaceId ?? PUBLIC_SPACE
   );
+  const dispatch = useDispatch();
+
   // const [spaces, setSpaces] = useState<Space[]>([]);
   const { data, error, isLoading } = useQuery(
-    ['spaces', availableSpaces],
+    ['spaces', spaceState.availableSpaces],
     async () => {
       const res = await WeCode.getSpaces();
       dispatch({
@@ -44,13 +45,11 @@ const JoinSpace = () => {
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-    console.log('dropdown event', event);
-
     setSelectedSpaceId(Number(event.target.value));
   };
 
-  const menuData: MenuData[] = availableSpaces
-    ? availableSpaces.map(space => ({
+  const menuData: MenuData[] = spaceState.availableSpaces
+    ? spaceState.availableSpaces.map(space => ({
         value: space.id,
         option: space.name,
       }))

@@ -39,9 +39,7 @@ const CreateSpace = () => {
 
   const { isLoading, isSuccess, isError, data, error, mutate } = useMutation(
     async (space: SpaceInfo) => {
-      console.log('calling mutate');
       const response = await WeCode.createSpace(space);
-      console.log('what is the response after mutating', response);
       return response;
     }
   );

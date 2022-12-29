@@ -1,8 +1,5 @@
-/* Default font */
-/* website background is #141414 */
-/* import monserrat and make it the font for the website */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
-/* make the font for all elements not just body and make it override any other font*/
+
 * {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
@@ -11,54 +8,50 @@
 }
 
 body {
-  background-color: #141414;
   overflow: hidden;
+  background-color: #141414;
+  /* shadow */
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 12vh;
-  border: 1px solid #43bbff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  height: 9vh;
+  border: white 1px solid;
+}
+.spaces {
   background-color: #141414;
+  height: 100vh;
+  overflow-y: scroll;
+}
+.spaces-nav {
+  height: 9vh;
+}
+.spaces-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5%;
 }
 
-/* Two columns */
 .columns {
   display: flex;
-  height: 88vh;
+  height: 100vh;
   background-color: #141414;
 }
 
 .columns > div {
   flex: 1;
-  border: 1px solid #43bbff;
-  /* min-width: fit-content; */
+  /* border: 1px solid #43bbff; */
 }
-
-/* .columns > div:first-child {
-  flex: 1;
-  overflow-y: scroll;
-  min-width: fit-content;
-}
-
-.columns > div:last-child {
-  flex: 3;
-  overflow: scroll;
-  flex-shrink: calc(100% - 300px);
-} */
-/* three columns instead of 2, 2nd column is 2fr, other 2 are 1fr */
 .columns > div:first-child {
   flex: 1;
   overflow-y: scroll;
   min-width: fit-content;
+  border-right: 1px solid #43bbff;
 }
 .columns > div:nth-child(2) {
   flex: 2;
   overflow: scroll;
   flex-shrink: calc(100% - 300px);
+  border-right: 1px solid #43bbff;
 }
 .columns > div:last-child {
   flex: 1;

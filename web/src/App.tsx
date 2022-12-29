@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import './App.css';
 import ReduxCount from './components/ReduxCount';
 import MainPage from './components/MainPage/MainPage';
+import { SpacesView } from './components/SpacesView/SpacesView';
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainPage />} />
+            <Route path="/spaces" element={<SpacesView />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

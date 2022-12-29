@@ -22,7 +22,7 @@ export const Comments = ({ className }: CommentsProps) => {
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDummyContent(prev => ({ ...prev, content: event.target.value }));
   };
-  console.log('is expanded', isExpanded);
+
   return (
     <Collapsible
       className={className}
