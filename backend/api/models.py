@@ -3,7 +3,11 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     name = models.CharField(max_length=200, default="")
-    is_admin = models.BooleanField(null=False, default=False)
+    friends = models.ManyToManyField("self", blank=True)
+    is_admin = models.BooleanField(default=False, blank=True)
+    following = models.ManyToManyField(
+        "self", symmetrical=False, related_name="followers", blank=True
+    )
 
 
 class Post(models.Model):
@@ -20,6 +24,10 @@ class Post(models.Model):
 
     def str(self):
         return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, dislikes: {self.dislikes}, comments: {self.comments}, langauge: {self.langauge}, room: {self.room}"
+
+
+class Test(models.Model):
+    test = models.CharField(max_length=200, default="", blank=True, null=True)
 
 
 # Think of the foreign key relationship as each post points to one space

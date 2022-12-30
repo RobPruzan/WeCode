@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SpaceActions } from '../../redux/reducers/spaces';
 import WeCode, { Space } from '../../services/connections';
+import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { SpaceCard } from './SpaceCard/SpaceCard';
 import { SpaceSearch } from './SpaceSearch';
@@ -27,7 +28,7 @@ export const SpacesView = () => {
   const dispatch = useDispatch();
   return (
     <div className="spaces">
-      <MainNavbar height="9vh" />
+      <MainNavbar height="9vh" location={DockLocation.HOME} />
       <div className="d-flex justify-content-center mt-5">
         <SpaceSearch />
       </div>
