@@ -3,10 +3,32 @@ from rest_framework import serializers
 from .models import Post, Space, User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSeralizerMinimal(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "name", "is_admin")
+        fields = ("id", "name")
+
+
+class UserSerializer(serializers.ModelSerializer):
+    friends = serializers.SerializerMethodField()
+    followers = serializers.SerializerMethodField()
+    following = serializers.SerializerMethodField()
+
+    def get_friends(self, obj):
+        friends = obj.friends.all()
+        return UserSeralizerMinimal(friends, many=True).data
+
+    def get_followers(self, obj):
+        followers = obj.followers.all()
+        return UserSeralizerMinimal(followers, many=True).data
+
+    def get_following(self, obj):
+        following = obj.following.all()
+        return UserSeralizerMinimal(following, many=True).data
+
+    class Meta:
+        model = User
+        fields = ("id", "name", "is_admin", "friends", "followers", "following")
 
 
 class PostSerializer(serializers.ModelSerializer):

@@ -12,7 +12,9 @@ export const SpaceUsers = ({
   changeHandler,
   members,
 }: SpaceUsersProps) => {
-  const { data, error, isLoading } = useQuery('users', () => WeCode.getUsers());
+  const { data, error, isLoading } = useQuery('users', () =>
+    WeCode.getUsernames()
+  );
 
   if (error) {
     return <div>Error: {`${error}`}</div>;

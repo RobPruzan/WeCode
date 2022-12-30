@@ -25,12 +25,15 @@ export type Comment = {
 export type User = {
   id: number;
   name: string;
+  followers: User[];
+  following: User[];
+  friends: User[];
   photo: Blob;
 };
 
 export type UserName = {
   id: number;
-  name: string;
+  label: string;
 };
 
 export type Space = {
@@ -65,7 +68,17 @@ export class WeCodeApi {
     return response.data;
   }
 
-  public async getUsers(): Promise<UserName[]> {
+  public async createUser(name: string): Promise<User> {
+    const response = await axios.post(`${this.baseUrl}/users`, { name });
+    return response.data;
+  }
+
+  public async getUsernames(): Promise<UserName[]> {
+    const response = await axios.get(`${this.baseUrl}/user_names`);
+    return response.data;
+  }
+
+  public async getUsers(): Promise<User[]> {
     const response = await axios.get(`${this.baseUrl}/users`);
     return response.data;
   }
@@ -80,8 +93,36 @@ export class WeCodeApi {
     await axios.post(`${this.baseUrl}/spaces`, spaceInfo);
   }
 
-  public async getComments(post_id: number): Promise<Comment[]> {
-    const response = await axios.get(`${this.baseUrl}/comments/${post_id}`);
+  public async getComments(postId: number): Promise<Comment[]> {
+    const response = await axios.get(`${this.baseUrl}/comments/${postId}`);
+    return response.data;
+  }
+
+  public async followerUser(
+    user_id: number,
+    user_to_follow_id: number
+  ): Promise<void> {
+    await axios.post(`${this.baseUrl}/follow`, {
+      ...{ user_id, user_to_follow_id },
+    });
+  }
+
+  public async unfollowerUser(
+    user_id: number,
+    user_to_unfollow_id: number
+  ): Promise<void> {
+    await axios.delete(
+      `${this.baseUrl}/unfollow/${user_id}/${user_to_unfollow_id}`
+    );
+  }
+
+  public async getFollowers(userId: number): Promise<User[]> {
+    const response = await axios.get(`${this.baseUrl}/follow/${userId}`);
+    return response.data;
+  }
+
+  public async getFollowing(userId: number): Promise<User[]> {
+    const response = await axios.get(`${this.baseUrl}/following/${userId}`);
     return response.data;
   }
 }
