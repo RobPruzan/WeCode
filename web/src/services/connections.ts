@@ -83,14 +83,16 @@ export class WeCodeApi {
     return response.data;
   }
 
-  public async getSpaces(): Promise<Space[]> {
-    const response = await axios.get(`${this.baseUrl}/spaces`);
-
+  public async getSpaces(userId: number): Promise<Space[]> {
+    const response = await axios.get(`${this.baseUrl}/spaces/${userId}`);
     return response.data;
   }
 
-  public async createSpace(spaceInfo: SpaceInfo): Promise<void> {
-    await axios.post(`${this.baseUrl}/spaces`, spaceInfo);
+  public async createSpace(
+    spaceInfo: SpaceInfo,
+    user_id: number
+  ): Promise<void> {
+    await axios.post(`${this.baseUrl}/spaces/${user_id}`, spaceInfo);
   }
 
   public async getComments(postId: number): Promise<Comment[]> {

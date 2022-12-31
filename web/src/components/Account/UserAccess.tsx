@@ -15,7 +15,6 @@ const UserAccess = () => {
     ({ userState }: RootState) => userState.user
   );
   const handleSignin = (userData: User) => {
-    console.log('new user:', userData);
     dispatch({ type: UserActions.SignUp, payload: { user: userData } });
   };
   const handleLogout = () => {
@@ -33,20 +32,36 @@ const UserAccess = () => {
   );
   return (
     <div>
-      <p className="h3">Login</p>
-      <CustomTextField
-        label="User Name"
-        handleChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setUserName(event.target.value)
-        }
-        value={userName}
-      />
-      <Button variant="contained" onClick={() => mutate(userName)}>
-        Login
-      </Button>
-      <Button onClick={() => handleLogout()} variant="contained">
-        Logout
-      </Button>
+      {user ? (
+        <>
+          Logged in as: {user.name}
+          <Button
+            className="mx-2"
+            onClick={() => handleLogout()}
+            variant="contained"
+          >
+            Logout
+          </Button>
+        </>
+      ) : (
+        <div className="justify-content-center">
+          <p className="h3 mt-2">Login</p>
+          <CustomTextField
+            label="User Name"
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setUserName(event.target.value)
+            }
+            value={userName}
+          />
+          <Button
+            className="m-2"
+            variant="contained"
+            onClick={() => mutate(userName)}
+          >
+            Login
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

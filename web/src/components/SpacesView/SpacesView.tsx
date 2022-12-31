@@ -1,17 +1,19 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SpaceActions } from '../../redux/reducers/spaces';
+import { RootState } from '../../redux/store';
 import WeCode, { Space } from '../../services/connections';
 import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { SpaceCard } from './SpaceCard/SpaceCard';
 import { SpaceSearch } from './SpaceSearch';
 const SPACE_CARD_STYLE = {
-  width: '35vh',
-  height: '25vh',
+  minWidth: '35vh',
+  minHeight: '25vh',
+
   // minWidth: '50vh',
   // minHeight: '35vh',
   // wrap
@@ -21,8 +23,9 @@ const SPACE_CARD_STYLE = {
 };
 
 export const SpacesView = () => {
+  const user = useSelector(({ userState }: RootState) => userState.user);
   const { data, error, isLoading } = useQuery('spaces', async () => {
-    return WeCode.getSpaces();
+    return user && WeCode.getSpaces(user.id);
   });
 
   const dispatch = useDispatch();

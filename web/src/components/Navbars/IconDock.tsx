@@ -18,12 +18,17 @@ export type IconDockProps = {
 const IconDock = ({ location }: IconDockProps) => {
   const user = useSelector(({ userState }: RootState) => userState.user);
   return (
-    <div className="Nav__right">
+    <div
+      className="Nav__right"
+      style={{
+        display: 'inline-block',
+      }}
+    >
       <Link className="Nav__link " to="/">
         <SendIcon
           sx={{ fill: location === DockLocation.SEND ? 'gray' : undefined }}
           fontSize="large"
-          className="ml-5"
+          style={{ marginLeft: '1.5em' }}
         />
       </Link>
       <Link className="Nav__link" to="/spaces">
@@ -40,13 +45,18 @@ const IconDock = ({ location }: IconDockProps) => {
       />
       <Link className="Nav__link " to="/account">
         <AccountCircleIcon
-          sx={{ fill: location === DockLocation.ACCOUNT ? 'gray' : undefined }}
+          sx={{
+            fill: user
+              ? 'green'
+              : location === DockLocation.ACCOUNT
+              ? 'gray'
+              : undefined,
+          }}
           fontSize="large"
           className="mx-5"
         />
         {/* <DiamondSharpIcon fontSize="large" className="mx-5" /> */}
       </Link>
-      Hello! {user?.name}
     </div>
   );
 };

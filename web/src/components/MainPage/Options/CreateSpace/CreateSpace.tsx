@@ -32,6 +32,7 @@ const DEFAULT_SPACE_INFO = {
 
 const CreateSpace = () => {
   const [spaceInfo, setSpaceInfo] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
+  const user = useSelector(({ userState }: RootState) => userState.user);
   const dispatch = useDispatch();
   const availableSpaces = useSelector(
     ({ spaceState }: RootState) => spaceState.availableSpaces
@@ -39,8 +40,7 @@ const CreateSpace = () => {
 
   const { isLoading, isSuccess, isError, data, error, mutate } = useMutation(
     async (space: SpaceInfo) => {
-      const response = await WeCode.createSpace(space);
-      return response;
+      return user && (await WeCode.createSpace(space, user.id));
     }
   );
 

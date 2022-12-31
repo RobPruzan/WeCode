@@ -7,7 +7,7 @@ export type CurrentSpaceProps = {
 
 export const CurrentSpace = ({ className }: CurrentSpaceProps) => {
   const spaceState = useSelector(({ spaceState }: RootState) => spaceState);
-  const currentSpaceName = spaceState.availableSpaces?.find(
+  const currentSpaceName = spaceState?.availableSpaces?.find(
     space => space.id === spaceState.currentSpaceId
   )?.name;
 

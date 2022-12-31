@@ -1,3 +1,4 @@
+from ctypes import Union
 from pprint import pprint
 from tokenize import Comment
 from rest_framework import generics
@@ -26,13 +27,12 @@ class UserView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         name = request.data.get("name", None)
         if name is not None:
-            user = User.objects.filter(name=name).first()
+            user = User.objects.get(name=name)
             if user:
                 serializer = UserSerializer(user)
                 return Response(serializer.data)
         user = User.objects.create(**request.data)
         user = UserSerializer(user)
-        print(user.data, color="green")
         return Response(user.data)
 
 
@@ -69,14 +69,21 @@ class UsernameView(APIView):
 
 class SpacesView(APIView):
     def get(self, request, *args, **kwargs):
-        spaces = Space.objects.all()
+        member_Id = kwargs.get("member_id")
+        if member_Id is None:
+            print("No Member ID Found", color="red")
+            return Response("No Member ID Found")
+        user = User.objects.get(id=member_Id)
+        spaces = Space.objects.filter(members=user)
         serializer = SpaceSerializer(spaces, many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         description = request.data.get("description", "")
         name = request.data.get("name", "")
-        members = request.data.get("members", "")
+        members = request.data.get("members")
+        user_id = kwargs.get("member_id")
+        members = [*members, {"id": user_id}]
         members = [User.objects.get(id=member.get("id")) for member in members]
         space = Space.objects.create(description=description, name=name)
         space.members.set(members)
