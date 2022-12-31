@@ -3,6 +3,7 @@ import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useUsersQuery } from '../../hooks/useUsersQuery';
 import { RootState } from '../../redux/store';
 import WeCode from '../../services/connections';
 import { DockLocation } from '../Navbars/IconDock';
@@ -54,14 +55,15 @@ const Account = () => {
     }
   );
 
-  const {
-    data: users,
-    error: usersError,
-    isLoading: usersLoading,
-    isError: isUsersError,
-  } = useQuery('user_accounts', async () => {
-    return WeCode.getUsers();
-  });
+  // const {
+  //   data: users,
+  //   error: usersError,
+  //   isLoading: usersLoading,
+  //   isError: isUsersError,
+  // } = useQuery('user_accounts', async () => {
+  //   return WeCode.getUsers();
+  // });
+  const { users, usersError, usersIsLoading, usersIsError } = useUsersQuery();
   const { data: following } = useQuery('following', async () => {
     return currentUser && WeCode.getFollowing(currentUser.id);
   });
