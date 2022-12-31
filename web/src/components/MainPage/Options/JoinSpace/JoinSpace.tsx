@@ -12,6 +12,7 @@ import { JoinSpaceButton } from './JoinSpaceButton';
 export const PUBLIC_SPACE = 1;
 
 const JoinSpace = () => {
+  const user = useSelector(({ userState }: RootState) => userState.user);
   const spaceState = useSelector(({ spaceState }: RootState) => spaceState);
   const [selectedSpaceId, setSelectedSpaceId] = useState<number>(
     spaceState?.currentSpaceId ?? PUBLIC_SPACE
@@ -22,10 +23,10 @@ const JoinSpace = () => {
   const { data, error, isLoading } = useQuery(
     ['spaces', spaceState.availableSpaces],
     async () => {
-      const res = await WeCode.getSpaces();
+      const res = user && (await WeCode.getSpaces(user.id));
       dispatch({
         type: SpaceActions.SetAvailableSpaces,
-        payload: { availableSpaces: res },
+        payload: { availableSpaces: res ?? [] },
       });
     }
   );
@@ -49,7 +50,7 @@ const JoinSpace = () => {
   };
 
   const menuData: MenuData[] = spaceState.availableSpaces
-    ? spaceState.availableSpaces.map(space => ({
+    ? spaceState.availableSpaces?.map(space => ({
         value: space.id,
         option: space.name,
       }))

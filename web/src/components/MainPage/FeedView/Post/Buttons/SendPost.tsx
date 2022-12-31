@@ -31,7 +31,7 @@ export const SendPost = ({
       setPostedContent(prev => [currentPostInfo, ...prev]);
       setCurrentPostInfo(prev => ({ ...prev, content: '', code: '' }));
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     dispatch({ type: PostLoadingActions.SetIsNotLoading });
   };

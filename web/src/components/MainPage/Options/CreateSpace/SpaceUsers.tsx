@@ -12,7 +12,7 @@ export const SpaceUsers = ({
   changeHandler,
   members,
 }: SpaceUsersProps) => {
-  const { data, error, isLoading } = useQuery('users', () =>
+  const { data, error, isLoading } = useQuery('user_names', () =>
     WeCode.getUsernames()
   );
 

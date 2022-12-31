@@ -7,8 +7,6 @@ import JoinSpace from './JoinSpace/JoinSpace';
 export const Options = () => {
   return (
     <div className="d-flex flex-column align-items-center pt-3">
-      {/* div with #43bbff border rounded */}
-
       <PrimaryCard style={primarCardStyle} className="p-3">
         <CurrentSpace className="h3  mb-3 d-flex justify-content-center" />
         <JoinSpace />
