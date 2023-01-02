@@ -14,8 +14,8 @@ import IconDock, { DockLocation } from '../Navbars/IconDock';
 const MainPage = () => {
   return (
     <div>
-      <div className="columns">
-        <div className="d-flex justify-content-center ">
+      <div className="columns ">
+        <div className="d-flex justify-content-center hidden sm:hidden">
           <p className="h3">Filters</p>
         </div>
         <div>

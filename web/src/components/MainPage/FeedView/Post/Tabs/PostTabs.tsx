@@ -50,6 +50,7 @@ export const PostTabs = ({
       <div
         className={className}
         style={{
+          minWidth: 'min-content',
           background: '#141414',
           border: '1px solid #43bbff',
         }}
