@@ -80,7 +80,7 @@ export const PostedContent = ({
             upOrDownVote={upOrDownVote}
           />
         </div>
-        <div style={{ color: 'white' }} className="mx-3">
+        <div className="mx-3 text-white">
           {singlePostedContent.content}
           {singlePostedContent.code && singlePostedContent.content && <hr />}
         </div>

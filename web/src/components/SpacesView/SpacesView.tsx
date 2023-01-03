@@ -10,17 +10,17 @@ import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { SpaceCard } from './SpaceCard/SpaceCard';
 import { SpaceSearch } from './SpaceSearch';
-const SPACE_CARD_STYLE = {
-  minWidth: '35vh',
-  minHeight: '25vh',
+// const SPACE_CARD_STYLE = {
+//   minWidth: '35vh',
+//   minHeight: '25vh',
 
-  // minWidth: '50vh',
-  // minHeight: '35vh',
-  // wrap
+//   // minWidth: '50vh',
+//   // minHeight: '35vh',
+//   // wrap
 
-  padding: '1%',
-  margin: '1%',
-};
+//   padding: '1%',
+//   margin: '1%',
+// };
 
 export const SpacesView = () => {
   const user = useSelector(({ userState }: RootState) => userState.user);
@@ -44,9 +44,9 @@ export const SpacesView = () => {
           {error && <div>Error: {`${error}`}</div>}
           {data &&
             data.map((space: Space) => (
-              <SpaceCard style={SPACE_CARD_STYLE}>
-                <div className="d-flex justify-content-evenly flex-column">
-                  <div className="d-flex justify-content-center align-items-center ">
+              <SpaceCard>
+                <div className="">
+                  <div className=" ">
                     <p className="h3">{space.name}</p>
                   </div>
                   <p className="mt-3">{space.description}</p>

@@ -73,7 +73,7 @@ const Account = () => {
       <MainNavbar height="7.3" location={DockLocation.ACCOUNT} />
 
       <UserAccess />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className="flex flex-col">
         {users?.map(user => (
           <div key={user.id} className="border border-white p-2 m-2 ">
             <div className="d-flex"> Follow: {user.name}</div>

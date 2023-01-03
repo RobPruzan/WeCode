@@ -28,7 +28,6 @@ const IconDock = ({ location }: IconDockProps) => {
         <SendIcon
           sx={{ fill: location === DockLocation.SEND ? 'gray' : undefined }}
           fontSize="large"
-          style={{ marginLeft: '1.5em' }}
         />
       </Link>
       <Link className="Nav__link" to="/spaces">

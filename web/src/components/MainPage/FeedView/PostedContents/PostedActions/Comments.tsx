@@ -30,12 +30,7 @@ export const Comments = ({ className }: CommentsProps) => {
       onOpen={() => setExpanded(true)}
       onClose={() => setExpanded(false)}
       trigger={
-        <PrimaryCard
-          className="d-flex justify-content-center p-1"
-          style={{
-            maxWidth: '93%',
-          }}
-        >
+        <PrimaryCard className="d-flex justify-content-center p-1">
           <CommentIcon
             style={{
               fill: isExpanded ? 'gray' : '#43bbff',
@@ -46,20 +41,13 @@ export const Comments = ({ className }: CommentsProps) => {
       transitionTime={150}
     >
       <br />
-      <PrimaryCard
-        style={{
-          width: '100% !important',
-          maxWidth: '93%',
-        }}
-        className="d-flex justify-content-center p-3"
-      >
+      <PrimaryCard className="d-flex justify-content-center p-3">
         <InputText
           changeHandler={changeHandler}
           value={dummyContent.content}
           rows={7}
-          style={{ width: '100% !important' }}
         />
-        <SendIcon style={{ cursor: 'pointer' }} />
+        <SendIcon className="cursor-pointer" />
       </PrimaryCard>
     </Collapsible>
   );

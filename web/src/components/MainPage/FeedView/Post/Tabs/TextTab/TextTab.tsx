@@ -1,4 +1,5 @@
 import { SelectChangeEvent } from '@mui/material';
+import { useState } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { PostContent } from '../../../../../../services/connections';
 import { DropDown } from '../../../../Options/DropDown';
@@ -24,6 +25,7 @@ export const TextTab = ({
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentPostInfo(prev => ({ ...prev, content: event.target.value }));
   };
+
   return (
     <>
       <InputText
@@ -37,6 +39,9 @@ export const TextTab = ({
         handleChange={flairChangeHandler}
         labelName="Flair"
         defaultValue="Discussion"
+        setCurrentPostInfo={setCurrentPostInfo}
+        currentPostInfo={currentPostInfo}
+        setPostedContent={setPostedContent}
       />
       <SendPost
         setCurrentPostInfo={setCurrentPostInfo}

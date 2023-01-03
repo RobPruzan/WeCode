@@ -3,6 +3,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as React from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { PostContent } from '../../../services/connections';
+import { SendPost } from '../FeedView/Post/Buttons/SendPost';
 export type MenuData = {
   value: string | number;
   option: string;
@@ -16,6 +19,9 @@ export type DropDownProps = {
   defaultValue?: string;
   style?: React.CSSProperties;
   handleChange: (event: SelectChangeEvent) => void;
+  setCurrentPostInfo?: Dispatch<SetStateAction<PostContent>>;
+  currentPostInfo?: PostContent;
+  setPostedContent?: Dispatch<SetStateAction<PostContent[]>>;
 };
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,6 +34,9 @@ export const DropDown = ({
   labelName,
   defaultValue,
   style,
+  setCurrentPostInfo,
+  currentPostInfo,
+  setPostedContent,
 }: DropDownProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -48,7 +57,7 @@ export const DropDown = ({
   };
 
   return (
-    <div>
+    <div className="flex ">
       <FormControl sx={{ m: 1 }} className={className}>
         <InputLabel focused={true} id="demo-controlled-open-select-label">
           {labelName}

@@ -19,7 +19,7 @@ export const SendPost = ({
   setCurrentPostInfo,
 }: SendPostProps) => {
   const dispatch = useDispatch();
-  const space = useSelector((spaceState: RootState) => spaceState.spaceState);
+  const space = useSelector(({ spaceState }: RootState) => spaceState);
   const handleSendPost = async () => {
     try {
       dispatch({ type: PostLoadingActions.SetIsLoading });
@@ -42,8 +42,6 @@ export const SendPost = ({
       className="w-100"
       endIcon={<SendIcon />}
       onClick={handleSendPost}
-    >
-      Send Post
-    </Button>
+    ></Button>
   );
 };

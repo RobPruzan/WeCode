@@ -78,7 +78,7 @@ const CreateSpace = () => {
   };
 
   return (
-    <form style={{ width: '18em' }} className="p-4">
+    <form className="p-4">
       <p className="h2 mx-2 mb-4">Create Space</p>
       <CustomTextField
         value={spaceInfo.name}

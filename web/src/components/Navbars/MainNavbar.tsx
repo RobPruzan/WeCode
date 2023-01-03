@@ -17,7 +17,7 @@ export type MainNavbarProps = {
 };
 export const MainNavbar = ({ height = '9', location }: MainNavbarProps) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div className="m-2">
       <AppBar
         position="static"
         sx={{ height: `${height}vh`, backgroundColor: '#141414' }}
@@ -29,6 +29,6 @@ export const MainNavbar = ({ height = '9', location }: MainNavbarProps) => {
           <IconDock location={location} />
         </Toolbar>
       </AppBar>
-    </Box>
+    </div>
   );
 };

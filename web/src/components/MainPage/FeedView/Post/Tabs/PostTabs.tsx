@@ -47,14 +47,7 @@ export const PostTabs = ({
 
   return (
     <div>
-      <div
-        className={className}
-        style={{
-          minWidth: 'min-content',
-          background: '#141414',
-          border: '1px solid #43bbff',
-        }}
-      >
+      <div className={`${className} border-2 border-neon-blue`}>
         <Tabs
           value={activeTab}
           onChange={handleChange}

@@ -3,28 +3,36 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+/* * {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 16px;
   color: #43bbff;
+  background-color: #141414;
 }
 
 body {
   overflow: hidden;
   background-color: #141414;
-  /* shadow */
+
 }
+
 
 nav {
   height: 9vh;
   border: white 1px solid;
+} */
+body {
+  background-color: #141414;
+  overflow: hidden;
 }
+
 .spaces {
   background-color: #141414;
   height: 100vh;
   overflow-y: scroll;
 }
+
 .account {
   background-color: #141414;
   overflow-y: scroll;

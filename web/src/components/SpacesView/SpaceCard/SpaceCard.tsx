@@ -1,20 +1,16 @@
 import React from 'react';
 export type SpaceCardProps = {
   children?: React.ReactNode;
-  style?: React.CSSProperties;
+  className?: string;
 };
-export const SpaceCard = ({ children, style }: SpaceCardProps) => {
+export const SpaceCard = ({ children, className }: SpaceCardProps) => {
   return (
     <div
       style={{
-        backgroundColor: '#2D2D2F',
-        border: '2px solid #3B3B3D',
-        borderRadius: '4px',
-        boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.5)',
-        // whiteSpace: 'pre',
-
-        ...style,
+        minWidth: '15rem',
+        width: '13%',
       }}
+      className={`border-2 items-center border-gray-500 text-white p-3 m-3  bg-zinc-800 shadow-md rounded-sm ${className}     h-2/6 max-h-72 flex flex-col content-center`}
     >
       {children}
     </div>

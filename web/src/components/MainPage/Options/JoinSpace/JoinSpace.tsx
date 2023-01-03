@@ -31,13 +31,7 @@ const JoinSpace = () => {
     }
   );
   if (isLoading) {
-    <PrimaryCard
-      className="p-3"
-      style={{
-        minWidth: '15em',
-        maxWidth: '50%',
-      }}
-    >
+    <PrimaryCard className="p-3">
       <div>Loading...</div>
     </PrimaryCard>;
   }
@@ -63,10 +57,6 @@ const JoinSpace = () => {
         handleChange={handleChange}
         defaultValue={'Public'}
         labelName="Select Space"
-        style={{
-          minWidth: '15em',
-          maxWidth: '50%',
-        }}
       />
       <JoinSpaceButton className="m-2" spaceId={selectedSpaceId} />
     </div>

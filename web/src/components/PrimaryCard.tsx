@@ -11,13 +11,13 @@ export const PrimaryCard = ({
 }: PrimaryCardProps) => {
   return (
     <div
-      className={`d-flex flex-column align-items-center m-3  ${className}`}
-      style={{
-        border: '1px solid #43bbff',
-        borderRadius: '10px',
+      className={`d-flex flex-column align-items-center m-3 border-2 border-neon-blue ${className}`}
+      // style={{
+      //   border: '1px solid #43bbff',
+      //   borderRadius: '10px',
 
-        ...style,
-      }}
+      //   ...style,
+      // }}
     >
       {children}
     </div>

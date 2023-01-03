@@ -32,14 +32,14 @@ export const UpDownVoting = ({
   return (
     <>
       <p className="h4">{upVotes}</p>
-      <div style={{ cursor: 'pointer' }} onClick={handleUpVote}>
+      <div className="cursor-pointer" onClick={handleUpVote}>
         <ThumbUpIcon
           style={{
             fill: getColor('up'),
           }}
         />
       </div>
-      <div style={{ cursor: 'pointer' }} onClick={handleDownVote}>
+      <div className="cursor-pointer" onClick={handleDownVote}>
         <ThumbDownIcon
           style={{
             fill: getColor('down'),
