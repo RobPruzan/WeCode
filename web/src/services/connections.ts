@@ -105,7 +105,7 @@ export class WeCodeApi {
     user_to_follow_id: number
   ): Promise<void> {
     await axios.post(`${this.baseUrl}/follow`, {
-      ...{ user_id, user_to_follow_id },
+       user_id, user_to_follow_id,
     });
   }
 

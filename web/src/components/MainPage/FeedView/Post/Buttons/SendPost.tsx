@@ -7,19 +7,19 @@ import { RootState } from '../../../../../redux/store';
 import WeCode, { PostContent } from '../../../../../services/connections';
 import { PUBLIC_SPACE } from '../../../Options/JoinSpace/JoinSpace';
 export type SendPostProps = {
-  postInfo?: string;
   currentPostInfo: PostContent;
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
   setCurrentPostInfo: Dispatch<SetStateAction<PostContent>>;
 };
 export const SendPost = ({
-  postInfo,
   currentPostInfo,
   setPostedContent,
   setCurrentPostInfo,
 }: SendPostProps) => {
   const dispatch = useDispatch();
   const space = useSelector(({ spaceState }: RootState) => spaceState);
+  const space = useSelector(({spaceState}: RootState) => spaceState);
+  // turn this into use mutate
   const handleSendPost = async () => {
     try {
       dispatch({ type: PostLoadingActions.SetIsLoading });
@@ -33,7 +33,7 @@ export const SendPost = ({
     } catch (err) {
       console.error(err);
     }
-    dispatch({ type: PostLoadingActions.SetIsNotLoading });
+    dispatch({ type: PostLoadingActions.SetIsNotLoading }); 
   };
   return (
     <Button
@@ -41,6 +41,12 @@ export const SendPost = ({
       color="primary"
       className="w-100"
       endIcon={<SendIcon />}
+      disabled={!currentPostInfo.content}
+      sx={{
+        "&:disabled":{
+          color:"gray",bordercolor:"gray"
+        }
+      }}
       onClick={handleSendPost}
     ></Button>
   );
