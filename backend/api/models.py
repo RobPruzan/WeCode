@@ -16,14 +16,13 @@ class Post(models.Model):
     code = models.CharField(max_length=2000, default="", blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)
-    dislikes = models.IntegerField(default=0, blank=True, null=True)
     comments = models.IntegerField(default=0, blank=True, null=True)
     langauge = models.CharField(max_length=200, default="", blank=True, null=True)
     space = models.ForeignKey("Space", on_delete=models.CASCADE, blank=True, null=True)
     flair = models.CharField(max_length=200, default="", blank=True, null=True)
 
     def str(self):
-        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, dislikes: {self.dislikes}, comments: {self.comments}, langauge: {self.langauge}, room: {self.room}"
+        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, comments: {self.comments}, langauge: {self.langauge}, room: {self.room}"
 
 
 class Test(models.Model):
