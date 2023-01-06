@@ -43,7 +43,6 @@ class PostSerializer(serializers.ModelSerializer):
             "code",
             "date",
             "likes",
-            "dislikes",
             "comments",
             "langauge",
         )

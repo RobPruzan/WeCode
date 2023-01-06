@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
+import axios from 'axios';
 // TODO remove optional fields
 export type PostContent = {
   id?: number;
@@ -69,7 +69,12 @@ export class WeCodeApi {
   }
 
   public async createUser(name: string): Promise<User> {
-    const response = await axios.post(`${this.baseUrl}/users`, { name });
+    const response = await axios.post(`${this.baseUrl}/user`, { name });
+    return response.data;
+  }
+
+  public async getUser(id: number): Promise<User> {
+    const response = await axios.get(`${this.baseUrl}/user/${id}`);
     return response.data;
   }
 
@@ -105,7 +110,8 @@ export class WeCodeApi {
     user_to_follow_id: number
   ): Promise<void> {
     await axios.post(`${this.baseUrl}/follow`, {
-       user_id, user_to_follow_id,
+      user_id,
+      user_to_follow_id,
     });
   }
 

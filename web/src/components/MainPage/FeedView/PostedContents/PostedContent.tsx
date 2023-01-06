@@ -1,14 +1,16 @@
-import { Card } from '@mui/material';
-import { useState } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { PostContent as PostInfo } from '../../../../services/connections';
-
-import CommentIcon from '@mui/icons-material/Comment';
-import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
-import { UpDownVoting } from './UpDownVoting';
-import ExpandIcon from '@mui/icons-material/Expand';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import { Card } from '@mui/material';
+import CommentIcon from '@mui/icons-material/Comment';
 import { Comments } from './PostedActions/Comments';
+import ExpandIcon from '@mui/icons-material/Expand';
+import { PostContent as PostInfo } from '../../../../services/connections';
+import { RootState } from '../../../../redux/store';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { UpDownVoting } from './UpDownVoting';
+import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+
 const cardStyle = {
   color: 'white',
   background: '#141414',
@@ -31,6 +33,7 @@ export const PostedContent = ({
   const [upVotes, setUpVotes] = useState(0);
   const [usedVote, setUsedVote] = useState(false);
   const [upOrDownVote, setUpOrDownVote] = useState<'up' | 'down' | null>(null);
+  const user = useSelector(({ userState }: RootState) => userState.user);
   const handleUpVote = () => {
     if (usedVote) {
       if (upOrDownVote === 'up') {
@@ -69,7 +72,18 @@ export const PostedContent = ({
   };
   return (
     <div key={`PostedContent: ${keyValue}`}>
+      {/* <div
+        className="border-2 text-center border-white rounded-full  
+      // min width 40 px
+
+       min-w-fit h-10 "
+      >
+        <p className="w-10">{user?.name[0]}</p>
+      </div> */}
+
       <Card sx={cardStyle} className={className}>
+        {/* a circle float left top 0 */}
+
         <div style={{ float: 'right', marginLeft: '1em', marginBottom: '1em' }}>
           <UpDownVoting
             upVotes={upVotes}

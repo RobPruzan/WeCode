@@ -18,10 +18,18 @@ from rest_framework.response import Response
 from print_color import print
 
 # Create your views here.
-class UserView(generics.CreateAPIView):
+class UsersView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class UserView(generics.CreateAPIView):
+    def get(self, request, *args, **kwargs):
+        user_id = int(filter_data(kwargs.get("user_id")))
+        user = User.objects.filter(id=user_id).first()
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
