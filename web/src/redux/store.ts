@@ -1,16 +1,15 @@
-import {
-  ThunkAction,
-  Action,
-  createStore,
-  combineReducers,
-  applyMiddleware,
-} from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { CountReducer, CountState } from './reducers/counts';
-import logger from 'redux-logger';
 import { PostLoadingReducer, PostLoadingState } from './reducers/postLoading';
 import { SpaceReducer, SpaceState } from './reducers/spaces';
 import { UserReducer, UserState } from './reducers/user';
+import {
+  applyMiddleware,
+  combineReducers,
+  createStore,
+} from '@reduxjs/toolkit';
+
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { count } from 'console';
 export interface RootState {
   countState: CountState;
   postLoadingState: PostLoadingState;

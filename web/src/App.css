@@ -25,10 +25,8 @@ nav {
   height: 100vh;
   overflow-y: scroll;
 }
-.account {
+.custom-black-background {
   background-color: #141414;
-  overflow-y: scroll;
-  height: 100vh;
 }
 .spaces-nav {
   height: 9vh;
