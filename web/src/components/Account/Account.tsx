@@ -1,14 +1,15 @@
-import { Button } from '@mui/material';
-import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useUsersQuery } from '../../hooks/useUsersQuery';
-import { RootState } from '../../redux/store';
-import WeCode from '../../services/connections';
+
+import { Button } from '@mui/material';
 import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
+import React from 'react';
+import { RootState } from '../../redux/store';
 import UserAccess from './UserAccess';
+import WeCode from '../../services/connections';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useUsersQuery } from '../../hooks/useUsersQuery';
 
 export type FollowMutationParams = {
   user_id: number;
@@ -55,41 +56,65 @@ const Account = () => {
     }
   );
 
-  // const {
-  //   data: users,
-  //   error: usersError,
-  //   isLoading: usersLoading,
-  //   isError: isUsersError,
-  // } = useQuery('user_accounts', async () => {
-  //   return WeCode.getUsers();
-  // });
   const { users, usersError, usersIsLoading, usersIsError } = useUsersQuery();
   const { data: following } = useQuery('following', async () => {
     return currentUser && WeCode.getFollowing(currentUser.id);
   });
 
   return (
-    <div className="account">
-      <MainNavbar height="7.3" location={DockLocation.ACCOUNT} />
-
-      <UserAccess />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {users?.map(user => (
-          <div key={user.id} className="border border-white p-2 m-2 ">
-            <div className="d-flex"> Follow: {user.name}</div>
-            <div>
-              {' '}
-              <Button
-                onClick={() =>
-                  followUser({ user_id: user.id, user_to_follow_id: user.id })
-                }
-              >
-                Follow
-              </Button>
+    <div className="custom-black-background flex flex-col h-screen w-screen  max-w-full bg-cust">
+      <MainNavbar height="10" location={DockLocation.ACCOUNT} />
+      <div className="flex justify-center items-center flex-grow">
+        <div className=" grid  grid-rows-8 min-h-full w-full">
+          <div className="row-span-2  ">
+            <div className="grid grid-rows-2 h-full">
+              <div className="row-span-1 border-b-2  ">
+                <div className="grid grid-cols-3 h-full">
+                  <div className="col-span-1 text-center flex items-center justify-center">
+                    Followers
+                  </div>
+                  <div className="col-span-1 text-center flex items-center justify-center">
+                    Following
+                  </div>
+                  <div className="col-span-1 text-center flex items-center justify-center">
+                    Friends
+                  </div>
+                </div>
+              </div>
+              <div className="row-span-1 ">
+                <div className="grid grid-cols-3 h-full">
+                  <div className="col-span-1 text-center flex items-center justify-center">
+                    {currentUser?.followers.length ?? 0}
+                  </div>
+                  <div className="col-span-1 text-center flex items-center justify-center">
+                    {currentUser?.following.length ?? 0}
+                  </div>
+                  <div className="col-span-1 text-center flex items-center justify-center">
+                    {currentUser?.friends.length ?? 0}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div> </div>
           </div>
-        ))}
+          <div className="row-span-6 border-t-2">
+            <div className="grid grid-cols-2 h-full">
+              <div className="col-span-1 border-r-2 ">
+                <div className="flex flex-col h-full w-full items-center p-8">
+                  <div className="border-2 border-white h-full w-80 overflow-y-scroll">
+                    sdfsf
+                  </div>
+                </div>
+              </div>
+              <div className="col-span-1  ">
+                <div className="flex flex-col h-full w-full items-center p-8">
+                  <div className="border-2 border-white h-full w-10/12 overflow-y-scroll">
+                    <UserAccess />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

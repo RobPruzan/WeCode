@@ -1,10 +1,16 @@
-import { SelectChangeEvent } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { PostContent } from '../../../../../../services/connections';
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from 'react-query';
+
 import { DropDown } from '../../../../Options/DropDown';
-import { SendPost } from '../../Buttons/SendPost';
 import { FLAIRS } from '../PostTabs';
 import { InputText } from './InputText';
+import { PostContent } from '../../../../../../services/connections';
+import { SelectChangeEvent } from '@mui/material';
+import { SendPost } from '../../Buttons/SendPost';
 
 const defaultFlair = 'Discussion';
 
