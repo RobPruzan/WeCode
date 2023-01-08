@@ -1,8 +1,3 @@
-import {
-  Follow,
-  UnFollow,
-  useFollowUserAction,
-} from '../../hooks/useFollowUserAction';
 import React, { ChangeEvent, useState } from 'react';
 import WeCode, { PostContent } from '../../services/connections';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -15,6 +10,7 @@ import { PostedContent } from '../MainPage/FeedView/PostedContents/PostedContent
 import { PostedContents } from '../MainPage/FeedView/PostedContents/PostedContents';
 import { RootState } from '../../redux/store';
 import UserAccess from './UserAccess';
+import { useFollowUserAction } from '../../hooks/useFollowUserAction';
 import { useGetPosts } from '../../hooks/useGetPosts';
 import { useGetUserPosts } from '../../hooks/useGetUserPosts';
 import { useParams } from 'react-router-dom';
@@ -29,11 +25,21 @@ const Account = () => {
   const { userPosts } = useGetUserPosts(currentUser?.id ?? -1);
   const reversedPosts =
     userPosts && userPosts.sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0));
-  // Passing that follow action twice because it's an anti-pattern to run functions based on types- https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals#non-goals
-  // The purpose of the 2 types is to give us better type safety, while following good practices
-  const { followUser, followIsLoading } = useFollowUserAction<Follow>('follow');
-  const { unfollowUser, unfollowIsLoading } =
-    useFollowUserAction<UnFollow>('unfollow');
+
+  const {
+    data: followData,
+    error: followError,
+    isLoading: followIsLoading,
+    isError: followIsError,
+    mutate: followUser,
+  } = useFollowUserAction('follow');
+  const {
+    data: unfollowData,
+    error: unfollowError,
+    isLoading: unfollowIsLoading,
+    isError: unfollowIsError,
+    mutate: unfollowUser,
+  } = useFollowUserAction('unfollow');
 
   const handleFollow = (user_id: number, user_to_follow_id: number) => {
     followUser({
@@ -81,11 +87,6 @@ const Account = () => {
     otherUsers
       .filter(user => {
         if (selectedUserName) {
-          console.log(
-            'hmm',
-            user.name.toLowerCase(),
-            selectedUserName.toLowerCase()
-          );
           return user.name
             .toLowerCase()
             .includes(selectedUserName.toLowerCase());
