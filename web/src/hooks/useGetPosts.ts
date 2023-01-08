@@ -13,7 +13,7 @@ export const useGetPosts = (
     () => WeCode.getPosts(space_id ?? PUBLIC_SPACE),
     {
       onSuccess: data => {
-        fn && fn(data.reverse());
+        fn && fn(data?.reverse());
       },
     }
   );

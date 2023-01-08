@@ -27,7 +27,8 @@ const Account = () => {
   const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
 
   const { userPosts } = useGetUserPosts(currentUser?.id ?? -1);
-  const reversedPosts = userPosts?.sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0));
+  const reversedPosts =
+    userPosts && userPosts.sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0));
   // Passing that follow action twice because it's an anti-pattern to run functions based on types- https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals#non-goals
   // The purpose of the 2 types is to give us better type safety, while following good practices
   const { followUser, followIsLoading } = useFollowUserAction<Follow>('follow');
@@ -75,19 +76,23 @@ const Account = () => {
     setSelectedUserName(event.target.value);
   };
 
-  const visibleUsers = otherUsers
-    ?.filter(user => {
-      if (selectedUserName) {
-        console.log(
-          'hmm',
-          user.name.toLowerCase(),
-          selectedUserName.toLowerCase()
-        );
-        return user.name.toLowerCase().includes(selectedUserName.toLowerCase());
-      }
-      return true;
-    })
-    .sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0));
+  const visibleUsers =
+    otherUsers &&
+    otherUsers
+      .filter(user => {
+        if (selectedUserName) {
+          console.log(
+            'hmm',
+            user.name.toLowerCase(),
+            selectedUserName.toLowerCase()
+          );
+          return user.name
+            .toLowerCase()
+            .includes(selectedUserName.toLowerCase());
+        }
+        return true;
+      })
+      .sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0));
 
   return (
     <div className="custom-black-background flex flex-col h-screen w-screen  max-w-full bg-cust">
