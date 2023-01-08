@@ -34,17 +34,17 @@ const UserAccess = () => {
     }
   );
   return (
-    <div>
+    <>
       {user ? (
         <>
-          Logged in as: {user.name}
+          {/* Logged in as: {user.name}
           <Button
             className="mx-2"
             onClick={() => handleLogout()}
             variant="contained"
           >
             Logout
-          </Button>
+          </Button> */}
         </>
       ) : (
         <div className="justify-content-center">
@@ -65,7 +65,7 @@ const UserAccess = () => {
           </Button>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

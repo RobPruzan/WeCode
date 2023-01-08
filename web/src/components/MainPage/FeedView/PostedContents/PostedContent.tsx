@@ -3,7 +3,7 @@ import { Card } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Comments } from './PostedActions/Comments';
 import ExpandIcon from '@mui/icons-material/Expand';
-import { PostContent as PostInfo } from '../../../../services/connections';
+import { PostContent } from '../../../../services/connections';
 import { RootState } from '../../../../redux/store';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { UpDownVoting } from './UpDownVoting';
@@ -22,12 +22,14 @@ const cardStyle = {
 };
 export type PostedContentProps = {
   className?: string;
-  singlePostedContent: PostInfo;
-  keyValue: number;
+  canComment?: boolean;
+  singlePostedContent: PostContent;
+  keyValue: number | string;
 };
 export const PostedContent = ({
   className,
   singlePostedContent,
+  canComment = true,
   keyValue,
 }: PostedContentProps) => {
   const [upVotes, setUpVotes] = useState(0);
@@ -112,8 +114,7 @@ export const PostedContent = ({
         )}
 
         <hr />
-
-        <Comments />
+        {canComment && <Comments />}
       </Card>
     </div>
   );

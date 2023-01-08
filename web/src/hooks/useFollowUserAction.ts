@@ -1,5 +1,9 @@
 import { UseMutateFunction, useMutation, useQueryClient } from 'react-query';
 import WeCode, { PostContent } from '../services/connections';
+
+import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
+
 export type FollowType = 'follow' | 'unfollow';
 
 export type FollowActionMutationParams = {
@@ -35,6 +39,7 @@ export type Follow = {
 
 export const useFollowUserAction = <T>(followType: FollowType) => {
   const queryClient = useQueryClient();
+  const userId = useSelector(({ userState }: RootState) => userState.user?.id);
   const handleFollowAction = (user_id: number, user_to_follow_id: number) => {
     if (followType === 'follow') {
       console.log('plesase?');

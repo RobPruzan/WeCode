@@ -19,11 +19,7 @@ const IconDock = ({ location }: IconDockProps) => {
   const user = useSelector(({ userState }: RootState) => userState.user);
 
   return (
-    <div
-      style={{
-        display: 'inline-block',
-      }}
-    >
+    <div className="flex h-full items-center">
       <Link to="/">
         <SendIcon
           sx={{ fill: location === DockLocation.SEND ? 'gray' : undefined }}

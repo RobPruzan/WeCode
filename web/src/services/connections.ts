@@ -114,8 +114,7 @@ export class WeCodeApi {
     user_id: number,
     user_to_follow_id: number
   ): Promise<void> {
-    console.log('clicked to follow');
-    await axios.post(`${this.baseUrl}/follow`, {
+    await axios.post(`${this.baseUrl}/follow/${user_id}`, {
       user_id,
       user_to_follow_id,
     });
@@ -132,6 +131,7 @@ export class WeCodeApi {
 
   public async getFollowers(userId: number): Promise<User[]> {
     const response = await axios.get(`${this.baseUrl}/follow/${userId}`);
+    console.log('the getted followers');
     return response.data;
   }
 
