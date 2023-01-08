@@ -2,9 +2,9 @@ import { useQuery, useQueryClient } from 'react-query';
 
 import WeCode from '../services/connections';
 
-export const useGetPosts = (userId: number) => {
+export const useGetUserPosts = (userId: number) => {
   const { data, error, isLoading, isError, refetch } = useQuery(
-    ['space_posts', userId],
+    ['user_posts', userId],
     () => WeCode.getUserPosts(userId)
   );
   return {

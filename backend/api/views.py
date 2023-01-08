@@ -69,7 +69,7 @@ class UserPostView(APIView):
         if user_id is None:
             return Response("No User ID Found")
         user_id = int(user_id)
-        user = User.objects.get(id=user_id)
+        user = User.objects.filter(id=user_id).first()
         posts = Post.objects.filter(user=user).all()
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
@@ -93,7 +93,7 @@ class SpacesView(APIView):
         if member_Id is None:
             print("No Member ID Found", color="red")
             return Response("No Member ID Found")
-        user = User.objects.get(id=member_Id)
+        user = User.objects.filter(id=member_Id).first()
         spaces = Space.objects.filter(members=user)
         serializer = SpaceSerializer(spaces, many=True)
         return Response(serializer.data)
@@ -104,7 +104,9 @@ class SpacesView(APIView):
         members = request.data.get("members")
         user_id = kwargs.get("member_id")
         members = [*members, {"id": user_id}]
-        members = [User.objects.get(id=member.get("id")) for member in members]
+        members = [
+            User.objects.filter(id=member.get("id")).first() for member in members
+        ]
         space = Space.objects.create(description=description, name=name)
         space.members.set(members)
         space.save()
@@ -118,7 +120,7 @@ class CommentsView(APIView):
         if post_id is None:
             return Response("No Post ID Found")
         post_id = int(post_id)
-        post = Post.objects.get(id=post_id)
+        post = Post.objects.filter(id=post_id).first()
         comments = post.comments.all()
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
@@ -127,7 +129,7 @@ class CommentsView(APIView):
         post_id = filter_data(kwargs.get("post_id", 0))
         reply_to = filter_data(request.data.get("reply_to", 0))
         if post_id:
-            post = Post.objects.get(id=post_id)
+            post = Post.objects.filter(id=post_id).first()
             reply_to = int(reply_to) if reply_to else None
             Comment.objects.create(**request.data, post=post, reply_to_id=int(reply_to))
             post.save()
@@ -140,7 +142,7 @@ class FriendsView(APIView):
         if user_id is None:
             return Response("No User ID Provided")
         user_id = int(filter_data(user_id))
-        user = User.objects.get(id=user_id)
+        user = User.objects.filter(id=user_id).first()
         friends = user.friends.all()
         serializer = UserSerializer(friends, many=True)
         return Response(serializer.data)
@@ -150,8 +152,8 @@ class FriendsView(APIView):
         friend_id = request.data.get("friend_id")
         if user_id is None or friend_id is None:
             return Response("Invalid User IDs Provided")
-        user = User.objects.get(id=user_id)
-        friend = User.objects.get(id=friend_id)
+        user = User.objects.filter(id=user_id).first()
+        friend = User.objects.filter(id=friend_id).first()
         user.friends.add(friend)
         user.save()
         return Response("Friend Added")
@@ -163,10 +165,11 @@ class FollowView(APIView):
         if user_id is None:
             return Response("No User ID Provided")
         user_id = int(filter_data(user_id))
-        user = User.objects.get(id=user_id)
+        user = User.objects.filter(id=user_id).first()
         followers = user.followers.all()
 
         serializer = UserSerializer(followers, many=True)
+        print(serializer.data, color="blue")
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
@@ -174,8 +177,8 @@ class FollowView(APIView):
         user_to_follow_id = request.data.get("user_to_follow_id")
         if user_id is None or user_to_follow_id is None:
             return Response("Invalid User IDs Provided")
-        user = User.objects.get(id=user_id)
-        user_to_follow = User.objects.get(id=user_to_follow_id)
+        user = User.objects.filter(id=user_id).first()
+        user_to_follow = User.objects.filter(id=user_to_follow_id).first()
         user.following.add(user_to_follow)
         user_to_follow.followers.add(user)
         user.save()
@@ -190,8 +193,8 @@ class UnfollowView(APIView):
         user_to_unfollow_id = kwargs.get("user_to_unfollow_id")
         if user_id is None or user_to_unfollow_id is None:
             return Response("Invalid User IDs Provided")
-        user = User.objects.get(id=user_id)
-        user_to_unfollow = User.objects.get(id=user_to_unfollow_id)
+        user = User.objects.filter(id=user_id).first()
+        user_to_unfollow = User.objects.filter(id=user_to_unfollow_id).first()
         user.following.remove(user_to_unfollow)
         user_to_unfollow.followers.remove(user)
         user.save()
@@ -205,7 +208,7 @@ class FollowingView(APIView):
         if user_id is None:
             return Response("No User ID Provided")
         user_id = int(filter_data(user_id))
-        user = User.objects.get(id=user_id)
+        user = User.objects.filter(id=user_id).first()
         following = user.following.all()
         serializer = UserSerializer(following, many=True)
         return Response(serializer.data)

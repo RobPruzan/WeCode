@@ -21,7 +21,7 @@ urlpatterns = [
     path("api/user_names", UsernameView.as_view()),
     path("api/spaces/<int:member_id>", SpacesView.as_view()),
     path("api/comments", CommentsView.as_view()),
-    path("api/follow", FollowView.as_view()),
+    path("api/follow/<int:user_id>", FollowView.as_view()),
     path(
         "api/unfollow/<int:user_id>/<int:user_to_unfollow_id>", UnfollowView.as_view()
     ),
