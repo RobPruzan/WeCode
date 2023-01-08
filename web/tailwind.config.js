@@ -7,7 +7,11 @@ module.exports = {
       md: '850px',
       ...defaultTheme.screens,
     },
-    extend: {},
+    extend: {
+      colors: {
+        'neon-blue': '#43bbff',
+      },
+    },
   },
   plugins: [],
 };

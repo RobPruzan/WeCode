@@ -5,17 +5,15 @@ import { PUBLIC_SPACE } from '../components/MainPage/Options/JoinSpace/JoinSpace
 
 export const useGetPosts = (
   space_id: number,
-  fn: (state: PostContent[]) => void
+  fn?: (state: PostContent[]) => void
 ) => {
   const queryClient = useQueryClient();
   const { data, error, isLoading, isError, refetch } = useQuery(
     ['space_posts', space_id],
-    async () => {
-      return WeCode.getPosts(space_id ?? PUBLIC_SPACE);
-    },
+    () => WeCode.getPosts(space_id ?? PUBLIC_SPACE),
     {
       onSuccess: data => {
-        fn(data.reverse());
+        fn && fn(data.reverse());
       },
     }
   );

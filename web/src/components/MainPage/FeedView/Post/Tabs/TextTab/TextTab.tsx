@@ -18,6 +18,7 @@ export type TextTabProps = {
   setCurrentPostInfo: Dispatch<SetStateAction<PostContent>>;
   currentPostInfo: PostContent;
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
+  postedContent: PostContent[];
   flairChangeHandler: (event: SelectChangeEvent<string>) => void;
 };
 
@@ -25,6 +26,7 @@ export const TextTab = ({
   currentPostInfo,
   setPostedContent,
   setCurrentPostInfo,
+  postedContent,
   flairChangeHandler,
 }: TextTabProps) => {
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +50,7 @@ export const TextTab = ({
         setCurrentPostInfo={setCurrentPostInfo}
         currentPostInfo={currentPostInfo}
         setPostedContent={setPostedContent}
+        postedContent={postedContent}
       />
     </>
   );

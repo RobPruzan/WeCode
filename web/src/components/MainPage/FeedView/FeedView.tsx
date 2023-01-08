@@ -25,6 +25,7 @@ const FeedView = () => {
       <PostTabs
         className="mx-5 mt-3 mb-5"
         setPostedContent={setPostedContent}
+        postedContent={postedContent}
         isPostLoading={isPostLoading}
       />
 

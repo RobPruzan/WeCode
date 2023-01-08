@@ -53,7 +53,7 @@ const IconDock = ({ location }: IconDockProps) => {
               : '#43bbff',
           }}
           fontSize="large"
-          className="mx-5"
+          className="mx-4"
         />
       </Link>
     </div>

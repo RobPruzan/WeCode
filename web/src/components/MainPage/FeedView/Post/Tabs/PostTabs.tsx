@@ -30,11 +30,13 @@ export type TabsProps = {
   className?: string;
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
   isPostLoading: boolean;
+  postedContent: PostContent[];
 };
 export const PostTabs = ({
   className,
   setPostedContent,
   isPostLoading,
+  postedContent,
 }: TabsProps) => {
   const [currentPostInfo, setCurrentPostInfo] = useState<PostContent>({
     content: '',
@@ -93,6 +95,7 @@ export const PostTabs = ({
             setCurrentPostInfo={setCurrentPostInfo}
             setPostedContent={setPostedContent}
             flairChangeHandler={flairChangeHandler}
+            postedContent={postedContent}
           />
         )}
         {activeTab === TabType.CODE && (
@@ -101,6 +104,7 @@ export const PostTabs = ({
             setCurrentPostInfo={setCurrentPostInfo}
             setPostedContent={setPostedContent}
             flairChangeHandler={flairChangeHandler}
+            postedContent={postedContent}
           />
         )}
       </div>
