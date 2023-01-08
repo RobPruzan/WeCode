@@ -7,6 +7,7 @@ from .views import (
     PostContentView,
     SpacesView,
     UnfollowView,
+    UserPostView,
     UserView,
     UsersView,
     UsernameView,
@@ -14,6 +15,7 @@ from .views import (
 
 urlpatterns = [
     path("api/post_content/<str:space_id>", PostContentView.as_view()),
+    path("api/user_posts/<str:user_id>", UserPostView.as_view()),
     path("api/user", UserView.as_view()),
     path("api/users", UsersView.as_view()),
     path("api/user_names", UsernameView.as_view()),

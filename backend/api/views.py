@@ -63,6 +63,18 @@ class PostContentView(APIView):
         pass
 
 
+class UserPostView(APIView):
+    def get(self, request, *args, **kwargs):
+        user_id = filter_data(kwargs.get("user_id"))
+        if user_id is None:
+            return Response("No User ID Found")
+        user_id = int(user_id)
+        user = User.objects.get(id=user_id)
+        posts = Post.objects.filter(user=user).all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
+
 class UsernameView(APIView):
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
@@ -153,6 +165,7 @@ class FollowView(APIView):
         user_id = int(filter_data(user_id))
         user = User.objects.get(id=user_id)
         followers = user.followers.all()
+
         serializer = UserSerializer(followers, many=True)
         return Response(serializer.data)
 
@@ -167,6 +180,7 @@ class FollowView(APIView):
         user_to_follow.followers.add(user)
         user.save()
         user_to_follow.save()
+        print(user.following, color="blue")
         return Response("Follower Added")
 
 

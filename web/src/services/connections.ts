@@ -3,7 +3,7 @@ import axios from 'axios';
 // TODO remove optional fields
 export type PostContent = {
   id?: number;
-  user?: string;
+  user_id?: number;
   content: string;
   code?: string;
   flair?: string;
@@ -68,6 +68,11 @@ export class WeCodeApi {
     return response.data;
   }
 
+  public async getUserPosts(user_id: number): Promise<PostContent[]> {
+    const response = await axios.get(`${this.baseUrl}/user_posts/${user_id}}`);
+    return response.data;
+  }
+
   public async createUser(name: string): Promise<User> {
     const response = await axios.post(`${this.baseUrl}/user`, { name });
     return response.data;
@@ -109,6 +114,7 @@ export class WeCodeApi {
     user_id: number,
     user_to_follow_id: number
   ): Promise<void> {
+    console.log('clicked to follow');
     await axios.post(`${this.baseUrl}/follow`, {
       user_id,
       user_to_follow_id,

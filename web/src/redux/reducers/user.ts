@@ -1,5 +1,6 @@
 import { User } from '../../services/connections';
-
+// TODO
+// REMOVE ALL OF THIS AND MIGRATE THIS TO REACT QUERY
 export interface UserState {
   user: User | null;
   // TODO remove username
