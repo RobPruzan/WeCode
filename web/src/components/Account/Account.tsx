@@ -142,37 +142,44 @@ const Account = () => {
                     }}
                     className=" w-full mt-4  border-2 border-neon-blue p-3 overflow-y-scroll rounded-md"
                   >
-                    {visibleUsers?.map((otherUser, index) => (
-                      <>
-                        <div
-                          key={index}
-                          className="border-2 border-white w-full h-fit p-3 mt-4 grid grid-cols-2 gap-2 rounded-sm"
-                        >
-                          {otherUser.name}
-                          {following?.find(user => user.id === otherUser.id) ? (
-                            <button
-                              className="bg-gray-400 p-1 text-white  rounded-md hover:bg-gray-300"
-                              onClick={_ =>
-                                currentUser &&
-                                handleUnfollow(currentUser?.id, otherUser.id)
-                              }
-                            >
-                              Unfollow
-                            </button>
-                          ) : (
-                            <button
-                              className="bg-neon-blue p-1 text-white  rounded-md hover:bg-sky-300 "
-                              onClick={_ =>
-                                currentUser &&
-                                handleFollow(currentUser?.id, otherUser.id)
-                              }
-                            >
-                              Follow
-                            </button>
-                          )}
-                        </div>
-                      </>
-                    ))}
+                    {visibleUsers && visibleUsers.length > 0 ? (
+                      visibleUsers.map((otherUser, index) => (
+                        <>
+                          <div
+                            key={index}
+                            className="border-2 border-white w-full h-fit p-3 mt-4 grid grid-cols-2 gap-2 rounded-sm"
+                          >
+                            {otherUser.name}
+                            {following?.find(
+                              user => user.id === otherUser.id
+                            ) ? (
+                              <button
+                                className="bg-gray-400 p-1 text-white  rounded-md hover:bg-gray-300"
+                                onClick={_ =>
+                                  currentUser &&
+                                  handleUnfollow(currentUser?.id, otherUser.id)
+                                }
+                              >
+                                Unfollow
+                              </button>
+                            ) : (
+                              <button
+                                className="bg-neon-blue p-1 text-white  rounded-md hover:bg-sky-300 "
+                                onClick={_ =>
+                                  currentUser &&
+                                  handleFollow(currentUser?.id, otherUser.id)
+                                }
+                              >
+                                Follow
+                              </button>
+                            )}
+                          </div>
+                        </>
+                      ))
+                    ) : (
+                      <p className="text-2xl text-center">No Users Found</p>
+                    )}
+                    {}
                   </div>
                 </div>
               </div>
