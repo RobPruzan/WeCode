@@ -1,7 +1,9 @@
-import { useQuery } from 'react-query';
-import WeCode from '../../../../services/connections';
 import { TypeAhead, TypeAheadOption } from '../../../utils/TypeAhead';
+
 import { TypAheadChangeHandler } from './CreateSpace';
+import WeCode from '../../../../services/connections';
+import { useQuery } from 'react-query';
+
 export type SpaceUsersProps = {
   className?: string;
   changeHandler: TypAheadChangeHandler;
