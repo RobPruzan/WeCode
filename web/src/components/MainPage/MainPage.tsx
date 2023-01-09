@@ -1,6 +1,6 @@
 import IconDock, { DockLocation } from '../Navbars/IconDock';
 
-import Challenges from './Challenges/Challenges';
+import ChallengesCol from './Challenges/ChallengesCol';
 import FeedView from './FeedView/FeedView';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { Options } from './Options/Options';
@@ -9,9 +9,9 @@ const MainPage = () => {
   return (
     <div>
       <div className="columns ">
-        <div className=" justify-center hidden md:flex">
+        <div className=" justify-center hidden lg:flex">
           <p className="h3">
-            <Challenges />
+            <ChallengesCol />
           </p>
         </div>
         <div>

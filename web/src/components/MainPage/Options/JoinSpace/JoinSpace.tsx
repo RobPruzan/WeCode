@@ -1,13 +1,14 @@
-import { SelectChangeEvent } from '@mui/material/Select';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { SpaceActions } from '../../../../redux/reducers/spaces';
-import { RootState } from '../../../../redux/store';
-import WeCode from '../../../../services/connections';
-import { PrimaryCard } from '../../../PrimaryCard';
 import { DropDown, MenuData } from '../DropDown';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { JoinSpaceButton } from './JoinSpaceButton';
+import { PrimaryCard } from '../../../PrimaryCard';
+import { RootState } from '../../../../redux/store';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { SpaceActions } from '../../../../redux/reducers/spaces';
+import WeCode from '../../../../services/connections';
+import { useQuery } from 'react-query';
+import { useState } from 'react';
 
 export const PUBLIC_SPACE = 1;
 

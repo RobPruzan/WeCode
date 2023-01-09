@@ -4,7 +4,9 @@ import {
   TextField,
   UseAutocompleteProps,
 } from '@mui/material';
+
 import { TypAheadChangeHandler } from '../MainPage/Options/CreateSpace/CreateSpace';
+
 export type TypeAheadOption = {
   label: string;
   id: string;
@@ -23,8 +25,10 @@ export const TypeAhead = ({
   label,
   changeHandler,
   members,
+
   ...props
 }: TypeAheadProps) => {
+  console.log('whats the difference', props.options, members);
   return (
     <Stack spacing={3}>
       <Autocomplete

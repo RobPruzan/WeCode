@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { SpaceActions } from '../../../../redux/reducers/spaces';
-import { RootState } from '../../../../redux/store';
-import WeCode from '../../../../services/connections';
-import { CustomTextField } from '../../../CustomTextField';
-import { TypeAheadOption } from '../../../utils/TypeAhead';
+
 import { CreateSpaceButton } from './CreateSpaceButton';
+import { CustomTextField } from '../../../CustomTextField';
+import { RootState } from '../../../../redux/store';
+import { SpaceActions } from '../../../../redux/reducers/spaces';
 import { SpaceDescription } from './SpaceDescription';
 import { SpaceUsers } from './SpaceUsers';
+import { TypeAheadOption } from '../../../utils/TypeAhead';
+import WeCode from '../../../../services/connections';
+import { useMutation } from 'react-query';
 
 export type TypAheadChangeHandler = (
   event: React.SyntheticEvent<Element, Event>,
@@ -78,23 +79,26 @@ const CreateSpace = () => {
   };
 
   return (
-    <form style={{ width: '18em' }} className="p-4">
+    <form
+      style={{ maxWidth: '18em' }}
+      className="p-4  border-2 border-neon-blue rounded-lg"
+    >
       <p className="h2 mx-2 mb-4">Create Space</p>
       <CustomTextField
         value={spaceInfo.name}
-        className="mb-2 w-100"
+        className="mb-2 w-60"
         label="Space Name"
         handleChange={handleNameChange}
       />
       <SpaceUsers
-        className="my-2"
+        className="my-2 w-60"
         changeHandler={handleUsersChange}
         members={spaceInfo.members}
       />
       <SpaceDescription
         value={spaceInfo.description}
         handleChange={handleDescriptionChange}
-        className="my-2 w-100"
+        className="my-2 w-60"
         isMultiline={true}
         rows={6}
       />
