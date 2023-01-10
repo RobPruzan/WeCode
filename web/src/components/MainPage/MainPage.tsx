@@ -3,7 +3,7 @@ import IconDock, { DockLocation } from '../Navbars/IconDock';
 import ChallengesCol from './Challenges/ChallengesCol';
 import FeedView from './FeedView/FeedView';
 import { MainNavbar } from '../Navbars/MainNavbar';
-import { Options } from './Options/Options';
+import { SpaceOptions } from './Options/Options';
 
 const MainPage = () => {
   return (
@@ -43,10 +43,10 @@ const MainPage = () => {
             <IconDock location={DockLocation.SEND} />
           </div>
 
-          <Options />
+          <SpaceOptions />
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 export default MainPage;

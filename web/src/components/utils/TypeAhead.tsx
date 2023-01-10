@@ -20,12 +20,13 @@ export type TypeAheadProps = UseAutocompleteProps<
   label: string;
   changeHandler: TypAheadChangeHandler;
   members: TypeAheadOption[];
+  placeholder:string
 };
 export const TypeAhead = ({
   label,
   changeHandler,
   members,
-
+  placeholder,
   ...props
 }: TypeAheadProps) => {
   console.log('whats the difference', props.options, members);
@@ -74,8 +75,8 @@ export const TypeAhead = ({
                 backgroundColor: '#141414',
               },
             }}
-            label="Select Users"
-            placeholder="Users"
+            label={label}
+            placeholder={placeholder}
           />
         )}
       />

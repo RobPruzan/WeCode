@@ -4,14 +4,10 @@ export type PrimaryCardProps = {
   children?: React.ReactNode;
   style?: React.CSSProperties;
 };
-export const PrimaryCard = ({
-  className,
-  children,
-  style,
-}: PrimaryCardProps) => {
+export const PrimaryCard = ({className,children,style,}: PrimaryCardProps) => {
   return (
     <div
-      className={`d-flex flex-column align-items-center m-3 ${className}`}
+      className={`flex flex-column items-center m-3 ${className}`}
       style={{
         border: '1px solid #43bbff',
         borderRadius: '10px',
