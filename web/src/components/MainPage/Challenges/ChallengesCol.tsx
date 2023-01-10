@@ -129,6 +129,11 @@ export const difficultyMap = (difficulty: string) => {
 export const NO_ACTIVE_QUIZES = -1;
 const ChallengesCol = () => {
   const [activeQuiz, seActiveQuiz] = useState(NO_ACTIVE_QUIZES);
+  // defined in the card to avoid re-initializing the function on every render in the quiz component
+  const handleExitChallenge = () => {
+    seActiveQuiz(NO_ACTIVE_QUIZES);
+  };
+
   return (
     <div className="flex flex-col   h-full w-full overflow-y-scroll p-4  ">
       {activeQuiz === NO_ACTIVE_QUIZES && (
@@ -143,6 +148,7 @@ const ChallengesCol = () => {
 
       {DummyCodingChallenges.map((challenge, index) => (
         <ChallengeCard
+          handleExitChallenge={handleExitChallenge}
           activeQuiz={activeQuiz}
           setActiveQuiz={seActiveQuiz}
           challenge={challenge}

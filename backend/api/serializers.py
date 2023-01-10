@@ -1,6 +1,6 @@
 from tokenize import Comment
 from rest_framework import serializers
-from .models import Post, Space, User
+from .models import Post, Space, User, Challenge
 
 
 class UserSeralizerMinimal(serializers.ModelSerializer):
@@ -86,3 +86,26 @@ class CommentSerializer(serializers.ModelSerializer):
         # Add the number of members to the serialized data
         representation["num_replies"] = instance.replies.count()
         return representation
+
+
+class Challenge(serializers.Serializer):
+    author = UserSerializer()
+    users_that_succeeded = UserSerializer(many=True)
+    users_that_failed = UserSerializer(many=True)
+    users_that_attempted = UserSerializer(many=True)
+
+    class Meta:
+        model = Challenge
+        fields = (
+            "id",
+            "title",
+            "description",
+            "date",
+            "space",
+            "author",
+            "difficulty",
+            "answer",
+            "users_that_succeeded",
+            "users_that_failed",
+            "users_that_attempted",
+        )
