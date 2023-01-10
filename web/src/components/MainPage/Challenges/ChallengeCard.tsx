@@ -124,7 +124,6 @@ const ChallengeCard = ({
                 className="   m-4 flex flex-col   "
               >
                 <div className="flex">
-                  {/* <p>Description:</p> */}
                   <div
                     // fdsfasdf
                     style={{
@@ -136,7 +135,7 @@ const ChallengeCard = ({
                       style={{
                         overflowWrap: 'anywhere',
                       }}
-                      className=" break-words text-start"
+                      className=" break-words text-start "
                     >
                       {challenge.description}
                       {challenge.description}
