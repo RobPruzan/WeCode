@@ -1,5 +1,5 @@
-import { TextField } from '@mui/material';
 import { ChangeEventHandler } from 'react';
+import { TextField } from '@mui/material';
 
 export type CustomTextFieldProps = {
   label: string;
@@ -28,7 +28,7 @@ export const CustomTextField = ({
       InputProps={{
         style: {
           color: 'white',
-          background: '#141414',
+          backgroundColor: '#141414',
         },
       }}
       sx={{

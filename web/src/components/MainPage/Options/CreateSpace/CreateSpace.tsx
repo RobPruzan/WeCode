@@ -86,7 +86,7 @@ const CreateSpace = () => {
       <p className="h2 mx-2 mb-4">Create Space</p>
       <CustomTextField
         value={spaceInfo.name}
-        className="mb-2 w-60"
+        className="mb-2 w-60 "
         label="Space Name"
         handleChange={handleNameChange}
       />

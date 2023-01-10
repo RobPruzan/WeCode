@@ -1,6 +1,8 @@
-import TextField from '@mui/material/TextField';
-import { Dispatch, SetStateAction } from 'react';
 import { Comment, PostContent } from '../../../../../../services/connections';
+import { Dispatch, SetStateAction } from 'react';
+
+import TextField from '@mui/material/TextField';
+
 export type InputTextProps = {
   // setCurrentPostInfo: Dispatch<SetStateAction<PostContent>> | Dispatch<SetStateAction<Comment>>
   // currentPostInfo: PostContent | Comment;
@@ -28,7 +30,6 @@ export const InputText = ({
           borderBottomColor: 'white',
         },
 
-        background: '#141414',
         fontFamily: 'inherit',
         ...style,
       }}
@@ -38,7 +39,6 @@ export const InputText = ({
       InputProps={{
         style: {
           color: 'white',
-          background: '#141414',
         },
       }}
       fullWidth
