@@ -57,3 +57,20 @@ class Comment(models.Model):
     comments = models.ManyToManyField("self", blank=True)
     up_votes = models.IntegerField(default=0, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+
+class Challenge(models.Model):
+    title = models.CharField(max_length=200, default="", blank=True, null=True)
+    description = models.CharField(max_length=2000, default="", blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    space = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    difficulty = models.IntegerField(default=1, blank=True, null=True)
+    answer = models.IntegerField(default=0, blank=True, null=True)
+    users_that_succeeded = models.ManyToManyField(
+        User, blank=True, related_name="succeeded"
+    )
+    users_that_failed = models.ManyToManyField(User, blank=True, related_name="failed")
+    users_that_attempted = models.ManyToManyField(
+        User, blank=True, related_name="attempted"
+    )

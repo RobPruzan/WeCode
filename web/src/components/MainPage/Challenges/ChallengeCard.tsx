@@ -45,12 +45,14 @@ export type ChallengeCardProps = {
   index: number;
   activeQuiz: number;
   setActiveQuiz: Dispatch<SetStateAction<number>>;
+  handleExitChallenge: VoidFunction;
 };
 const ChallengeCard = ({
   challenge,
   index,
   activeQuiz,
   setActiveQuiz,
+  handleExitChallenge,
 }: ChallengeCardProps) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -58,11 +60,9 @@ const ChallengeCard = ({
     setExpanded(false);
     setActiveQuiz(index);
   };
-  // move this one component up
-  const handleExitChallenge = () => setActiveQuiz(NO_ACTIVE_QUIZES);
 
   return (
-    <div>
+    <>
       {activeQuiz !== NO_ACTIVE_QUIZES ? (
         activeQuiz === index && (
           <div
@@ -90,7 +90,7 @@ const ChallengeCard = ({
             <Collapsible
               overflowWhenOpen="visible"
               transitionTime={150}
-              onOpen={() => setExpanded(true)}
+              onOpening={() => setExpanded(true)}
               onClosing={() => setExpanded(false)}
               trigger={
                 <div
@@ -173,7 +173,7 @@ const ChallengeCard = ({
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 
