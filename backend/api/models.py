@@ -75,6 +75,8 @@ class Challenge(models.Model):
         User, blank=True, related_name="attempted"
     )
 
+    # a test here
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=2000, default="", blank=True, null=True)
