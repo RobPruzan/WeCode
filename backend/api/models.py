@@ -76,6 +76,7 @@ class Challenge(models.Model):
     )
 
     # a test here
+    # joe's test(8[3])
 
 
 class Answer(models.Model):
