@@ -212,3 +212,13 @@ class FollowingView(APIView):
         following = user.following.all()
         serializer = UserSerializer(following, many=True)
         return Response(serializer.data)
+
+
+# class ChallengeView(APIView):
+#     def get(self, request, *args, **kwargs):
+#         pass
+#     def post(self, request, *args, **kwargs):
+#         user_id = request.data.get("user_id")
+#         challenge_id = request.data.get("challenge_id")
+#         if user_id is None or challenge_id is None:
+#             return Response("Invalid User IDs Provided")
