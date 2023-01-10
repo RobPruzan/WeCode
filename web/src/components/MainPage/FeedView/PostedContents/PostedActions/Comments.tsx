@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import useCollapse from 'react-collapsed';
-import CommentIcon from '@mui/icons-material/Comment';
-import Collapsible from 'react-collapsible';
-import { InputText } from '../../Post/Tabs/TextTab/InputText';
 import { Comment, PostContent } from '../../../../../services/connections';
+import React, { useState } from 'react';
+
+import Collapsible from 'react-collapsible';
+import CommentIcon from '@mui/icons-material/Comment';
+import { InputText } from '../../Post/Tabs/TextTab/InputText';
 import { PrimaryCard } from '../../../../PrimaryCard';
 import SendIcon from '@mui/icons-material/Send';
+import useCollapse from 'react-collapsed';
 
 export type CommentsProps = {
   className?: string;
@@ -31,7 +32,7 @@ export const Comments = ({ className }: CommentsProps) => {
       onClose={() => setExpanded(false)}
       trigger={
         <PrimaryCard
-          className="d-flex justify-content-center p-1"
+          className="d-flex justify-content-center p-1 "
           style={{
             maxWidth: '93%',
           }}

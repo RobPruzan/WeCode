@@ -1,5 +1,6 @@
-import { Button } from '@mui/material';
 import React, { useEffect } from 'react';
+
+import { Button } from '@mui/material';
 import { SpaceInfo } from './CreateSpace';
 export type CreateSpaceButtonProps = {
   className?: string;

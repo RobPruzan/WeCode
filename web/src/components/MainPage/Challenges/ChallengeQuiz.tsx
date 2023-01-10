@@ -1,37 +1,55 @@
 import React, { useEffect, useState } from 'react';
 
+import { ChallengeInfo } from './ChallengesCol';
 import LinearProgress from '@mui/material/LinearProgress';
+import Radio from '@material-ui/core/Radio';
+import green from '@material-ui/core/colors/green';
 
 export type ChallengeQuizProps = {
   activeQuiz: number;
-  title: string;
+  challenge: ChallengeInfo;
   handleExitChallenge: () => void;
 };
+const styles = {
+  root: {
+    color: green[600],
+    '&$checked': {
+      color: green[500],
+    },
+  },
+  checked: {},
+};
+
 const ChallengeQuiz = ({
   activeQuiz,
+  challenge,
   handleExitChallenge,
-  title,
 }: ChallengeQuizProps) => {
-  const [timer, setTimer] = useState(0);
+  const [count, setCount] = useState(0);
+
   useEffect(() => {
-    setTimer(0);
-    const timer = setInterval(() => {
-      setTimer(prev => {
-        return prev + 1;
-      });
+    const interval = setInterval(() => {
+      if (count < 100) {
+        setCount(count + 1);
+      }
     }, 100);
-  }, [activeQuiz]);
+
+    return () => clearInterval(interval);
+  }, [count]);
+  console.log(count);
   return (
-    <div>
-      <LinearProgress variant="determinate" value={timer} />
-      <p className="h3">{title}</p>
+    <>
+      <LinearProgress variant="determinate" value={count} />
+      <p className="h3">{challenge.title}</p>
+      <p className="h3">{challenge.description}</p>
+      <div className=""></div>
       <button
         onClick={handleExitChallenge}
         className="bg-neon-blue hover:bg-blue-500 rounded-lg shadow-lg text-white p-2 m-2"
       >
         exit
       </button>
-    </div>
+    </>
   );
 };
 

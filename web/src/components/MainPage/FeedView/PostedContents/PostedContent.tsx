@@ -83,7 +83,7 @@ export const PostedContent = ({
         <p className="w-10">{user?.name[0]}</p>
       </div> */}
 
-      <Card sx={cardStyle} className={className}>
+      <div className={`border-2 border-neon-blue rounded-lg p-2 ${className}`}>
         {/* a circle float left top 0 */}
 
         <div style={{ float: 'right', marginLeft: '1em', marginBottom: '1em' }}>
@@ -115,7 +115,7 @@ export const PostedContent = ({
 
         <hr />
         {canComment && <Comments />}
-      </Card>
+      </div>
     </div>
   );
 };

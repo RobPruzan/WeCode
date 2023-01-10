@@ -9,18 +9,29 @@ const MainPage = () => {
   return (
     <div>
       <div className="columns ">
-        <div className=" justify-center hidden lg:flex">
+        <div
+          style={{
+            minWidth: '30vw',
+          }}
+          className=" justify-center hidden md:flex"
+        >
           <p className="h3">
             <ChallengesCol />
           </p>
         </div>
         <div>
-          <div className=" sm:hidden">
+          <div
+            style={{
+              backgroundColor:
+                'rgb(15 23 42 / var(--tw-bg-opacity)) !important',
+            }}
+            className=" sm:hidden "
+          >
             <MainNavbar location={DockLocation.HOME} />
           </div>
           <FeedView />
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden lg:block">
           <div
             className=" justify-evenly align-middle "
             style={{

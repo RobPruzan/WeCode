@@ -65,9 +65,13 @@ export const TypeAhead = ({
             {...params}
             InputProps={{
               ...params.InputProps,
+              // className: 'bg-slate-800',
               style: {
                 color: 'white',
-                background: '#141414',
+                // background: ''
+                opacity: 1,
+
+                backgroundColor: '#141414',
               },
             }}
             label="Select Users"

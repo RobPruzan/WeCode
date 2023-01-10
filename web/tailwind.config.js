@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         'neon-blue': '#43bbff',
         'custom-gray': '#2D2D2F',
+        'custom-dark-gray': '#141414',
       },
     },
   },
