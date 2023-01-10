@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { UserReducer } from '../../../redux/reducers/user';
 import { RootState } from '../../../redux/store';
-import WeCode from '../../../services/connections';
+import WeCode, { User } from '../../../services/connections';
 import UserAccess from '../../Account/UserAccess';
 import { Users } from '../../Users/Users';
 import { TypeAhead, TypeAheadOption } from '../../utils/TypeAhead'
@@ -14,19 +14,29 @@ const languageNames = [{label:'JavaScript',id:1},{label:'Python',id:2},{label:'J
 {label:'C++',id:5},{label:'C#',id:6},{label:'Go',id:7},{label:'Ruby',id:8},{label:'Rust',id:9},{label:'Swift',id:10},
 {label:'Php',id:11},{label:'Sql',id:12},{label:'Kotlin',id:13},{label:'Scala',id:14}]
 
+const DEFAULT_FILTERS:Filters = {languages:[],names:[]}
+
+export type Filters = {
+  languages:TypeAheadOption[]
+  names:TypeAheadOption[]
+}
+
 const LanguageOptions = () => {
   const [chosenLanguages, setChosenLanguages] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
-  const [chosenUsers, setChosenUsers] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
+  // const [chosenUsers, setChosenUsers] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   const user = useSelector(
     ({userState}:RootState) => userState.user
   )
+// useState<typeOfVariable>(initialValueOfVariable)
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
   const {data, isLoading, isError, isSuccess, error} = useQuery(
     ['following'],
-    () => user && WeCode.getFollowing(user.id) 
+    () => user && WeCode.getFollowing(user.id),
+    // {onSuccess: (data) => setSelectedFollowing(data)} 
   )
   const following = data ?? []
   const followerNames = following.map((user) => ({id:String(user.id), label:user.name}))
-  const [selectedFollowing, setSelectedFollowing] = useState(followerNames)
+
   const handleLangChange: TypAheadChangeHandler = (
     event,
     newValue
@@ -39,7 +49,7 @@ const LanguageOptions = () => {
     event,
     newValue
   ) => {
-    setChosenUsers(prev => ({ ...prev,}))
+    setFilters(prev => ({ ...prev, names:newValue}))
   }
   
   return (
@@ -55,10 +65,10 @@ const LanguageOptions = () => {
          />
         <div className='p-8'/>
           <TypeAhead 
-          options={following}
+          options={followerNames}
           label='Select Users'
           changeHandler={handleUserChange}
-          members={followerNames}
+          members={filters.names}
           placeholder='Users'
          />
             </div>
