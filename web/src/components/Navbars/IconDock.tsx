@@ -11,6 +11,7 @@ export enum DockLocation {
   'DIAMOND',
   'ACCOUNT',
 }
+
 export type IconDockProps = {
   location: DockLocation;
 };

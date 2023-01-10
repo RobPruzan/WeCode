@@ -30,6 +30,7 @@ export const SpaceUsers = ({
           label="Select Users"
           options={data}
           changeHandler={changeHandler}
+          placeholder="Users"
         />
       )}
     </div>

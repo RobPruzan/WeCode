@@ -25,7 +25,7 @@ export type SpaceInfo = {
   description: string;
 };
 
-const DEFAULT_SPACE_INFO = {
+export const DEFAULT_SPACE_INFO = {
   name: '',
   members: [],
   description: '',
@@ -61,8 +61,8 @@ const CreateSpace = () => {
   };
 
   const handleUsersChange: TypAheadChangeHandler = (
-    event: React.SyntheticEvent<Element, Event>,
-    newValue: TypeAheadOption[]
+    event,
+    newValue
   ) => {
     // const users = newValue.map(user => user.id);
     setSpaceInfo(prev => ({ ...prev, members: newValue }));
