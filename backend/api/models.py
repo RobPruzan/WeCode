@@ -74,3 +74,10 @@ class Challenge(models.Model):
     users_that_attempted = models.ManyToManyField(
         User, blank=True, related_name="attempted"
     )
+
+
+class Answer(models.Model):
+    text = models.CharField(max_length=2000, default="", blank=True, null=True)
+    challenge = models.ForeignKey(
+        Challenge, on_delete=models.CASCADE, blank=True, null=True
+    )
