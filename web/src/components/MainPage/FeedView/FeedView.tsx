@@ -5,7 +5,7 @@ import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
 import { PostTabs } from './Post/Tabs/PostTabs';
 import { PostedContents } from './PostedContents/PostedContents';
 import { RootState } from '../../../redux/store';
-import { useGetPosts } from '../../../hooks/useGetPosts';
+import { useGetPosts } from '../../../hooks/PostHooks/useGetPosts';
 import { useSelector } from 'react-redux';
 import { useUsersQuery } from '../../../hooks/useUsersQuery';
 

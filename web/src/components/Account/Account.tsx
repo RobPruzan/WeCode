@@ -9,7 +9,7 @@ import { PostedContents } from '../MainPage/FeedView/PostedContents/PostedConten
 import { RootState } from '../../redux/store';
 import UserAccess from './UserAccess';
 import { useFollowUserAction } from '../../hooks/useFollowUserAction';
-import { useGetUserPosts } from '../../hooks/useGetUserPosts';
+import { useGetUserPosts } from '../../hooks/PostHooks/useGetUserPosts';
 import { useSelector } from 'react-redux';
 import { useUsersQuery } from '../../hooks/useUsersQuery';
 

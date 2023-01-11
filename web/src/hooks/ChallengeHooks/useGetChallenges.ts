@@ -1,5 +1,5 @@
-import { RootState } from '../redux/store';
-import WeCode from '../services/connections';
+import { RootState } from '../../redux/store';
+import WeCode from '../../services/connections';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 

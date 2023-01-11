@@ -72,8 +72,6 @@ class Challenge(models.Model):
     space = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     difficulty = models.IntegerField(default=1, blank=True, null=True)
-    # technologies =
-    # Answer is in string because the model is defined below (not in scope)
     correct_answer = models.OneToOneField(
         "Answer",
         related_name="question",
@@ -88,9 +86,6 @@ class Challenge(models.Model):
     users_that_attempted = models.ManyToManyField(
         User, blank=True, related_name="attempted"
     )
-
-    # def __str__(self):
-    #     return f"Title:{self.title}, Description:{self.description}, Date:{self.date}, Space:{self.space}, Author:{self.author}, Difficulty:{self.difficulty}, Correct Answer:{self.correct_answer}, Users that succeeded:{self.users_that_succeeded}, Users that failed:{self.users_that_failed}, Users that attempted:{self.users_that_attempted}"
 
 
 class Answer(models.Model):

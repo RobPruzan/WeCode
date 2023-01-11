@@ -4,7 +4,7 @@ import { BsPlusCircle } from 'react-icons/bs';
 import ChallengeCard from './ChallengeCard';
 import CreateChallenge from './CreateChallenge/CreateChallenge';
 import { RootState } from '../../../redux/store';
-import { useGetChallenges } from '../../../hooks/useGetChallenges';
+import { useGetChallenges } from '../../../hooks/ChallengeHooks/useGetChallenges';
 import { useSelector } from 'react-redux';
 
 export type ChallengeInfo = {
