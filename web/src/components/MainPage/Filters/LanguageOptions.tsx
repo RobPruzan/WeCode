@@ -8,7 +8,7 @@ import WeCode, { User } from '../../../services/connections';
 import UserAccess from '../../Account/UserAccess';
 import { Users } from '../../Users/Users';
 import { TypeAhead, TypeAheadOption } from '../../utils/TypeAhead'
-import { ChangeHandler, DEFAULT_SPACE_INFO, SpaceInfo, TypAheadChangeHandler } from '../Options/CreateSpace/CreateSpace';
+import { ChangeHandler, DEFAULT_SPACE_INFO, FilterChangeHandler, SpaceInfo, TypAheadChangeHandler} from '../Options/CreateSpace/CreateSpace';
 
 const languageNames = [{label:'JavaScript',id:1},{label:'Python',id:2},{label:'Java',id:3},{label:'C',id:4},
 {label:'C++',id:5},{label:'C#',id:6},{label:'Go',id:7},{label:'Ruby',id:8},{label:'Rust',id:9},{label:'Swift',id:10},
@@ -22,7 +22,7 @@ export type Filters = {
 }
 
 const LanguageOptions = () => {
-  const [chosenLanguages, setChosenLanguages] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
+  // const [chosenLanguages, setChosenLanguages] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   // const [chosenUsers, setChosenUsers] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   const user = useSelector(
     ({userState}:RootState) => userState.user
@@ -39,21 +39,15 @@ const LanguageOptions = () => {
   )
   const following = data ?? []
   const followerNames = useMemo(() => following.map((user) => ({id:String(user.id), label:user.name})), [following])
-  const handleLangChange: TypAheadChangeHandler = (
+ 
+  const handleFilterChange: FilterChangeHandler = (
     event,
-    newValue
+    newValue,
+    filterChoice
   ) => {
     // const users = newValue.map(user => user.id);
-    setChosenLanguages(prev => ({ ...prev, members: newValue }));
+    setFilters((prev):Filters=> ({ ...prev, [filterChoice]: newValue }));
   };
-
-  const handleUserChange: TypAheadChangeHandler = (
-    event,
-    newValue
-  ) => {
-    setFilters(prev => ({ ...prev, names:newValue}))
-  }
-  
   return (
     <div className = 'hidden sm:flex flex-col p-5' >
         <div className='text-center justify-center h-80 w-96 rounded-3xl border-2 m-3 p-3 border-blue-400'>
@@ -61,15 +55,15 @@ const LanguageOptions = () => {
               <TypeAhead 
           options={languageNames}
           label='Select Languages'
-          changeHandler={handleLangChange}
-          members={chosenLanguages.members}
+          changeHandler={(event, newValue) => handleFilterChange(event, newValue, 'languages')}
+          members={filters.languages}
           placeholder='Languages'
          />
         <div className='p-8'/>
           <TypeAhead 
           options={followerNames}
           label='Select Users'
-          changeHandler={handleUserChange}
+          changeHandler={(event, newValue) => handleFilterChange(event, newValue, 'names')}
           members={filters.names}
           placeholder='Users'
          />

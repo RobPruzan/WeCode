@@ -10,10 +10,19 @@ import { SpaceUsers } from './SpaceUsers';
 import { TypeAheadOption } from '../../../utils/TypeAhead';
 import WeCode from '../../../../services/connections';
 import { useMutation } from 'react-query';
+import { Filters } from '../../Filters/LanguageOptions';
+
+export type FilterChangeHandler = (
+  event: React.SyntheticEvent<Element, Event>,
+  newValue: TypeAheadOption[],
+  // only takes key of Filters (names or languages)
+  filterChoice: keyof Filters
+) => void;
 
 export type TypAheadChangeHandler = (
   event: React.SyntheticEvent<Element, Event>,
-  newValue: TypeAheadOption[]
+  newValue: TypeAheadOption[],
+  // only takes key of Filters (names or languages)
 ) => void;
 export type ChangeHandler = (
   event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
