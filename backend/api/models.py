@@ -76,8 +76,8 @@ class Challenge(models.Model):
     )
 
 
-class Answer(models.Model):
-    text = models.CharField(max_length=2000, default="", blank=True, null=True)
-    challenge = models.ForeignKey(
-        Challenge, on_delete=models.CASCADE, blank=True, null=True
-    )
+# class Answer(models.Model):
+#     text = models.CharField(max_length=2000, default="", blank=True, null=True)
+#     challenge = models.ForeignKey(
+#         Challenge, on_delete=models.CASCADE, blank=True, null=True
+#     )
