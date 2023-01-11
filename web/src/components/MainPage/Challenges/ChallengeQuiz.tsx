@@ -27,11 +27,19 @@ const ChallengeQuiz = ({
 }: ChallengeQuizProps) => {
   const [selection, setSelection] = useState<number>();
   const [correct, setCorrect] = useState<boolean | null>(null);
+  const handleAnswer = () => {
+    if (selection === challenge.correct_answer) {
+      setCorrect(true);
+    } else {
+      setCorrect(false);
+    }
+  };
+
   return (
     <>
       {correct === null ? (
         <>
-          <ChallengeProgressBar />
+          <ChallengeProgressBar handleAnswer={handleAnswer} />
           <p className="h3 mt-2">{challenge.title}</p>
           <p
             style={{
@@ -72,13 +80,7 @@ const ChallengeQuiz = ({
               Exit
             </button>
             <button
-              onClick={() => {
-                if (selection === challenge.correct_answer) {
-                  setCorrect(true);
-                } else {
-                  setCorrect(false);
-                }
-              }}
+              onClick={handleAnswer}
               className="bg-neon-blue hover:bg-sky-500 rounded-lg shadow-lg text-white p-2 w-50 "
             >
               Submit

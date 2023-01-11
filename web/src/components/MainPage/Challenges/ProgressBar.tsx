@@ -2,12 +2,18 @@ import { useEffect, useState } from 'react';
 
 import { LinearProgress } from '@mui/material';
 
-const ChallengeProgressBar = () => {
+export type ChallengeProgressBarProps = {
+  handleAnswer: VoidFunction;
+};
+
+const ChallengeProgressBar = ({ handleAnswer }: ChallengeProgressBarProps) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      if (count < 300) {
+      if (count < 200) {
         setCount(count + 1);
+      } else {
+        handleAnswer();
       }
     }, 100);
 
@@ -15,7 +21,7 @@ const ChallengeProgressBar = () => {
   }, [count]);
 
   return (
-    <LinearProgress color="info" variant="determinate" value={count / 3} />
+    <LinearProgress color="info" variant="determinate" value={count / 2} />
   );
 };
 
