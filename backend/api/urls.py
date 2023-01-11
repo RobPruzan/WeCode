@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from .views import (
+    ChallengeView,
     CommentsView,
     FollowView,
     FollowingView,
@@ -26,4 +27,5 @@ urlpatterns = [
         "api/unfollow/<int:user_id>/<int:user_to_unfollow_id>", UnfollowView.as_view()
     ),
     path("api/following/<int:user_id>", FollowingView.as_view()),
+    path("api/challenge/<int:challenge_id>", ChallengeView.as_view()),
 ]

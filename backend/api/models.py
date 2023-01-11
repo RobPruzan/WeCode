@@ -17,12 +17,12 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)
     comments = models.IntegerField(default=0, blank=True, null=True)
-    langauge = models.CharField(max_length=200, default="", blank=True, null=True)
+    language = models.CharField(max_length=200, default="", blank=True, null=True)
     space = models.ForeignKey("Space", on_delete=models.CASCADE, blank=True, null=True)
     flair = models.CharField(max_length=200, default="", blank=True, null=True)
 
     def str(self):
-        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, comments: {self.comments}, langauge: {self.langauge}, room: {self.room}"
+        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, comments: {self.comments}, langauge: {self.language}, room: {self.room}"
 
 
 class Test(models.Model):
@@ -59,6 +59,11 @@ class Comment(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
+class Technology(models.Model):
+    name = models.CharField(max_length=200, default="", blank=True, null=True)
+    description = models.CharField(max_length=2000, default="", blank=True, null=True)
+
+
 class Challenge(models.Model):
     title = models.CharField(max_length=200, default="", blank=True, null=True)
     description = models.CharField(max_length=2000, default="", blank=True, null=True)
@@ -66,7 +71,15 @@ class Challenge(models.Model):
     space = models.ForeignKey(Space, on_delete=models.CASCADE, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     difficulty = models.IntegerField(default=1, blank=True, null=True)
-    answer = models.IntegerField(default=0, blank=True, null=True)
+    # technologies =
+    # Answer is in string because the model is defined below (not in scope)
+    correct_answer = models.OneToOneField(
+        "Answer",
+        related_name="question",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     users_that_succeeded = models.ManyToManyField(
         User, blank=True, related_name="succeeded"
     )
@@ -75,9 +88,16 @@ class Challenge(models.Model):
         User, blank=True, related_name="attempted"
     )
 
+    def __str__(self):
+        return f"Title:{self.title}, Description:{self.description}, Date:{self.date}, Space:{self.space}, Author:{self.author}, Difficulty:{self.difficulty}, Correct Answer:{self.correct_answer}, Users that succeeded:{self.users_that_succeeded}, Users that failed:{self.users_that_failed}, Users that attempted:{self.users_that_attempted}"
 
-# class Answer(models.Model):
-#     text = models.CharField(max_length=2000, default="", blank=True, null=True)
-#     challenge = models.ForeignKey(
-#         Challenge, on_delete=models.CASCADE, blank=True, null=True
-#     )
+
+class Answer(models.Model):
+    text = models.CharField(max_length=2000, default="", blank=True, null=True)
+    challenge = models.ForeignKey(
+        Challenge,
+        related_name="answer",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
