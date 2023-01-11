@@ -1,19 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import WeCode, { PostContent } from '../../services/connections';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
-import { Button } from '@mui/material';
 import { CustomTextField } from '../CustomTextField';
 import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
-import { PostedContent } from '../MainPage/FeedView/PostedContents/PostedContent';
 import { PostedContents } from '../MainPage/FeedView/PostedContents/PostedContents';
 import { RootState } from '../../redux/store';
 import UserAccess from './UserAccess';
 import { useFollowUserAction } from '../../hooks/useFollowUserAction';
-import { useGetPosts } from '../../hooks/useGetPosts';
 import { useGetUserPosts } from '../../hooks/useGetUserPosts';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useUsersQuery } from '../../hooks/useUsersQuery';
 

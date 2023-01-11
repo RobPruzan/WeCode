@@ -36,16 +36,7 @@ const UserAccess = () => {
   return (
     <>
       {user ? (
-        <>
-          {/* Logged in as: {user.name}
-          <Button
-            className="mx-2"
-            onClick={() => handleLogout()}
-            variant="contained"
-          >
-            Logout
-          </Button> */}
-        </>
+        <></>
       ) : (
         <div className="justify-content-center">
           <p className="h3 mt-2">Login</p>

@@ -1,6 +1,7 @@
 from tokenize import Comment
 from rest_framework import serializers
 from .models import Post, Space, User, Challenge, Answer
+from print_color import print
 
 
 class UserSerializerMinimal(serializers.ModelSerializer):
@@ -88,6 +89,15 @@ class CommentSerializer(serializers.ModelSerializer):
         return representation
 
 
+class ChallengeSerializerMinimal(serializers.ModelSerializer):
+    class Meta:
+        model = Challenge
+        fields = (
+            "id",
+            "title",
+        )
+
+
 class ChallengeSerializer(serializers.ModelSerializer):
     author = UserSerializerMinimal()
     users_that_succeeded = UserSerializerMinimal(many=True)
@@ -96,13 +106,21 @@ class ChallengeSerializer(serializers.ModelSerializer):
     space = SpaceSerializerMinimal()
     author = UserSerializerMinimal()
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["answers"] = AnswerSerializer(
+            instance.answer.all(), many=True
+        ).data
+        return representation
+
     class Meta:
         model = Challenge
         fields = "__all__"
 
 
-class AnswerSerializer(serializers.Serializer):
-    challenge = ChallengeSerializer()
+class AnswerSerializer(serializers.ModelSerializer):
+
+    challenge = ChallengeSerializerMinimal()
 
     class Meta:
         model = Answer

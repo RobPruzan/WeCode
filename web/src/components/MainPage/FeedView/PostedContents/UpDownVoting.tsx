@@ -1,6 +1,7 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { Dispatch, SetStateAction, useState } from 'react';
 export type UpDownVotingProps = {
   upVotes: number;
   setUpVotes: Dispatch<SetStateAction<number>>;

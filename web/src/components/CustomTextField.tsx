@@ -39,9 +39,6 @@ export const CustomTextField = ({
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: 'rgba(67, 187, 255, 0.25)',
         },
-        // '&:hover .MuiOutlinedInput-notchedOutline': {
-        //   borderColor: 'rgba(67, 187, 255, 1)',
-        // },
         '&.Mui-focused:hover .MuiOutlinedInput-notchedOutline': {
           borderColor: 'rgba(67, 187, 255, .25)',
         },

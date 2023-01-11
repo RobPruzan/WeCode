@@ -9,7 +9,7 @@ export type PostContent = {
   flair?: string;
   upvotes?: number;
   comments?: number;
-  langauge?: string;
+  language?: string;
   hasCode?: boolean;
 };
 
@@ -31,7 +31,7 @@ export type User = {
   photo: Blob;
 };
 
-export type UserName = {
+export type UserMinimal = {
   id: number;
   label: string;
 };
@@ -42,6 +42,40 @@ export type Space = {
   description: string;
   num_members: number;
   members: User[];
+};
+
+export type SpaceMinimal = {
+  id: number;
+  name: string;
+};
+
+export type AnswerId = number;
+
+export type Answer = {
+  id: AnswerId;
+  challenge: ChallengeMinimal;
+  text: string;
+};
+
+export type ChallengeMinimal = {
+  id: number;
+  title: string;
+};
+
+export type Challenge = {
+  id: number;
+  title: string;
+  users_that_succeeded: UserMinimal[];
+  users_that_failed: UserMinimal[];
+  users_that_attempted: UserMinimal[];
+  author: UserMinimal;
+  space: SpaceMinimal;
+  description: string;
+  question: string;
+  date: Date;
+  difficulty: number;
+  correct_answer: AnswerId;
+  answers: Answer[];
 };
 
 export class WeCodeApi {
@@ -83,7 +117,7 @@ export class WeCodeApi {
     return response.data;
   }
 
-  public async getUsernames(): Promise<UserName[]> {
+  public async getUsernames(): Promise<UserMinimal[]> {
     const response = await axios.get(`${this.baseUrl}/user_names`);
     return response.data;
   }
@@ -120,7 +154,7 @@ export class WeCodeApi {
     });
   }
 
-  public async unfollowerUser(
+  public async unfollowUser(
     user_id: number,
     user_to_unfollow_id: number
   ): Promise<void> {
@@ -136,6 +170,11 @@ export class WeCodeApi {
 
   public async getFollowing(userId: number): Promise<User[]> {
     const response = await axios.get(`${this.baseUrl}/following/${userId}`);
+    return response.data;
+  }
+
+  public async getChallengeAndAnswers(spaceId: number): Promise<Challenge[]> {
+    const response = await axios.get(`${this.baseUrl}/challenge/${spaceId}`);
     return response.data;
   }
 }

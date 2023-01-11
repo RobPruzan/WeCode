@@ -1,9 +1,9 @@
-import Editor from '@monaco-editor/react';
-import { DropDown } from '../../../../Options/DropDown';
-import { SendPost } from '../../Buttons/SendPost';
-import { FLAIRS } from '../PostTabs';
-import { TextTabProps } from '../TextTab/TextTab';
 import CodeLanguage from './CodeLanguage';
+import { DropDown } from '../../../../Options/DropDown';
+import Editor from '@monaco-editor/react';
+import { FLAIRS } from '../PostTabs';
+import { SendPost } from '../../Buttons/SendPost';
+import { TextTabProps } from '../TextTab/TextTab';
 export const SUPPORTED_LANGUAGES = [
   'javascript',
 
@@ -41,8 +41,8 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
         theme="vs-dark"
         height="20vh"
         language={
-          props.currentPostInfo.langauge
-            ? props.currentPostInfo.langauge
+          props.currentPostInfo.language
+            ? props.currentPostInfo.language
             : DEFAULT_PROGRAMMING_LANGUAGE
         }
         options={{ fixedOverflowWidgets: true }}
