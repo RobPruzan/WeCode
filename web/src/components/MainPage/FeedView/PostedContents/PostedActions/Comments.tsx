@@ -1,12 +1,11 @@
-import { Comment, PostContent } from '../../../../../services/connections';
 import React, { useState } from 'react';
 
 import Collapsible from 'react-collapsible';
+import { Comment } from '../../../../../services/connections';
 import CommentIcon from '@mui/icons-material/Comment';
 import { InputText } from '../../Post/Tabs/TextTab/InputText';
 import { PrimaryCard } from '../../../../PrimaryCard';
 import SendIcon from '@mui/icons-material/Send';
-import useCollapse from 'react-collapsed';
 
 export type CommentsProps = {
   className?: string;

@@ -1,35 +1,51 @@
-import { BsArrowDown, BsFillArrowDownCircleFill } from 'react-icons/bs';
-import {
-  ChallengeInfo,
-  NO_ACTIVE_QUIZES,
-  difficultyMap,
-} from './ChallengesCol';
 import { DiPython, DiReact } from 'react-icons/di';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { TbTallymark1, TbTallymark3, TbTallymarks } from 'react-icons/tb';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 
 import { AiOutlineFire } from 'react-icons/ai';
+import { Challenge } from '../../../services/connections';
 import ChallengeQuiz from './ChallengeQuiz';
 import Collapsible from 'react-collapsible';
+import { NO_ACTIVE_QUIZZES } from './ChallengesCol';
 import { Radio } from '@mui/material';
+import { RootState } from '../../../redux/store';
 import { SiTypescript } from 'react-icons/si';
+import { useSelector } from 'react-redux';
 
-const tallyMarkMap = (difficulty: string) => {
+const tallyMarkMap = (difficulty: number) => {
   switch (difficulty) {
-    case 'easy':
+    case 1:
+      return (
+        <div className="flex">
+          <AiOutlineFire fill="#34ebba" size={30} />
+        </div>
+      );
+    case 2:
       return (
         <div className="flex">
           <AiOutlineFire fill="green" size={30} />
+          <AiOutlineFire fill="green" size={30} />
         </div>
       );
-    case 'medium':
+
+    case 3:
+      return (
+        <div className="flex">
+          <AiOutlineFire fill="yellow" size={30} />
+          <AiOutlineFire fill="yellow" size={30} />
+          <AiOutlineFire fill="yellow" size={30} />
+        </div>
+      );
+    case 4:
       return (
         <div className="flex">
           <AiOutlineFire fill="orange" size={30} />
           <AiOutlineFire fill="orange" size={30} />
+          <AiOutlineFire fill="orange" size={30} />
+          <AiOutlineFire fill="orange" size={30} />
         </div>
       );
-    case 'hard':
+
+    case 5:
       return (
         <div className="flex">
           <AiOutlineFire fill="red" size={30} />
@@ -41,7 +57,7 @@ const tallyMarkMap = (difficulty: string) => {
 };
 
 export type ChallengeCardProps = {
-  challenge: ChallengeInfo;
+  challenge: Challenge;
   index: number;
   activeQuiz: number;
   setActiveQuiz: Dispatch<SetStateAction<number>>;
@@ -55,6 +71,12 @@ const ChallengeCard = ({
   handleExitChallenge,
 }: ChallengeCardProps) => {
   const [expanded, setExpanded] = useState(false);
+  const user = useSelector(({ userState }: RootState) => userState.user);
+
+  const userCompletedChallenge = useMemo(
+    () => challenge.users_that_succeeded.some(user => user.id === user.id),
+    [challenge.users_that_succeeded]
+  );
 
   const handleEnterChallenge = (event: any) => {
     setExpanded(false);
@@ -63,11 +85,10 @@ const ChallengeCard = ({
 
   return (
     <>
-      {activeQuiz !== NO_ACTIVE_QUIZES ? (
+      {activeQuiz !== NO_ACTIVE_QUIZZES ? (
         activeQuiz === index && (
           <div
             key={`ChallengeCard-${index}`}
-            // bg-slate-900
             className=" shadow-lg border-2 border-neon-blue  text-white h-fit w-100 p-3 flex flex-col  rounded-md text-center "
           >
             <ChallengeQuiz
@@ -78,9 +99,6 @@ const ChallengeCard = ({
           </div>
         )
       ) : (
-        //
-
-        //
         <>
           <div
             className={`
@@ -108,7 +126,7 @@ const ChallengeCard = ({
                     </p>
                     <Radio
                       disableRipple={true}
-                      checked={challenge.completed}
+                      checked={userCompletedChallenge}
                       value="b"
                       name="radio-buttons"
                       inputProps={{ 'aria-label': 'B' }}
@@ -125,7 +143,6 @@ const ChallengeCard = ({
               >
                 <div className="flex">
                   <div
-                    // fdsfasdf
                     style={{
                       backgroundColor: '#141414',
                     }}
@@ -137,10 +154,6 @@ const ChallengeCard = ({
                       }}
                       className=" break-words text-start "
                     >
-                      {challenge.description}
-                      {challenge.description}
-                      {challenge.description}
-                      {challenge.description}
                       {challenge.description}
                     </p>
                   </div>
@@ -159,7 +172,9 @@ const ChallengeCard = ({
                   </div>
                   <div>
                     <p className="inline">Challengers:</p>{' '}
-                    <p className="inline">{challenge.challengers}</p>
+                    <p className="inline">
+                      {challenge.users_that_attempted.length}
+                    </p>
                   </div>
                   <button
                     onClick={handleEnterChallenge}

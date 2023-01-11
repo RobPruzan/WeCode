@@ -14,7 +14,7 @@ export interface SpaceState {
 }
 
 export const DEFAULT_SPACE_STATE: SpaceState = {
-  currentSpaceId: null,
+  currentSpaceId: 1,
   availableSpaces: null,
   // TODO remove
 };

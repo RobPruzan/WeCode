@@ -1,11 +1,18 @@
+import 'bootstrap/dist/css/bootstrap.css';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import App from './App';
+import { Provider } from 'react-redux';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import App from './App';
-import 'bootstrap/dist/css/bootstrap.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 const theme = createTheme({
+  // make default behavior root: {
+  //   whiteSpace: "unset",
+  //   wordBreak: "break-all"
+  // }
+
   palette: {
     primary: {
       main: '#43bbff',
@@ -13,9 +20,20 @@ const theme = createTheme({
     secondary: {
       main: '#141414',
     },
+    // whitespace unset
   },
+
   typography: {
     fontFamily: 'Montserrat',
+  },
+
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        whiteSpace: 'unset',
+        wordBreak: 'break-all',
+      },
+    },
   },
 });
 

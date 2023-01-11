@@ -29,7 +29,6 @@ export const TypeAhead = ({
   placeholder,
   ...props
 }: TypeAheadProps) => {
-  console.log('whats the difference', props.options, members);
   return (
     <Stack spacing={3}>
       <Autocomplete

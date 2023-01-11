@@ -1,19 +1,13 @@
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { FormControl, Radio, RadioGroup } from '@mui/material';
 
-import { ChallengeInfo } from './ChallengesCol';
-import LinearProgress from '@mui/material/LinearProgress';
+import { Challenge } from '../../../services/connections';
+import ChallengeProgressBar from './ProgressBar';
 import green from '@material-ui/core/colors/green';
+import { useState } from 'react';
 
 export type ChallengeQuizProps = {
   activeQuiz: number;
-  challenge: ChallengeInfo;
+  challenge: Challenge;
   handleExitChallenge: () => void;
 };
 const styles = {
@@ -26,35 +20,18 @@ const styles = {
   checked: {},
 };
 
-const correctAnswer = 'b';
 const ChallengeQuiz = ({
   activeQuiz,
   challenge,
   handleExitChallenge,
 }: ChallengeQuizProps) => {
-  const [count, setCount] = useState(0);
-  const [selection, setSelection] = useState<'a' | 'b' | 'c' | 'd'>();
+  const [selection, setSelection] = useState<number>();
   const [correct, setCorrect] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (count < 300) {
-        setCount(count + 1);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [count]);
-
   return (
     <>
       {correct === null ? (
         <>
-          <LinearProgress
-            color="info"
-            variant="determinate"
-            value={count / 3}
-          />
+          <ChallengeProgressBar />
           <p className="h3 mt-2">{challenge.title}</p>
           <p
             style={{
@@ -62,46 +39,28 @@ const ChallengeQuiz = ({
             }}
             className="border-t-2 border-custom-gray mt-2 p-2"
           >
-            {challenge.description}
+            {challenge.question}
           </p>
           <div className="mr-auto ml-3">
-            <FormControl
-              component="fieldset"
-              onSubmit={() => {
-                if (selection === correctAnswer) {
-                  setCorrect(true);
-                } else {
-                  setCorrect(false);
-                }
-              }}
-            >
+            <FormControl component="fieldset">
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue="female"
                 name="radio-buttons-group"
                 value={selection}
-                onChange={e =>
-                  setSelection(e.target.value as 'a' | 'b' | 'c' | 'd')
-                }
+                onChange={e => setSelection(Number(e.target.value ?? -1))}
               >
-                <FormControlLabel
-                  className="mt-2"
-                  value="a"
-                  control={<Radio disableRipple={true} />}
-                  label="Test question 1"
-                />
-                <FormControlLabel
-                  className="mt-2"
-                  value="b"
-                  control={<Radio />}
-                  label="Test question 2"
-                />
-                <FormControlLabel
-                  className="mt-2"
-                  value="c"
-                  control={<Radio />}
-                  label="Test question 3"
-                />
+                {challenge.answers.map((answer, index) => (
+                  <div className="flex items-center m-1">
+                    <Radio id={`RadioQuiz${index + 1}`} value={answer.id} />
+                    <label
+                      className="text-start cursor-pointer"
+                      htmlFor={`RadioQuiz${index + 1}`}
+                    >
+                      <p className="m-0 ">{answer.text.trim()}</p>
+                    </label>
+                  </div>
+                ))}
               </RadioGroup>
             </FormControl>
           </div>
@@ -114,7 +73,7 @@ const ChallengeQuiz = ({
             </button>
             <button
               onClick={() => {
-                if (selection === correctAnswer) {
+                if (selection === challenge.correct_answer) {
                   setCorrect(true);
                 } else {
                   setCorrect(false);

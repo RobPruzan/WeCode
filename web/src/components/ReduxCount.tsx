@@ -1,7 +1,8 @@
-import { MouseEvent } from 'react';
-import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Button } from 'react-bootstrap';
 import { CountActions } from '../redux/reducers/counts';
+import { MouseEvent } from 'react';
 import { RootState } from '../redux/store';
 
 const ReduxCount = () => {

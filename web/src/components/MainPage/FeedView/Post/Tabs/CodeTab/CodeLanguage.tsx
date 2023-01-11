@@ -1,8 +1,8 @@
-import { SelectChangeEvent } from '@mui/material';
-import React from 'react';
-import { PostContent } from '../../../../../../services/connections';
-import { DropDown } from '../../../../Options/DropDown';
 import { DEFAULT_PROGRAMMING_LANGUAGE } from './CodeTab';
+import { DropDown } from '../../../../Options/DropDown';
+import { PostContent } from '../../../../../../services/connections';
+import React from 'react';
+import { SelectChangeEvent } from '@mui/material';
 export type CodeLanguageProps = {
   setCurrentPostInfo: React.Dispatch<React.SetStateAction<PostContent>>;
   currentPostInfo: PostContent;
@@ -16,12 +16,12 @@ const CodeLanguage = ({
   defaultValue,
 }: CodeLanguageProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
-    setCurrentPostInfo({ ...currentPostInfo, langauge: event.target.value });
+    setCurrentPostInfo({ ...currentPostInfo, language: event.target.value });
   };
 
   return (
     <DropDown
-      selection={currentPostInfo.langauge ?? DEFAULT_PROGRAMMING_LANGUAGE}
+      selection={currentPostInfo.language ?? DEFAULT_PROGRAMMING_LANGUAGE}
       options={languages}
       handleChange={handleChange}
       labelName="Language"

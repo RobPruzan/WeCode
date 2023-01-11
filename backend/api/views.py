@@ -8,6 +8,7 @@ from .utils import filter_data
 
 from .models import Challenge, Post, Space, User
 from .serializers import (
+    AnswerSerializer,
     ChallengeSerializer,
     CommentSerializer,
     PostSerializer,
@@ -217,13 +218,13 @@ class FollowingView(APIView):
 
 class ChallengeView(APIView):
     def get(self, request, *args, **kwargs):
-        challenge_id = kwargs.get("challenge_id")
-        if challenge_id is None:
-            return Response("No Challenge ID Provided")
-        challenge_id = int(filter_data(challenge_id))
-        challenge = Challenge.objects.filter(id=challenge_id).first()
-        serializer = ChallengeSerializer(challenge)
-        return Response(serializer.data)
+        space_id = kwargs.get("space_id")
+        if space_id is None:
+            return Response("No Space ID Provided")
+        space_id = int(filter_data(space_id))
+        challenges = Challenge.objects.filter(space_id=space_id).all()
+        challenge_serializer = ChallengeSerializer(challenges, many=True)
+        return Response(challenge_serializer.data)
 
     def post(self, request, *args, **kwargs):
         user_id = request.data.get("user_id")

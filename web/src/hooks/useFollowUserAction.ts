@@ -1,8 +1,6 @@
-import { UseMutateFunction, useMutation, useQueryClient } from 'react-query';
-import WeCode, { PostContent } from '../services/connections';
+import { useMutation, useQueryClient } from 'react-query';
 
-import { RootState } from '../redux/store';
-import { useSelector } from 'react-redux';
+import WeCode from '../services/connections';
 
 export type FollowType = 'follow' | 'unfollow';
 
@@ -17,7 +15,7 @@ export const useFollowUserAction = (followType: FollowType) => {
     if (followType === 'follow') {
       return WeCode.followerUser(user_id, user_to_follow_id);
     } else {
-      return WeCode.unfollowerUser(user_id, user_to_follow_id);
+      return WeCode.unfollowUser(user_id, user_to_follow_id);
     }
   };
   const { data, mutate, error, isLoading, isError } = useMutation(

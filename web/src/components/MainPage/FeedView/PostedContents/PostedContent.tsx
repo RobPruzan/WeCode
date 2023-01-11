@@ -1,8 +1,4 @@
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import { Card } from '@mui/material';
-import CommentIcon from '@mui/icons-material/Comment';
 import { Comments } from './PostedActions/Comments';
-import ExpandIcon from '@mui/icons-material/Expand';
 import { PostContent } from '../../../../services/connections';
 import { RootState } from '../../../../redux/store';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -104,12 +100,12 @@ export const PostedContent = ({
         {singlePostedContent.code && (
           <div className="m-3">
             <SyntaxHighlighter
-              language={singlePostedContent.langauge}
+              language={singlePostedContent.language}
               style={atomDark}
             >
               {singlePostedContent.code}
             </SyntaxHighlighter>
-            <p>{singlePostedContent.langauge?.toUpperCase()}</p>
+            <p>{singlePostedContent.language?.toUpperCase()}</p>
           </div>
         )}
 
