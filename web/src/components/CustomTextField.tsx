@@ -6,8 +6,9 @@ export type CustomTextFieldProps = {
   className?: string;
   isMultiline?: boolean;
   rows?: number;
-  handleChange: ChangeEventHandler;
+  handleChange: ChangeEventHandler<HTMLInputElement>;
   value: string;
+  type?: string;
 };
 export const CustomTextField = ({
   label,
@@ -16,15 +17,17 @@ export const CustomTextField = ({
   rows,
   handleChange,
   value,
+  type,
 }: CustomTextFieldProps) => {
   return (
     <TextField
+      type={type ?? 'text'}
       value={value}
       onChange={handleChange}
       className={className}
       label={label}
       multiline={isMultiline}
-      rows={rows ?? 1}
+      rows={rows}
       InputProps={{
         style: {
           color: 'white',

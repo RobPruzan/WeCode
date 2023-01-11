@@ -51,6 +51,8 @@ const tallyMarkMap = (difficulty: number) => {
           <AiOutlineFire fill="red" size={30} />
           <AiOutlineFire fill="red" size={30} />
           <AiOutlineFire fill="red" size={30} />
+          <AiOutlineFire fill="red" size={30} />
+          <AiOutlineFire fill="red" size={30} />
         </div>
       );
   }
@@ -74,10 +76,12 @@ const ChallengeCard = ({
   const user = useSelector(({ userState }: RootState) => userState.user);
 
   const userCompletedChallenge = useMemo(
-    () => challenge.users_that_succeeded.some(user => user.id === user.id),
-    [challenge.users_that_succeeded]
+    () =>
+      challenge.users_that_succeeded.some(
+        user_succeeded => user_succeeded.id === user?.id
+      ),
+    [challenge.users_that_succeeded, user?.id]
   );
-
   const handleEnterChallenge = (event: any) => {
     setExpanded(false);
     setActiveQuiz(index);
@@ -88,8 +92,12 @@ const ChallengeCard = ({
       {activeQuiz !== NO_ACTIVE_QUIZZES ? (
         activeQuiz === index && (
           <div
+            style={{
+              minWidth: '300px',
+              flexShrink: 0,
+            }}
             key={`ChallengeCard-${index}`}
-            className=" shadow-lg border-2 border-neon-blue  text-white h-fit w-100 p-3 flex flex-col  rounded-md text-center "
+            className=" shadow-lg border-2 border-neon-blue  text-white h-fit p-3 flex flex-col   rounded-md text-center "
           >
             <ChallengeQuiz
               challenge={challenge}
@@ -102,7 +110,7 @@ const ChallengeCard = ({
         <>
           <div
             className={`
-    ${expanded ? 'border-b-2' : ''}
+     ${expanded ? 'border-b-2' : ''}
        border-x-2  shadow-2xl rounded-md border-neon-blue min-w-fit  text-white  h-fit  mt-4  border-y-2 border-y-gray-800 text-center `}
           >
             <Collapsible
@@ -146,7 +154,7 @@ const ChallengeCard = ({
                     style={{
                       backgroundColor: '#141414',
                     }}
-                    className=" border-gray-600 border-2 text-white p-3 shadow-lg   rounded-lg  "
+                    className=" border-gray-600 border-2 text-white p-3 shadow-lg   rounded-lg w-100 "
                   >
                     <p
                       style={{

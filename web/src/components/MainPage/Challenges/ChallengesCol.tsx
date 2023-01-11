@@ -1,9 +1,11 @@
+import { SetStateAction, useState } from 'react';
+
 import { BsPlusCircle } from 'react-icons/bs';
 import ChallengeCard from './ChallengeCard';
+import CreateChallenge from './CreateChallenge/CreateChallenge';
 import { RootState } from '../../../redux/store';
 import { useGetChallenges } from '../../../hooks/useGetChallenges';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
 export type ChallengeInfo = {
   title: string;
@@ -32,6 +34,7 @@ export const difficultyMap = (difficulty: string) => {
 export const NO_ACTIVE_QUIZZES = -1;
 const ChallengesCol = () => {
   const [activeQuiz, seActiveQuiz] = useState(NO_ACTIVE_QUIZZES);
+  const [toggleAddChallenge, setToggleAddChallenge] = useState(false);
   const currentSpaceId = useSelector(
     ({ spaceState }: RootState) => spaceState.currentSpaceId
   );
@@ -55,9 +58,17 @@ const ChallengesCol = () => {
  
         border-x-2 p-3  shadow-2xl flex justify-center items-end rounded-md border-neon-blue   text-white  w-100  mt-4  border-y-2 border-y-gray-800 text-center `}
         >
-          <BsPlusCircle className="hover:fill-sky-600" size={45} />
+          <BsPlusCircle
+            onClick={() => setToggleAddChallenge(true)}
+            className="hover:fill-sky-600"
+            size={45}
+          />
         </div>
       )}
+      <CreateChallenge
+        toggleAddChallenge={toggleAddChallenge}
+        setToggleAddChallenge={setToggleAddChallenge}
+      />
 
       {challengesData &&
         challengesData.map((challenge, index) => (
