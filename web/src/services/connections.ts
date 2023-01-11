@@ -1,3 +1,4 @@
+import { ChallengeCreate } from '../components/MainPage/Challenges/CreateChallenge/CreateChallenge';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 import axios from 'axios';
 // TODO remove optional fields
@@ -54,6 +55,10 @@ export type AnswerId = number;
 export type Answer = {
   id: AnswerId;
   challenge: ChallengeMinimal;
+  text: string;
+};
+
+export type AnswerMinimal = {
   text: string;
 };
 
@@ -175,7 +180,18 @@ export class WeCodeApi {
 
   public async getChallengeAndAnswers(spaceId: number): Promise<Challenge[]> {
     const response = await axios.get(`${this.baseUrl}/challenge/${spaceId}`);
-    return response.data;
+    return response.data.reverse();
+  }
+
+  public async createChallenge(
+    challenge: ChallengeCreate,
+    spaceId: number,
+    userId: number
+  ): Promise<void> {
+    await axios.post(`${this.baseUrl}/challenge/${spaceId}`, {
+      user_id: userId,
+      challenge,
+    });
   }
 }
 
