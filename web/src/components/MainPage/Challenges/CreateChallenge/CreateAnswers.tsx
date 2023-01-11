@@ -17,6 +17,7 @@ const CreateAnswers = ({
   challengeInfo,
   setChallengeInfo,
 }: CreateAnswersProps) => {
+  const maxedAnswers = challengeInfo.answers.length >= 4;
   return (
     <div className="flex flex-col p-3 border-2 w-9/12 border-opacity-30 hover:border-opacity-100 border-neon-blue mt-3 rounded-lg overflow-y-scroll mb-3">
       <div className="flex items-center justify-center">
@@ -25,9 +26,13 @@ const CreateAnswers = ({
         )}
         <button className="ml-auto">
           <BsPlusCircle
-            className="fill-gray-300 cursor-pointer hover:fill-gray-400 ml-auto"
+            className={` ${
+              maxedAnswers
+                ? 'fill-gray-400 cursor-default'
+                : ' cursor-pointer fill-gray-300'
+            }  hover:fill-gray-400 ml-auto`}
             onClick={() => {
-              if (challengeInfo.answers.length < 4) {
+              if (!maxedAnswers) {
                 setChallengeInfo(
                   // [...answers, { text: '' }]
                   prev => ({

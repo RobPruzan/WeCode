@@ -19,7 +19,7 @@ const IconDock = ({ location }: IconDockProps) => {
 
   return (
     <div
-      className={`flex w-80 h-full items-center justify-evenly
+      className={`flex w-80 h-full items-center justify-evenly   mt-1 bg-custom-dark-gray
       }`}
     >
       <Link to="/">
