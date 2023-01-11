@@ -1,7 +1,7 @@
-import WeCode, { PostContent } from '../services/connections';
+import WeCode, { PostContent } from '../../services/connections';
 import { useQuery, useQueryClient } from 'react-query';
 
-import { PUBLIC_SPACE } from '../components/MainPage/Options/JoinSpace/JoinSpace';
+import { PUBLIC_SPACE } from '../../components/MainPage/Options/JoinSpace/JoinSpace';
 
 export const useGetPosts = (
   space_id: number,

@@ -77,7 +77,7 @@ const ChallengeCard = ({
 
   const userCompletedChallenge = useMemo(
     () =>
-      challenge.users_that_succeeded.some(
+      challenge.users_that_attempted.some(
         user_succeeded => user_succeeded.id === user?.id
       ),
     [challenge.users_that_succeeded, user?.id]

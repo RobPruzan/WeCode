@@ -62,6 +62,12 @@ export type AnswerMinimal = {
   text: string;
 };
 
+export type UserAnswer = {
+  userId?: number;
+  challengeId: number;
+  answerId: AnswerId;
+};
+
 export type ChallengeMinimal = {
   id: number;
   title: string;
@@ -180,7 +186,9 @@ export class WeCodeApi {
 
   public async getChallengeAndAnswers(spaceId: number): Promise<Challenge[]> {
     const response = await axios.get(`${this.baseUrl}/challenge/${spaceId}`);
-    return response.data.reverse();
+    return response.data.sort((a: Challenge, b: Challenge) => {
+      return b.id - a.id;
+    });
   }
 
   public async createChallenge(
@@ -192,6 +200,20 @@ export class WeCodeApi {
       user_id: userId,
       challenge,
     });
+  }
+
+  public async answerChallenge({
+    answerId,
+    challengeId,
+    userId,
+  }: UserAnswer): Promise<string> {
+    const response = await axios.post(`${this.baseUrl}/answer`, {
+      user_id: userId,
+      challenge_id: challengeId,
+      answer_id: answerId,
+    });
+    console.log(response.data);
+    return response.data;
   }
 }
 

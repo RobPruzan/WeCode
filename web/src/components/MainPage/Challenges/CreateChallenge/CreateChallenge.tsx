@@ -3,7 +3,7 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import CreateAnswers from './CreateAnswers';
 import { CustomTextField } from '../../../CustomTextField';
-import { useCreateChallenge } from '../../../../hooks/useCreateChallenge';
+import { useCreateChallenge } from '../../../../hooks/ChallengeHooks/useCreateChallenge';
 
 export type CreateChallengeProps = {
   toggleAddChallenge: boolean;

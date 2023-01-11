@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from 'react-query';
 
-import WeCode from '../services/connections';
+import WeCode from '../../services/connections';
 
 export const useGetUserPosts = (userId: number) => {
   const { data, error, isLoading, isError, refetch } = useQuery(

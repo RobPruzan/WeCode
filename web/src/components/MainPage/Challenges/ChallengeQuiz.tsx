@@ -1,9 +1,10 @@
+import { Answer, Challenge } from '../../../services/connections';
 import { FormControl, Radio, RadioGroup } from '@mui/material';
 
-import { Challenge } from '../../../services/connections';
 import ChallengeProgressBar from './ProgressBar';
 import { SiCheckmarx } from 'react-icons/si';
 import green from '@material-ui/core/colors/green';
+import { useAnswerChallenge } from '../../../hooks/ChallengeHooks/useAnswerChallenge';
 import { useState } from 'react';
 
 export type ChallengeQuizProps = {
@@ -28,17 +29,28 @@ const ChallengeQuiz = ({
 }: ChallengeQuizProps) => {
   const [selection, setSelection] = useState<number>();
   const [correct, setCorrect] = useState<boolean | null>(null);
+  const {
+    answerChallenge,
+    answerChallengeError,
+    answerChallengeIsError,
+    answerChallengeIsLoading,
+    answerChallengeIsSuccess,
+  } = useAnswerChallenge();
   const handleAnswer = () => {
     if (selection === challenge.correct_answer) {
       setCorrect(true);
     } else {
       setCorrect(false);
     }
+    console.log('wat');
+    answerChallenge({
+      challengeId: challenge.id,
+      answerId: selection ?? -1,
+    });
     setTimeout(() => {
       handleExitChallenge();
     }, 2500);
   };
-  console.log('daa ccacaca', challenge, challenge.answers);
 
   return (
     <>

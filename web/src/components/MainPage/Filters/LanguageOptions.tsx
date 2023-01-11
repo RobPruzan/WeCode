@@ -67,18 +67,9 @@ const LanguageOptions = () => {
     newValue,
     filterChoice
   ) => {
-    // const users = newValue.map(user => user.id);
     setFilters((prev): Filters => ({ ...prev, [filterChoice]: newValue }));
   };
   return (
-    // <div className="hidden sm:flex flex-col ">
-    //   <div
-    //     style={{
-    //       minWidth: '15em',
-    //       maxWidth: '50%',
-    //     }}
-    //     className="text-center justify-center  border-2 p-3 rounded-md border-blue-400"
-    //   >
     <div className="border-2 border-neon-blue rounded-lg p-4">
       <p className="h3 text-center">Filters</p>
       <TypeAhead

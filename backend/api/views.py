@@ -227,21 +227,14 @@ class ChallengeView(APIView):
         return Response(challenge_serializer.data)
 
     def post(self, request, *args, **kwargs):
-        print("did hit", request.data, kwargs.get("space_id"))
         user_id = request.data.get("user_id")
         space_id = kwargs.get("space_id")
 
         if user_id is None or space_id is None:
-            print("right?", color="red")
             return Response("Invalid IDs Provided")
         answers = request.data.get("challenge").get("answers")
-        print(answers, color="blue")
-
-        # correct_answer = Answer.objects.filter(
-        #     id=request.data.get("challenge").get("correct_answer")
-        # ).first()
         correct_answer_index = request.data.get("challenge").get("correct_answer")
-        test = Challenge.objects.create(
+        new_challenge = Challenge.objects.create(
             # **request.data,
             title=request.data.get("challenge").get("title"),
             description=request.data.get("challenge").get("description"),
@@ -251,31 +244,36 @@ class ChallengeView(APIView):
             author_id=user_id,
         )
         answer_objects = [
-            Answer.objects.create(text=ans.get("text"), challenge_id=test.id)
+            Answer.objects.create(text=ans.get("text"), challenge_id=new_challenge.id)
             for ans in answers
             if answers
         ]
 
-        test.correct_answer = Answer.objects.filter(
+        new_challenge.correct_answer = Answer.objects.filter(
             id=answer_objects[correct_answer_index].id
         ).first()
-        test.save()
-        print(test, color="blue")
+        new_challenge.save()
         return Response("Challenge Created")
 
 
-# correct_answer
-# :
-# -1
-# description
-# :
-# "some description"
-# difficulty
-# :
-# 1
-# question
-# :
-# "some question"
-# title
-# :
-# "Some title"
+class AnswerView(APIView):
+    def post(self, request, *args, **kwargs):
+        user_id = request.data.get("user_id")
+        challenge_id = request.data.get("challenge_id")
+        answer_id = request.data.get("answer_id")
+        if user_id is None or challenge_id is None or answer_id is None:
+            return Response("Invalid IDs Provided")
+        user = User.objects.filter(id=user_id).first()
+        challenge = Challenge.objects.filter(id=challenge_id).first()
+        answer = Answer.objects.filter(id=answer_id).first()
+        if answer.challenge.id != challenge.id:
+            return Response("Invalid Answer")
+        challenge.users_that_attempted.add(user)
+        if answer.id == challenge.correct_answer.id:
+            challenge.users_that_succeeded.add(user)
+            challenge.save()
+            return Response("Correct Answer")
+        else:
+            challenge.users_that_failed.add(user)
+            challenge.save()
+            return Response("Incorrect Answer")

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from 'react-query';
 
-import { ChallengeCreate } from '../components/MainPage/Challenges/CreateChallenge/CreateChallenge';
-import { RootState } from '../redux/store';
-import WeCode from '../services/connections';
+import { ChallengeCreate } from '../../components/MainPage/Challenges/CreateChallenge/CreateChallenge';
+import { RootState } from '../../redux/store';
+import WeCode from '../../services/connections';
 import { useSelector } from 'react-redux';
 
 export const useCreateChallenge = (successHandler?: VoidFunction) => {
@@ -16,7 +16,7 @@ export const useCreateChallenge = (successHandler?: VoidFunction) => {
       WeCode.createChallenge(challenge, spaceId ?? 0, userId ?? 0),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['challenges', userId]);
+        queryClient.invalidateQueries(['challenges', userId, spaceId]);
         successHandler && successHandler(); // if the mutation is successful, refetch the related query
       },
     }

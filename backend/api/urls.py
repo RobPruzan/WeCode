@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from .views import (
+    AnswerView,
     ChallengeView,
     CommentsView,
     FollowView,
@@ -28,4 +29,5 @@ urlpatterns = [
     ),
     path("api/following/<int:user_id>", FollowingView.as_view()),
     path("api/challenge/<int:space_id>", ChallengeView.as_view()),
+    path("api/answer", AnswerView.as_view()),
 ]
