@@ -131,7 +131,7 @@ const Account = () => {
             </div>
           </div>
           <div className="row-span-6 border-t-2">
-            <div className="grid grid-cols-2 h-screen overflow-hidden md:overflow-y-scroll ">
+            <div className="grid grid-cols-2 h-screen overflow-hidden md:overflow-y-auto ">
               <div className="col-span-2 md:col-span-1 border-r-2 ">
                 <div className="flex flex-col h-full w-full items-center p-8">
                   <UserAccess />
@@ -144,9 +144,9 @@ const Account = () => {
                   <div
                     style={{
                       maxHeight: ' calc(60vh - 53px)',
-                      overflowY: 'scroll',
+                      overflowY: 'auto',
                     }}
-                    className=" w-full mt-4  border-2 border-neon-blue p-3 overflow-y-scroll rounded-md"
+                    className=" w-full mt-4  border-2 border-neon-blue p-3 overflow-y-auto rounded-md"
                   >
                     {visibleUsers && visibleUsers.length > 0 ? (
                       visibleUsers.map((otherUser, index) => (
@@ -194,7 +194,7 @@ const Account = () => {
                   style={{
                     maxHeight: ' calc(80vh - 53px)',
                   }}
-                  className="  w-full items-center p-8 mb-2 overflow-y-scroll "
+                  className="  w-full items-center p-8 mb-2 overflow-y-auto "
                 >
                   {userPosts && (
                     <PostedContents

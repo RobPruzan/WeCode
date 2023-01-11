@@ -1,5 +1,5 @@
 import { userInfo } from 'os';
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { UserReducer } from '../../../redux/reducers/user';
@@ -28,15 +28,17 @@ const LanguageOptions = () => {
     ({userState}:RootState) => userState.user
   )
 // useState<typeOfVariable>(initialValueOfVariable)
+// making state variable filters, and setter for state variable
+// 
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
   const {data, isLoading, isError, isSuccess, error} = useQuery(
+    // dependency array
     ['following'],
     () => user && WeCode.getFollowing(user.id),
     // {onSuccess: (data) => setSelectedFollowing(data)} 
   )
   const following = data ?? []
-  const followerNames = following.map((user) => ({id:String(user.id), label:user.name}))
-
+  const followerNames = useMemo(() => following.map((user) => ({id:String(user.id), label:user.name})), [following])
   const handleLangChange: TypAheadChangeHandler = (
     event,
     newValue
