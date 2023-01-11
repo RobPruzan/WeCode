@@ -3,7 +3,6 @@ import IconDock, { DockLocation } from './IconDock';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import DiamondSharpIcon from '@mui/icons-material/DiamondSharp';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';

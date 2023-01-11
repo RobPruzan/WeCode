@@ -4,6 +4,7 @@ import ChallengesCol from './Challenges/ChallengesCol';
 import FeedView from './FeedView/FeedView';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { SpaceOptions } from './Options/Options';
+import UserAccess from '../Account/UserAccess';
 
 const MainPage = () => {
   return (
@@ -14,11 +15,21 @@ const MainPage = () => {
           style={{
             minWidth: '30vw',
           }}
-          className=" justify-center hidden md:flex min-w-fit  px-4 "
+          className=" justify-center hidden md:flex min-w-fit  px-5 pt-2 overflow-x-hidden"
         >
-          <p className="h3">
+          <div className="flex flex-col justify-center items-center  ">
+            <UserAccess />
+            <div
+              style={{
+                minWidth: '105%',
+                borderTop: '1px solid gray',
+
+                // minWidth: '400px',
+              }}
+              className="border-t-2 border-gray-500 overflow-x-hidden"
+            ></div>
             <ChallengesCol />
-          </p>
+          </div>
         </div>
         <div>
           <div
@@ -48,7 +59,7 @@ const MainPage = () => {
           <SpaceOptions />
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 export default MainPage;

@@ -11,7 +11,7 @@ const primaryCardStyle = { maxWidth: '18em' };
 
 export const SpaceOptions = () => {
   return (
-    <div className="d-flex flex-column align-items-center pt-3">
+    <div className="d-flex flex-column align-items-center p-3">
       <div className="border-2 rounded-lg  border-neon-blue p-3 mb-4">
         <CurrentSpace className="h3  mb-3 d-flex justify-content-center" />
         <JoinSpace />
