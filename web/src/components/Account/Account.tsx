@@ -130,7 +130,6 @@ const Account = () => {
             <div className="grid grid-cols-2 h-screen overflow-hidden md:overflow-y-auto ">
               <div className="col-span-2 md:col-span-1 border-r-2 ">
                 <div className="flex flex-col h-full w-full items-center p-8">
-                  <UserAccess />
                   <CustomTextField
                     className="w-full"
                     label="User Search"

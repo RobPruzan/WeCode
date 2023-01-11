@@ -20,7 +20,7 @@ export type TypeAheadProps = UseAutocompleteProps<
   label: string;
   changeHandler: TypAheadChangeHandler;
   members: TypeAheadOption[];
-  placeholder:string
+  placeholder: string;
 };
 export const TypeAhead = ({
   label,
@@ -59,6 +59,9 @@ export const TypeAhead = ({
           // '&:hover': {
           //   backgroundColor: 'transparent !important',
           // },
+
+          minWidth: '15em',
+          maxWidth: '50%',
         }}
         renderInput={params => (
           <TextField

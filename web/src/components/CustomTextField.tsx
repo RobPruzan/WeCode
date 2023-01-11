@@ -9,6 +9,8 @@ export type CustomTextFieldProps = {
   handleChange: ChangeEventHandler<HTMLInputElement>;
   value: string;
   type?: string;
+  variant?: 'outlined' | 'standard' | 'filled';
+  focused?: boolean;
 };
 export const CustomTextField = ({
   label,
@@ -18,6 +20,8 @@ export const CustomTextField = ({
   handleChange,
   value,
   type,
+  focused,
+  variant = 'outlined',
 }: CustomTextFieldProps) => {
   return (
     <TextField
@@ -27,7 +31,9 @@ export const CustomTextField = ({
       className={className}
       label={label}
       multiline={isMultiline}
+      focused={focused}
       rows={rows}
+      variant={variant}
       InputProps={{
         style: {
           color: 'white',

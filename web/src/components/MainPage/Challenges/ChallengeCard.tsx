@@ -129,7 +129,6 @@ const ChallengeCard = ({
 
                   <div className="flex justify-center w-full items-center ">
                     <p className="mr-auto">
-                      {' '}
                       {tallyMarkMap(challenge.difficulty)}
                     </p>
                     <Radio
@@ -166,18 +165,8 @@ const ChallengeCard = ({
                     </p>
                   </div>
                 </div>
-                <div className="flex">
-                  <div className="flex flex-row justify-evenly w-full my-3 ">
-                    <DiReact size={40} />
-                    <DiPython size={40} />
-                    <SiTypescript size={40} />
-                  </div>
-                </div>
 
-                <div className="flex justify-evenly items-center border-t-2 border-neon-blue pt-3">
-                  <div>
-                    <p className="inline">Prize:</p> <p className="inline">5</p>
-                  </div>
+                <div className="flex justify-evenly items-center border-t-2 my-3 border-neon-blue pt-3">
                   <div>
                     <p className="inline">Challengers:</p>{' '}
                     <p className="inline">
