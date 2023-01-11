@@ -85,7 +85,7 @@ const ChallengeCard = ({
           <div
             className={`
     ${expanded ? 'border-b-2' : ''}
-       border-x-2  shadow-2xl rounded-md border-neon-blue   text-white  h-fit w-100  mt-4  border-y-2 border-y-gray-800 text-center `}
+       border-x-2  shadow-2xl rounded-md border-neon-blue min-w-fit  text-white  h-fit  mt-4  border-y-2 border-y-gray-800 text-center `}
           >
             <Collapsible
               overflowWhenOpen="visible"

@@ -79,6 +79,7 @@ nav {
 
 .columns > div {
   flex: 1;
+  /* flex-shrink: 7 */
   /* border: 1px solid #43bbff; */
 }
 .columns > div:first-child {
@@ -90,7 +91,7 @@ nav {
 .columns > div:nth-child(2) {
   flex: 2;
   overflow: auto;
-  flex-shrink: calc(100% - 300px);
+  flex-shrink: calc(100% - 400px);
   border-right: 1px solid #43bbff;
 }
 .columns > div:last-child {
@@ -98,5 +99,3 @@ nav {
   overflow-y: scroll;
   min-width: fit-content;
 }
-
-

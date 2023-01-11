@@ -6,8 +6,9 @@ from django.shortcuts import render
 
 from .utils import filter_data
 
-from .models import Post, Space, User
+from .models import Challenge, Post, Space, User
 from .serializers import (
+    ChallengeSerializer,
     CommentSerializer,
     PostSerializer,
     SpaceSerializer,
@@ -214,11 +215,18 @@ class FollowingView(APIView):
         return Response(serializer.data)
 
 
-# class ChallengeView(APIView):
-#     def get(self, request, *args, **kwargs):
-#         pass
-#     def post(self, request, *args, **kwargs):
-#         user_id = request.data.get("user_id")
-#         challenge_id = request.data.get("challenge_id")
-#         if user_id is None or challenge_id is None:
-#             return Response("Invalid User IDs Provided")
+class ChallengeView(APIView):
+    def get(self, request, *args, **kwargs):
+        challenge_id = kwargs.get("challenge_id")
+        if challenge_id is None:
+            return Response("No Challenge ID Provided")
+        challenge_id = int(filter_data(challenge_id))
+        challenge = Challenge.objects.filter(id=challenge_id).first()
+        serializer = ChallengeSerializer(challenge)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.data.get("user_id")
+        challenge_id = request.data.get("challenge_id")
+        if user_id is None or challenge_id is None:
+            return Response("Invalid User IDs Provided")

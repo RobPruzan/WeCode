@@ -131,7 +131,6 @@ export class WeCodeApi {
 
   public async getFollowers(userId: number): Promise<User[]> {
     const response = await axios.get(`${this.baseUrl}/follow/${userId}`);
-    console.log('the getted followers');
     return response.data;
   }
 
