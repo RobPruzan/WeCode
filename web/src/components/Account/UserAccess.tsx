@@ -36,14 +36,14 @@ const UserAccess = () => {
   return (
     <>
       {user ? (
-        <div className="flex justify-evenly items-center w-full p-2">
+        <div className="flex justify-evenly items-center w-full   p-2">
           <p className="h4 m-0 ">{user.name}</p>
           <Button variant="contained" onClick={handleLogout}>
             Logout
           </Button>
         </div>
       ) : (
-        <div className="flex  justify-evenly items-center  mt-1">
+        <div className="flex  justify-evenly items-center bg-opacity-50  mt-1">
           <CustomTextField
             focused={true}
             variant={'filled'}
