@@ -23,7 +23,7 @@ nav {
 .spaces {
   background-color: #141414;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .custom-black-background {
   background-color: #141414;
@@ -49,13 +49,13 @@ nav {
 }
 .columns > div:first-child {
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-width: fit-content;
   border-right: 1px solid #43bbff;
 }
 .columns > div:nth-child(2) {
   flex: 2;
-  overflow: scroll;
+  overflow: auto;
   flex-shrink: calc(100% - 300px);
   border-right: 1px solid #43bbff;
 }

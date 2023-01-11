@@ -130,7 +130,7 @@ export const NO_ACTIVE_QUIZES = -1;
 const ChallengesCol = () => {
   const [activeQuiz, seActiveQuiz] = useState(NO_ACTIVE_QUIZES);
   return (
-    <div className="flex flex-col   h-full w-full overflow-y-scroll p-4  ">
+    <div className="flex flex-col   h-full w-full overflow-y-auto p-4  ">
       {activeQuiz === NO_ACTIVE_QUIZES && (
         <div
           className={`
