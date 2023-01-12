@@ -56,9 +56,6 @@ export const TypeAhead = ({
           '.MuiInputLabel-root': {
             color: 'rgba(67, 187, 255)',
           },
-          // '&:hover': {
-          //   backgroundColor: 'transparent !important',
-          // },
 
           minWidth: '15em',
           maxWidth: '15em',

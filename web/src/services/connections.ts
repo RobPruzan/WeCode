@@ -14,13 +14,13 @@ export type PostContent = {
   hasCode?: boolean;
 };
 
-export type Comment = {
+export type CommentType = {
   id: number;
   user: string;
   content: string;
   reply_to?: PostContent;
   upVotes?: number;
-  comments?: Comment[];
+  comments?: CommentType[];
 };
 
 export type User = {
@@ -150,7 +150,7 @@ export class WeCodeApi {
     await axios.post(`${this.baseUrl}/spaces/${user_id}`, spaceInfo);
   }
 
-  public async getComments(postId: number): Promise<Comment[]> {
+  public async getComments(postId: number): Promise<CommentType[]> {
     const response = await axios.get(`${this.baseUrl}/comments/${postId}`);
     return response.data;
   }
