@@ -1,4 +1,4 @@
-import { Comments } from './PostedActions/Comments';
+import { Comment } from './PostedActions/Comment';
 import { PostContent } from '../../../../services/connections';
 import { RootState } from '../../../../redux/store';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -110,7 +110,7 @@ export const PostedContent = ({
         )}
 
         <hr />
-        {canComment && <Comments />}
+        {canComment && <Comment />}
       </div>
     </div>
   );

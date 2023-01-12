@@ -1,4 +1,7 @@
-import { Comment, PostContent } from '../../../../../../services/connections';
+import {
+  CommentType,
+  PostContent,
+} from '../../../../../../services/connections';
 import { Dispatch, SetStateAction } from 'react';
 
 import TextField from '@mui/material/TextField';
