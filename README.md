@@ -1,6 +1,8 @@
 # Welcome to the programmers chat site!
 
-This messasging app specifically designed for coders to connect and share ideas.
+This social media app specifically designed for coders to connect and share ideas.
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/97781863/212164065-79cf27d5-3760-41d9-a05b-18f5468bd14f.png">
+
 
 ## Setup
 
