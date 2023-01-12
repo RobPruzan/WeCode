@@ -2,18 +2,28 @@ import WeCode, { PostContent } from '../../services/connections';
 import { useQuery, useQueryClient } from 'react-query';
 
 import { PUBLIC_SPACE } from '../../components/MainPage/Options/JoinSpace/JoinSpace';
+import { PostLoadingActions } from '../../redux/reducers/postLoading';
+import { useDispatch } from 'react-redux';
 
 export const useGetPosts = (
   space_id: number,
   fn?: (state: PostContent[]) => void
 ) => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const { data, error, isLoading, isError, refetch } = useQuery(
     ['space_posts', space_id],
-    () => WeCode.getPosts(space_id ?? PUBLIC_SPACE),
+    () => {
+      dispatch({ type: PostLoadingActions.SetIsLoading });
+      return WeCode.getPosts(space_id ?? PUBLIC_SPACE);
+    },
+
     {
       onSuccess: data => {
         fn && fn(data?.reverse());
+      },
+      onSettled: () => {
+        dispatch({ type: PostLoadingActions.SetIsNotLoading });
       },
     }
   );

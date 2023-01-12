@@ -1,3 +1,4 @@
+import { BsXCircle, BsXLg } from 'react-icons/bs';
 import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 import {
   QueryObserverResult,
@@ -5,9 +6,12 @@ import {
   RefetchQueryFilters,
 } from 'react-query';
 
+import { AiFillEdit } from 'react-icons/ai';
 import CodeIcon from '@mui/icons-material/Code';
 import { CodeTab } from './CodeTab/CodeTab';
+import { InputText } from './TextTab/InputText';
 import { PostContent } from '../../../../../services/connections';
+import PostPopup from './PostPopup';
 import { SelectChangeEvent } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -38,6 +42,7 @@ export const PostTabs = ({
   isPostLoading,
   postedContent,
 }: TabsProps) => {
+  const [postButtonToggled, setPostButtonToggled] = useState(false);
   const [currentPostInfo, setCurrentPostInfo] = useState<PostContent>({
     content: '',
   });
@@ -89,6 +94,16 @@ export const PostTabs = ({
             aria-label="code"
           />
         </Tabs>
+        <PostPopup
+          postButtonToggled={postButtonToggled}
+          setPostButtonToggled={setPostButtonToggled}
+          currentPostInfo={currentPostInfo}
+          flairChangeHandler={flairChangeHandler}
+          postedContent={postedContent}
+          setPostedContent={setPostedContent}
+          setCurrentPostInfo={setCurrentPostInfo}
+        />
+
         {activeTab === TabType.TEXT && (
           <TextTab
             currentPostInfo={currentPostInfo}

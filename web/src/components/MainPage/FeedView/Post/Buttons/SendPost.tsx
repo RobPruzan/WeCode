@@ -18,12 +18,14 @@ export type SendPostProps = {
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
   setCurrentPostInfo: Dispatch<SetStateAction<PostContent>>;
   postedContent: PostContent[];
+  setPostButtonToggled?: Dispatch<SetStateAction<boolean>>;
 };
 export const SendPost = ({
   currentPostInfo,
   setPostedContent,
   setCurrentPostInfo,
   postedContent,
+  setPostButtonToggled,
 }: SendPostProps) => {
   // Serves as a snapshot incase the post fails to send (since we are using optimistic updates)
   const [fallBackPosts, setfallBackPosts] =
@@ -74,12 +76,13 @@ export const SendPost = ({
           bordercolor: 'gray',
         },
       }}
-      onClick={_ =>
+      onClick={_ => {
+        setPostButtonToggled && setPostButtonToggled(false);
         mutate({
           currPostInfo: { ...currentPostInfo, user_id: user?.id },
           spaceId: space.currentSpaceId ?? PUBLIC_SPACE,
-        })
-      }
+        });
+      }}
     >
       Send Post
     </Button>

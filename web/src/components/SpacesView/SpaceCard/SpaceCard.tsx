@@ -13,6 +13,7 @@ export const SpaceCard = ({ className, children, style }: SpaceCardProps) => {
         border: '2px solid #3B3B3D',
         borderRadius: '4px',
         boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.5)',
+        marginTop: '15px',
         // whiteSpace: 'pre',
 
         ...style,

@@ -67,6 +67,7 @@ nav {
 }
 .spaces-container {
   display: flex;
+
   flex-wrap: wrap;
   padding: 5%;
 }

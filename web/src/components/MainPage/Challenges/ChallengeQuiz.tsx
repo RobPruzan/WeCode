@@ -42,7 +42,7 @@ const ChallengeQuiz = ({
     } else {
       setCorrect(false);
     }
-    console.log('wat');
+
     answerChallenge({
       challengeId: challenge.id,
       answerId: selection ?? -1,

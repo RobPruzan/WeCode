@@ -61,7 +61,7 @@ export const TypeAhead = ({
           // },
 
           minWidth: '15em',
-          maxWidth: '50%',
+          maxWidth: '15em',
         }}
         renderInput={params => (
           <TextField

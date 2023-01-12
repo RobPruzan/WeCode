@@ -3,6 +3,7 @@ import IconDock, { DockLocation } from './IconDock';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { BsCode } from 'react-icons/bs';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
@@ -23,9 +24,17 @@ export const MainNavbar = ({ height = '9', location }: MainNavbarProps) => {
         sx={{ height: `${height}vh`, backgroundColor: '#141414' }}
       >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {'<logo>'}
-          </Typography>
+          <Link
+            to={'/'}
+            className="flex items-center"
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <p className="h3 mb-0 mr-1">WeCode</p>
+            <BsCode className="cursor-pointer" size={50} />
+          </Link>
+
           <IconDock location={location} />
         </Toolbar>
       </AppBar>

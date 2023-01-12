@@ -9,6 +9,7 @@ export interface UserState {
 
 export const DEFAULT_USER_STATE: UserState = {
   user: null,
+
   // userName: null,
 };
 
@@ -37,6 +38,11 @@ export const UserReducer = (
 ) => {
   switch (action.type) {
     case UserActions.Login:
+      console.log('should login here', action.payload.user);
+      if (action.payload.user) {
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      }
+
       return {
         ...state,
         user: action.payload.user,
@@ -47,6 +53,9 @@ export const UserReducer = (
         user: null,
       };
     case UserActions.SignUp:
+      if (action.payload.user) {
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      }
       return {
         ...state,
         // userName: action.payload.userName,
