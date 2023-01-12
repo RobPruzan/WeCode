@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import LoadingPost from './LoadingPost';
 import { PostContent } from '../../../../services/connections';
 import { PostedContent } from './PostedContent';
 
@@ -15,8 +16,20 @@ export const PostedContents = ({
   isPostLoading,
   setPostedContent,
 }: PostedContentsProps) => {
+  console;
   return (
     <>
+      {isPostLoading && (
+        <div className="flex flex-col items-center">
+          <LoadingPost />
+          <LoadingPost />
+          <LoadingPost />
+          <LoadingPost />
+          <LoadingPost />
+          <LoadingPost />
+          <LoadingPost />
+        </div>
+      )}
       {postedContent.map((singlePostedContent, idx) => (
         <PostedContent
           className="mx-5 mb-5 "

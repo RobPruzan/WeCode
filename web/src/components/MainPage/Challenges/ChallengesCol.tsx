@@ -3,6 +3,7 @@ import { SetStateAction, useState } from 'react';
 import { BsPlusCircle } from 'react-icons/bs';
 import ChallengeCard from './ChallengeCard';
 import CreateChallenge from './CreateChallenge/CreateChallenge';
+import LoadingCard from './LoadingCard';
 import { RootState } from '../../../redux/store';
 import { useGetChallenges } from '../../../hooks/ChallengeHooks/useGetChallenges';
 import { useSelector } from 'react-redux';
@@ -53,26 +54,38 @@ const ChallengesCol = () => {
   return (
     <div className="flex flex-col   h-full w-full overflow-y-auto p-4  ">
       {activeQuiz === NO_ACTIVE_QUIZZES && (
-        <div
-          style={{
-            width: '25vw',
-            minWidth: '300px',
-          }}
-          className={`
- 
+        <>
+          <div
+            style={{
+              width: '25vw',
+              minWidth: '300px',
+            }}
+            className={`
         border-x-2 p-3  shadow-2xl flex justify-center items-end rounded-md border-neon-blue   text-white  mt-4  border-y-2 border-y-gray-800 text-center `}
-        >
-          <BsPlusCircle
-            onClick={() => setToggleAddChallenge(true)}
-            className="hover:fill-sky-600"
-            size={45}
-          />
-        </div>
+          >
+            <BsPlusCircle
+              onClick={() => setToggleAddChallenge(true)}
+              className="hover:fill-sky-600"
+              size={45}
+            />
+          </div>
+        </>
       )}
       <CreateChallenge
         toggleAddChallenge={toggleAddChallenge}
         setToggleAddChallenge={setToggleAddChallenge}
       />
+      {challengesIsLoading && (
+        <>
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+          <LoadingCard />
+        </>
+      )}
 
       {challengesData &&
         challengesData.map((challenge, index) => (

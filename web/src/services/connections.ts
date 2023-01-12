@@ -212,7 +212,7 @@ export class WeCodeApi {
       challenge_id: challengeId,
       answer_id: answerId,
     });
-    console.log(response.data);
+
     return response.data;
   }
 }

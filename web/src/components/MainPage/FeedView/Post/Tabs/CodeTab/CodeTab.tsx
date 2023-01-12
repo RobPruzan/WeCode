@@ -1,9 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import CodeLanguage from './CodeLanguage';
 import { DropDown } from '../../../../Options/DropDown';
 import Editor from '@monaco-editor/react';
 import { FLAIRS } from '../PostTabs';
 import { SendPost } from '../../Buttons/SendPost';
 import { TextTabProps } from '../TextTab/TextTab';
+
 export const SUPPORTED_LANGUAGES = [
   'javascript',
 
@@ -26,8 +29,13 @@ export const DEFAULT_PROGRAMMING_LANGUAGE = 'javascript';
 
 export type CodeTabProps = TextTabProps & {
   programmingLanguage?: string;
+  setPostButtonToggled?: Dispatch<SetStateAction<boolean>>;
 };
-export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
+export const CodeTab = ({
+  programmingLanguage,
+  setPostButtonToggled,
+  ...props
+}: CodeTabProps) => {
   const codeChangeHandler = (newValue?: string) => {
     const newCodeValue = newValue ? newValue : '';
     props.setCurrentPostInfo({ ...props.currentPostInfo, code: newCodeValue });
@@ -63,7 +71,7 @@ export const CodeTab = ({ programmingLanguage, ...props }: CodeTabProps) => {
         />
       </div>
 
-      <SendPost {...props} />
+      <SendPost setPostButtonToggled={setPostButtonToggled} {...props} />
     </div>
   );
 };

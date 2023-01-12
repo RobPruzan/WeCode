@@ -22,13 +22,24 @@ const JoinSpace = () => {
 
   // const [spaces, setSpaces] = useState<Space[]>([]);
   const { data, error, isLoading } = useQuery(
-    ['spaces', spaceState.availableSpaces, user?.id],
+    ['spaces', user?.id],
     async () => {
       const res = user && (await WeCode.getSpaces(user.id));
+      dispatch({
+        type: SpaceActions.SetIsLoading,
+      });
+
       dispatch({
         type: SpaceActions.SetAvailableSpaces,
         payload: { availableSpaces: res ?? [] },
       });
+    },
+    {
+      onSettled: () => {
+        dispatch({
+          type: SpaceActions.SetIsNotLoading,
+        });
+      },
     }
   );
   if (isLoading) {

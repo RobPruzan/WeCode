@@ -19,17 +19,33 @@ const IconDock = ({ location }: IconDockProps) => {
 
   return (
     <div
-      className={`flex w-80 h-full items-center justify-evenly   mt-1 bg-custom-dark-gray
-      }`}
+      className={`flex  h-full items-center justify-evenly   mt-1 bg-custom-dark-gray  ${
+        location === DockLocation.HOME || location === DockLocation.ACCOUNT
+          ? 'ml-auto'
+          : 'justify-center w-full m-0'
+      }
+    }`}
     >
       <Link to="/">
         <SendIcon
+          className={` ${
+            location === DockLocation.HOME || location === DockLocation.ACCOUNT
+              ? 'mx-8'
+              : ''
+          }
+      }`}
           sx={{ fill: location === DockLocation.SEND ? 'gray' : undefined }}
           fontSize="large"
         />
       </Link>
       <Link to="/spaces">
         <HomeIcon
+          className={` ${
+            location === DockLocation.HOME || location === DockLocation.ACCOUNT
+              ? 'mx-8'
+              : ''
+          }
+      }`}
           sx={{ fill: location === DockLocation.HOME ? 'gray' : undefined }}
           fontSize="large"
           // className="mx-5"
@@ -38,12 +54,14 @@ const IconDock = ({ location }: IconDockProps) => {
 
       <Link to="/account">
         <AccountCircleIcon
+          className={` ${
+            location === DockLocation.HOME || location === DockLocation.ACCOUNT
+              ? 'mx-8'
+              : ''
+          }
+      }`}
           sx={{
-            fill: user
-              ? '#34ebcc'
-              : location === DockLocation.ACCOUNT
-              ? 'gray'
-              : '#43bbff',
+            fill: location === DockLocation.ACCOUNT ? 'gray' : '#43bbff',
           }}
           fontSize="large"
           // className="mr-4"

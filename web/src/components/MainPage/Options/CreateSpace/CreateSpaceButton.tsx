@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Button } from '@mui/material';
 import { SpaceInfo } from './CreateSpace';
+
 export type CreateSpaceButtonProps = {
   className?: string;
   spaceInfo: SpaceInfo;
@@ -40,7 +41,6 @@ export const CreateSpaceButton = ({
       >
         Add Space
       </Button>
-      {isSuccess && alert && <p className="m-2">Space Created!</p>}
     </>
   );
 };
