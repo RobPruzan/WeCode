@@ -68,18 +68,26 @@ class PostContentView(APIView):
 
 class FilteredPostContentView(APIView):
     def get(self, request, *args, **kwargs):
+        NO_FILTER_CASES = [[""], []]
         space_id = kwargs.get("space_id")
-        if space_id is None:
+        if space_id:
+            space_id = int(space_id)
+        else:
             return Response("No Space ID Found")
-        space_id = int(space_id)
-        languages = request.GET.get("languages").split(",")
-        names = request.GET.get("names").split(",")
-        flairs = request.GET.get("flairs").split(",")
 
-        postData = Post.objects.filter(
-            space_id=space_id, language__in=languages, flair__contains=flairs
-        )
-        return Response()
+        languages = [i.lower() for i in request.GET.get("languages", []).split(",")]
+        names = [int(i) for i in request.GET.get("names", []).split(",") if i]
+        flairs = request.GET.get("flairs", []).split(",")
+        postData = Post.objects.filter(space_id=space_id)
+
+        if languages not in NO_FILTER_CASES:
+            postData = postData.filter(language__in=languages)
+        if names not in NO_FILTER_CASES:
+            postData = postData.filter(user__in=names)
+        if flairs not in NO_FILTER_CASES:
+            postData = postData.filter(flair__in=flairs)
+        serializer = PostSerializer(postData, many=True)
+        return Response(serializer.data)
 
 
 class UserPostView(APIView):

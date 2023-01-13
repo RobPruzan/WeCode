@@ -12,7 +12,9 @@ import { PostTabs } from './Post/Tabs/PostTabs';
 import { PostedContents } from './PostedContents/PostedContents';
 import { RootState } from '../../../redux/store';
 import { SiCircleci } from 'react-icons/si';
+import { useGetFilterPosts } from '../../../hooks/PostHooks/useGetFilterPosts';
 import { useGetPosts } from '../../../hooks/PostHooks/useGetPosts';
+import { useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useUsersQuery } from '../../../hooks/useUsersQuery';
 
@@ -23,7 +25,10 @@ const FeedView = () => {
 
   const { posts, postsError, postsIsLoading, postsIsError, refetchPosts } =
     useGetPosts(space.currentSpaceId ?? PUBLIC_SPACE, setPostedContent);
-
+  const queryClient = useQueryClient();
+  // const filteredSpacePosts: PostContent[] | undefined =
+  //   queryClient.getQueryData(['space_posts', space.currentSpaceId]);
+  // console.log(filteredSpacePosts, 'pls');
   return (
     <>
       <PostTabs
