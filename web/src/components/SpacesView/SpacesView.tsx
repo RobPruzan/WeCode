@@ -28,12 +28,16 @@ export const SpacesView = () => {
   const user = useSelector(({ userState }: RootState) => userState.user);
   const [addSpace, setAddSpace] = useState(false);
   const [searchedSpace, setSearchedSpace] = useState('');
-  // const spaceState = useSelector(({ spaceState }: RootState) => spaceState);
+  const totalSpaces = useSelector(
+    ({ spaceState }: RootState) => spaceState.availableSpaces
+  )?.length;
   const {
     data: spaces,
     error,
     isLoading: spacesLoading,
-  } = useQuery(['spaces', user?.id], () => WeCode.getSpaces(user?.id ?? 0));
+  } = useQuery(['spaces', user?.id, totalSpaces], () =>
+    WeCode.getSpaces(user?.id ?? 0)
+  );
 
   const shownSpaces = useMemo(
     () =>
