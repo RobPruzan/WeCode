@@ -1,7 +1,7 @@
 import { ChallengeCreate } from '../components/MainPage/Challenges/CreateChallenge/CreateChallenge';
+import { Filters } from '../components/MainPage/Filters/FilterOptions';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 import axios from 'axios';
-import { Filters } from '../components/MainPage/Filters/FilterOptions';
 // TODO remove optional fields
 export type PostContent = {
   id?: number;
@@ -123,7 +123,7 @@ export class WeCodeApi {
     url.searchParams.set('languages', csvLanguages);
     url.searchParams.set('names', csvNames);
     url.searchParams.set('flairs', csvFlairs);
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', url.toString());
+
     const response = await axios.get(url.toString());
 
     return response.data;
