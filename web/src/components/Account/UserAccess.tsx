@@ -11,10 +11,7 @@ import { useMutation } from 'react-query';
 const UserAccess = () => {
   const [userName, setUserName] = useState('');
   const dispatch = useDispatch();
-  const user = useSelector(
-    // we are selecting one of the users from the reducer
-    ({ userState }: RootState) => userState.user
-  );
+  const user = useSelector(({ userState }: RootState) => userState.user);
   // TODO
   // WE NEED LOGINS AND REAL AUTHENTICATION
   const handleSignin = (userData: User) => {

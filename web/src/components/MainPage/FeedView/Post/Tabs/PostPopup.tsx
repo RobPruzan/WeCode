@@ -15,15 +15,6 @@ export type PostPopupProps = {
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
   flairChangeHandler: (event: SelectChangeEvent<string>) => void;
   postedContent: PostContent[];
-
-  // changeHandler={changeHandler}
-  // currentPostInfo={currentPostInfo}
-  // setCurrentPostInfo={setCurrentPostInfo}
-  // setPostedContent={setPostedContent}
-  // flairChangeHandler={flairChangeHandler}
-  // postedContent={postedContent}
-  // changeHandler={changeHandler}
-  //               value={currentPostInfo.content}
 };
 const PostPopup = ({
   postButtonToggled,
@@ -110,12 +101,9 @@ const PostPopup = ({
           className=" shadow-2xl cursor-pointer"
           style={{
             zIndex: 30,
-
             position: 'fixed',
-            // top: 0,
             right: 20,
             bottom: 20,
-            // left: 0,
           }}
         />
       )}

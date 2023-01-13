@@ -43,7 +43,6 @@ const Account = () => {
       user_id: user_id,
       user_id_to_act_on: user_to_follow_id,
     });
-    // refetchFollowers();
   };
 
   const handleUnfollow = (user_id: number, user_to_unfollow_id: number) => {
@@ -51,7 +50,6 @@ const Account = () => {
       user_id: user_id,
       user_id_to_act_on: user_to_unfollow_id,
     });
-    // refetchFollowing();
   };
 
   const {

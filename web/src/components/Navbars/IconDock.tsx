@@ -48,7 +48,6 @@ const IconDock = ({ location }: IconDockProps) => {
       }`}
           sx={{ fill: location === DockLocation.HOME ? 'gray' : undefined }}
           fontSize="large"
-          // className="mx-5"
         />
       </Link>
 

@@ -7,12 +7,8 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { store } from './redux/store';
-const theme = createTheme({
-  // make default behavior root: {
-  //   whiteSpace: "unset",
-  //   wordBreak: "break-all"
-  // }
 
+const theme = createTheme({
   palette: {
     primary: {
       main: '#43bbff',
@@ -20,7 +16,6 @@ const theme = createTheme({
     secondary: {
       main: '#141414',
     },
-    // whitespace unset
   },
 
   typography: {

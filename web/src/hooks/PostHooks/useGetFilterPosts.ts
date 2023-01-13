@@ -1,8 +1,8 @@
-import WeCode, { PostContent } from '../../services/connections';
 import { useQuery, useQueryClient } from 'react-query';
 
 import { Filters } from '../../components/MainPage/Filters/FilterOptions';
 import { PUBLIC_SPACE } from '../../components/MainPage/Options/JoinSpace/JoinSpace';
+import WeCode from '../../services/connections';
 
 const DEFAULT_FILTERS: Filters = { languages: [], names: [], flairs: [] };
 
@@ -20,9 +20,6 @@ export const useGetFilterPosts = (
         filteredChoices ?? DEFAULT_FILTERS
       );
     }
-    // {
-    //   enabled: false,
-    // }
   );
   return {
     filteredPosts: data,

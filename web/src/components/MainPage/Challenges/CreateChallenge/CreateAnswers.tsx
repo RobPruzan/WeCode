@@ -33,13 +33,10 @@ const CreateAnswers = ({
             }  hover:fill-gray-400 ml-auto`}
             onClick={() => {
               if (!maxedAnswers) {
-                setChallengeInfo(
-                  // [...answers, { text: '' }]
-                  prev => ({
-                    ...prev,
-                    answers: [...prev.answers, { text: '' }],
-                  })
-                );
+                setChallengeInfo(prev => ({
+                  ...prev,
+                  answers: [...prev.answers, { text: '' }],
+                }));
               }
             }}
             size={30}
