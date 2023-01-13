@@ -4,6 +4,7 @@ from .views import (
     AnswerView,
     ChallengeView,
     CommentsView,
+    FilteredPostContentView,
     FollowView,
     FollowingView,
     PostContentView,
@@ -16,6 +17,10 @@ from .views import (
 )
 
 urlpatterns = [
+    path(
+        "api/filtered_post_content/<str:space_id>",
+        FilteredPostContentView.as_view(),
+    ),
     path("api/post_content/<str:space_id>", PostContentView.as_view()),
     path("api/user_posts/<str:user_id>", UserPostView.as_view()),
     path("api/user", UserView.as_view()),

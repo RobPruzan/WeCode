@@ -5,6 +5,7 @@ import FeedView from './FeedView/FeedView';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { SpaceOptions } from './Options/Options';
 import UserAccess from '../Account/UserAccess';
+import WeCode from '../../services/connections';
 
 const MainPage = () => {
   return (
@@ -55,7 +56,6 @@ const MainPage = () => {
           >
             <IconDock location={DockLocation.SEND} />
           </div>
-
           <SpaceOptions />
         </div>
       </div>

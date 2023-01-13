@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsXLg } from 'react-icons/bs';
 import { CreateSpaceButton } from './CreateSpaceButton';
 import { CustomTextField } from '../../../CustomTextField';
-import { Filters } from '../../Filters/LanguageOptions';
 import { RootState } from '../../../../redux/store';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 import { SpaceDescription } from './SpaceDescription';
@@ -12,6 +11,7 @@ import { SpaceUsers } from './SpaceUsers';
 import { TypeAheadOption } from '../../../utils/TypeAhead';
 import WeCode from '../../../../services/connections';
 import { useMutation } from 'react-query';
+import { Filters } from '../../Filters/FilterOptions';
 
 export type FilterChangeHandler = (
   event: React.SyntheticEvent<Element, Event>,

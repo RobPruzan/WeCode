@@ -1,7 +1,7 @@
+import FilterOptions from '../Filters/FilterOptions';
 import CreateSpace from './CreateSpace/CreateSpace';
 import { CurrentSpace } from './CurrentSpace';
 import JoinSpace from './JoinSpace/JoinSpace';
-import LanguageOptions from '../Filters/LanguageOptions';
 import { PrimaryCard } from '../../PrimaryCard';
 const primarCardStyle = { maxWidth: '18em' };
 
@@ -14,7 +14,7 @@ export const SpaceOptions = () => {
         <CurrentSpace className="h3  mb-3 d-flex justify-content-center" />
         <JoinSpace />
       </div>
-      <LanguageOptions />
+      <FilterOptions />
     </div>
   );
 };

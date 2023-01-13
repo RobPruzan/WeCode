@@ -17,8 +17,11 @@ import { Users } from '../../Users/Users';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { userInfo } from 'os';
+import { placeholder } from '@babel/types';
+import { Button } from '@mui/material';
+import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
 
-const languageNames = [
+const LANGUAGE_FILTER_NAMES = [
   { label: 'JavaScript', id: 1 },
   { label: 'Python', id: 2 },
   { label: 'Java', id: 3 },
@@ -35,17 +38,29 @@ const languageNames = [
   { label: 'Scala', id: 14 },
 ];
 
-const DEFAULT_FILTERS: Filters = { languages: [], names: [] };
+const FLAIR_FILTER_NAMES = [
+  { label: 'Help', id: 1 },
+  { label: 'Discussion', id: 2 },
+  { label: 'Question', id: 3 },
+  { label: 'Showcase', id: 4 },
+  { label: 'Announcement', id: 5 },
+  { label: 'News', id: 6 },
+];
 
+const DEFAULT_FILTERS: Filters = { languages: [], names: [], flairs: [] };
 export type Filters = {
   languages: TypeAheadOption[];
   names: TypeAheadOption[];
+  flairs: TypeAheadOption[];
 };
 
-const LanguageOptions = () => {
+const FilterOptions = () => {
   // const [chosenLanguages, setChosenLanguages] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   // const [chosenUsers, setChosenUsers] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   const user = useSelector(({ userState }: RootState) => userState.user);
+  const spaceId =
+    useSelector(({ spaceState }: RootState) => spaceState.currentSpaceId) ??
+    PUBLIC_SPACE;
   // useState<typeOfVariable>(initialValueOfVariable)
   // making state variable filters, and setter for state variable
   //
@@ -56,6 +71,7 @@ const LanguageOptions = () => {
     () => user && WeCode.getFollowing(user.id)
     // {onSuccess: (data) => setSelectedFollowing(data)}
   );
+
   const following = data ?? [];
   const followerNames = useMemo(
     () => following.map(user => ({ id: String(user.id), label: user.name })),
@@ -70,16 +86,19 @@ const LanguageOptions = () => {
     setFilters((prev): Filters => ({ ...prev, [filterChoice]: newValue }));
   };
   return (
-    <div className="border-2 border-neon-blue rounded-lg p-4">
+    <div
+      style={{ minHeight: '24rem' }}
+      className="border-2 border-neon-blue rounded-lg p-4 flex flex-col justify-evenly"
+    >
       <p className="h3 text-center">Filters</p>
       <TypeAhead
-        options={languageNames}
+        options={LANGUAGE_FILTER_NAMES}
         label="Select Languages"
         changeHandler={(event, newValue) =>
           handleFilterChange(event, newValue, 'languages')
         }
         members={filters.languages}
-        placeholder="Languages"
+        placeholder={filters.languages.length > 0 ? '' : 'Languages'}
       />
       <div className="mt-4" />
       <TypeAhead
@@ -89,10 +108,27 @@ const LanguageOptions = () => {
           handleFilterChange(event, newValue, 'names')
         }
         members={filters.names}
-        placeholder="Users"
+        placeholder={filters.names.length > 0 ? '' : 'Users'}
       />
+      <div className="mt-4" />
+      <TypeAhead
+        options={FLAIR_FILTER_NAMES}
+        label="Select Flair"
+        changeHandler={(event, newValue) =>
+          handleFilterChange(event, newValue, 'flairs')
+        }
+        members={filters.flairs}
+        placeholder={filters.flairs.length > 0 ? '' : 'Flairs'}
+      />
+      <Button
+        className="mt-4 w-1/2"
+        variant="outlined"
+        onClick={() => WeCode.getFilteredPosts(spaceId, filters)}
+      >
+        Apply
+      </Button>
     </div>
   );
 };
 
-export default LanguageOptions;
+export default FilterOptions;

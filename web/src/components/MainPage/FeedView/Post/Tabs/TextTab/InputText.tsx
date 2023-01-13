@@ -6,6 +6,9 @@ import { Dispatch, SetStateAction } from 'react';
 
 import TextField from '@mui/material/TextField';
 
+const possiblePlaceholderText = ["What's on your mind...", "Add a comment...", "Inspire us..."]
+const randomIndex = Math.floor(Math.random() * possiblePlaceholderText.length);
+
 export type InputTextProps = {
   // setCurrentPostInfo: Dispatch<SetStateAction<PostContent>> | Dispatch<SetStateAction<Comment>>
   // currentPostInfo: PostContent | Comment;
@@ -22,6 +25,7 @@ export const InputText = ({
 }: InputTextProps) => {
   return (
     <TextField
+      placeholder={possiblePlaceholderText[randomIndex]}
       onChange={changeHandler}
       value={value}
       className="p-2 "

@@ -3,6 +3,7 @@ from pprint import pprint
 from tokenize import Comment
 from rest_framework import generics
 from django.shortcuts import render
+from django.db.models import Q
 
 from .utils import filter_data
 
@@ -63,6 +64,22 @@ class PostContentView(APIView):
 
     def put(self, request, *args, **kwargs):
         pass
+
+
+class FilteredPostContentView(APIView):
+    def get(self, request, *args, **kwargs):
+        space_id = kwargs.get("space_id")
+        if space_id is None:
+            return Response("No Space ID Found")
+        space_id = int(space_id)
+        languages = request.GET.get("languages").split(",")
+        names = request.GET.get("names").split(",")
+        flairs = request.GET.get("flairs").split(",")
+
+        postData = Post.objects.filter(
+            space_id=space_id, language__in=languages, flair__contains=flairs
+        )
+        return Response()
 
 
 class UserPostView(APIView):

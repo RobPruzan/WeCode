@@ -1,6 +1,7 @@
 import { ChallengeCreate } from '../components/MainPage/Challenges/CreateChallenge/CreateChallenge';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 import axios from 'axios';
+import { Filters } from '../components/MainPage/Filters/FilterOptions';
 // TODO remove optional fields
 export type PostContent = {
   id?: number;
@@ -104,17 +105,40 @@ export class WeCodeApi {
       postContent
     );
   }
+  // add url parameters
+  public async getFilteredPosts(
+    space_id: number,
+    filteredChoices: Filters
+  ): Promise<PostContent[]> {
+    const url = new URL(
+      `${this.baseUrl}/filtered_post_content/${space_id ?? 1}`
+    );
+    const csvLanguages = filteredChoices.languages
+      .map(language => language.label)
+      .join(',');
+    const csvNames = filteredChoices?.names.map(name => name.id).join(',');
+    const csvFlairs = filteredChoices?.flairs
+      .map(flair => flair.label)
+      .join(',');
+    url.searchParams.set('languages', csvLanguages);
+    url.searchParams.set('names', csvNames);
+    url.searchParams.set('flairs', csvFlairs);
+    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', url.toString());
+    const response = await axios.get(url.toString());
 
-  public async getPosts(space_id = 1): Promise<PostContent[]> {
+    return response.data;
+  }
+
+  public async getPosts(space_id: number): Promise<PostContent[]> {
     const response = await axios.get(
-      `${this.baseUrl}/post_content/${space_id}}`
+      `${this.baseUrl}/post_content/${space_id}`
     );
 
     return response.data;
   }
 
   public async getUserPosts(user_id: number): Promise<PostContent[]> {
-    const response = await axios.get(`${this.baseUrl}/user_posts/${user_id}}`);
+    const response = await axios.get(`${this.baseUrl}/user_posts/${user_id}`);
     return response.data;
   }
 
