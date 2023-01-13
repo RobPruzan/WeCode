@@ -1,6 +1,7 @@
 import { Answer, Challenge } from '../../../services/connections';
 import { FormControl, Radio, RadioGroup } from '@mui/material';
 
+import ChallengeButtons from './CreateChallenge/ChallengeButtons';
 import ChallengeProgressBar from './ProgressBar';
 import { SiCheckmarx } from 'react-icons/si';
 import green from '@material-ui/core/colors/green';
@@ -47,9 +48,6 @@ const ChallengeQuiz = ({
       challengeId: challenge.id,
       answerId: selection ?? -1,
     });
-    setTimeout(() => {
-      handleExitChallenge();
-    }, 2500);
   };
 
   return (
@@ -70,7 +68,19 @@ const ChallengeQuiz = ({
           ) : correct ? (
             <p className="text-green-500 text-2xl  font-bold">Correct!</p>
           ) : (
-            <p className="text-red-500 text-2xl font-semibold">Wrong!</p>
+            <div>
+              <p className="text-red-500 text-2xl font-semibold">Wrong!</p>
+              <div className="flex flex-col items-center justify-center w-full h-full">
+                <p className=" mb-0 font-bold text-2xl">Correct answer:</p>
+                <p className="m-0 text-xl">
+                  {
+                    challenge.answers.find(
+                      answer => answer.id === challenge.correct_answer
+                    )?.text
+                  }
+                </p>
+              </div>
+            </div>
           )}
         </p>
 
@@ -98,18 +108,10 @@ const ChallengeQuiz = ({
           </FormControl>
         </div>
         <div className="flex mt-3">
-          <button
-            onClick={handleExitChallenge}
-            className="bg-red-500 hover:bg-red-700 rounded-lg shadow-lg text-white p-2 w-50 mr-2"
-          >
-            Exit
-          </button>
-          <button
-            onClick={handleAnswer}
-            className="bg-neon-blue hover:bg-sky-500 rounded-lg shadow-lg text-white p-2 w-50 "
-          >
-            Submit
-          </button>
+          <ChallengeButtons
+            handleExitChallenge={handleExitChallenge}
+            handleAnswer={handleAnswer}
+          />
         </div>
       </>
     </>
