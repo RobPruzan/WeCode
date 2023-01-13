@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 import { FilterChangeHandler } from '../Options/CreateSpace/CreateSpace';
 import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
 import { RootState } from '../../../redux/store';
+import { Spinner } from 'react-bootstrap';
 import WeCode from '../../../services/connections';
 import { useGetFilterPosts } from '../../../hooks/PostHooks/useGetFilterPosts';
 import { useGetPosts } from '../../../hooks/PostHooks/useGetPosts';
@@ -58,14 +59,14 @@ const FilterOptions = () => {
   );
   const { refetchPosts } = useGetPosts(spaceId);
   const { data, isLoading, isError, isSuccess, error } = useQuery(
-    ['following'],
-    () => user && WeCode.getFollowing(user.id)
+    ['users'],
+    () => WeCode.getUsers()
   );
 
-  const following = data ?? [];
-  const followerNames = useMemo(
-    () => following.map(user => ({ id: String(user.id), label: user.name })),
-    [following]
+  const users = data ?? [];
+  const userNames = useMemo(
+    () => users.map(user => ({ id: String(user.id), label: user.name })),
+    [users]
   );
   const handleFilterPosts = () => {
     refetchFilteredPosts();
@@ -100,7 +101,7 @@ const FilterOptions = () => {
       />
       <div className="mt-4" />
       <TypeAhead
-        options={followerNames}
+        options={userNames}
         label="Select Users"
         changeHandler={(event, newValue) =>
           handleFilterChange(event, newValue, 'names')
@@ -125,7 +126,7 @@ const FilterOptions = () => {
           variant="outlined"
           onClick={handleFilterPosts}
         >
-          Apply
+          Filter
         </Button>
         <Button
           className="mt-4 w-5/12 "

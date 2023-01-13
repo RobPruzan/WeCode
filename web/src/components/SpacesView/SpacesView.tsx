@@ -35,18 +35,23 @@ export const SpacesView = () => {
     data: spaces,
     error,
     isLoading: spacesLoading,
-  } = useQuery(['spaces', user?.id, totalSpaces], () =>
+  } = useQuery(['home_spaces', user?.id, totalSpaces], () =>
     WeCode.getSpaces(user?.id ?? 0)
   );
 
+  console.log('hello', spaces);
   const shownSpaces = useMemo(
     () =>
-      spaces?.filter(space => {
-        return (
-          space.name.toLowerCase().includes(searchedSpace.toLowerCase()) ||
-          space.description.toLowerCase().includes(searchedSpace.toLowerCase())
-        );
-      }),
+      spaces
+        ?.filter(space => {
+          return (
+            space.name.toLowerCase().includes(searchedSpace.toLowerCase()) ||
+            space.description
+              .toLowerCase()
+              .includes(searchedSpace.toLowerCase())
+          );
+        })
+        .reverse(),
     [spaces, searchedSpace]
   );
 

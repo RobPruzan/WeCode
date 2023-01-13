@@ -1,17 +1,17 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { BsXLg } from 'react-icons/bs';
 import { CreateSpaceButton } from './CreateSpaceButton';
 import { CustomTextField } from '../../../CustomTextField';
+import { Filters } from '../../Filters/FilterOptions';
 import { RootState } from '../../../../redux/store';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 import { SpaceDescription } from './SpaceDescription';
 import { SpaceUsers } from './SpaceUsers';
 import { TypeAheadOption } from '../../../utils/TypeAhead';
 import WeCode from '../../../../services/connections';
-import { useMutation } from 'react-query';
-import { Filters } from '../../Filters/FilterOptions';
 
 export type FilterChangeHandler = (
   event: React.SyntheticEvent<Element, Event>,
@@ -48,6 +48,7 @@ const CreateSpace = ({ setAddSpace }: CreateSpaceProps) => {
   const [spaceInfo, setSpaceInfo] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   const user = useSelector(({ userState }: RootState) => userState.user);
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const availableSpaces = useSelector(
     ({ spaceState }: RootState) => spaceState.availableSpaces
   );
@@ -64,6 +65,7 @@ const CreateSpace = ({ setAddSpace }: CreateSpaceProps) => {
             availableSpaces: [...(availableSpaces ?? []), spaceInfo].reverse(),
           },
         });
+        queryClient.invalidateQueries(['spaces', user?.id]);
       },
     }
   );

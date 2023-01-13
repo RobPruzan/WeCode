@@ -15,6 +15,7 @@ export const useGetPosts = (
       onSuccess: data => {
         fn && fn(data?.reverse());
       },
+      refetchOnWindowFocus: false,
     }
   );
   return {
