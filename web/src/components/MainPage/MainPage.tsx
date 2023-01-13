@@ -24,8 +24,6 @@ const MainPage = () => {
               style={{
                 minWidth: '105%',
                 borderTop: '1px solid gray',
-
-                // minWidth: '400px',
               }}
               className="border-t-2 border-gray-500 overflow-x-hidden"
             ></div>

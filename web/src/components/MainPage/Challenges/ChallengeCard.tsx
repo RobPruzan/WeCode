@@ -144,8 +144,6 @@ const ChallengeCard = ({
             >
               <div
                 key={`ChallengeCard-${index}`}
-                // bg-slate-900
-
                 className="   m-4 flex flex-col   "
               >
                 <div className="flex">

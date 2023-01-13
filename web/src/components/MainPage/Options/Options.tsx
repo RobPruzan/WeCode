@@ -1,8 +1,6 @@
-import FilterOptions from '../Filters/FilterOptions';
-import CreateSpace from './CreateSpace/CreateSpace';
 import { CurrentSpace } from './CurrentSpace';
+import FilterOptions from '../Filters/FilterOptions';
 import JoinSpace from './JoinSpace/JoinSpace';
-import { PrimaryCard } from '../../PrimaryCard';
 const primarCardStyle = { maxWidth: '18em' };
 
 const primaryCardStyle = { maxWidth: '18em' };

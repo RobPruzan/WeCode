@@ -28,7 +28,6 @@ const App = () => {
     const user = localStorage.getItem('user');
     if (user) {
       const userObect = JSON.parse(user ?? '');
-      console.log('user object smile', userObect);
 
       dispatch({ type: UserActions.Login, payload: { user: userObect } });
     }

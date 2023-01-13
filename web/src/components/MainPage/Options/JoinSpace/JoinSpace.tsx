@@ -20,7 +20,6 @@ const JoinSpace = () => {
   );
   const dispatch = useDispatch();
 
-  // const [spaces, setSpaces] = useState<Space[]>([]);
   const { data, error, isLoading } = useQuery(
     ['spaces', user?.id],
     async () => {

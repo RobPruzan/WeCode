@@ -70,18 +70,7 @@ export const PostedContent = ({
   };
   return (
     <div key={`PostedContent: ${keyValue}`}>
-      {/* <div
-        className="border-2 text-center border-white rounded-full  
-      // min width 40 px
-
-       min-w-fit h-10 "
-      >
-        <p className="w-10">{user?.name[0]}</p>
-      </div> */}
-
       <div className={`border-2 border-neon-blue rounded-lg p-2 ${className}`}>
-        {/* a circle float left top 0 */}
-
         <div style={{ float: 'right', marginLeft: '1em', marginBottom: '1em' }}>
           <UpDownVoting
             upVotes={upVotes}

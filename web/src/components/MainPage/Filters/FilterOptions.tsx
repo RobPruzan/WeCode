@@ -1,27 +1,15 @@
-import {
-  ChangeHandler,
-  DEFAULT_SPACE_INFO,
-  FilterChangeHandler,
-  SpaceInfo,
-  TypAheadChangeHandler,
-} from '../Options/CreateSpace/CreateSpace';
-import React, { useMemo, useState } from 'react';
 import { TypeAhead, TypeAheadOption } from '../../utils/TypeAhead';
-import WeCode, { User } from '../../../services/connections';
+import { useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
 import { Button } from '@mui/material';
+import { FilterChangeHandler } from '../Options/CreateSpace/CreateSpace';
 import { PUBLIC_SPACE } from '../Options/JoinSpace/JoinSpace';
-import { PrimaryCard } from '../../PrimaryCard';
 import { RootState } from '../../../redux/store';
-import UserAccess from '../../Account/UserAccess';
-import { UserReducer } from '../../../redux/reducers/user';
-import { Users } from '../../Users/Users';
-import { placeholder } from '@babel/types';
+import WeCode from '../../../services/connections';
 import { useGetFilterPosts } from '../../../hooks/PostHooks/useGetFilterPosts';
 import { useGetPosts } from '../../../hooks/PostHooks/useGetPosts';
 import { useSelector } from 'react-redux';
-import { userInfo } from 'os';
 
 const LANGUAGE_FILTER_NAMES = [
   { label: 'JavaScript', id: 1 },
@@ -57,17 +45,12 @@ export type Filters = {
 };
 
 const FilterOptions = () => {
-  // const [chosenLanguages, setChosenLanguages] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
-  // const [chosenUsers, setChosenUsers] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
   const queryClient = useQueryClient();
   const user = useSelector(({ userState }: RootState) => userState.user);
   const spaceId =
     useSelector(({ spaceState }: RootState) => spaceState.currentSpaceId) ??
     PUBLIC_SPACE;
 
-  // useState<typeOfVariable>(initialValueOfVariable)
-  // making state variable filters, and setter for state variable
-  //
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const { refetchFilteredPosts, filteredPostsIsLoading } = useGetFilterPosts(
     spaceId,
@@ -75,7 +58,6 @@ const FilterOptions = () => {
   );
   const { refetchPosts } = useGetPosts(spaceId);
   const { data, isLoading, isError, isSuccess, error } = useQuery(
-    // dependency array
     ['following'],
     () => user && WeCode.getFollowing(user.id)
   );
@@ -86,14 +68,10 @@ const FilterOptions = () => {
     [following]
   );
   const handleFilterPosts = () => {
-    // queryClient.invalidateQueries(['space_posts', spaceId]);
-    // queryClient.removeQueries(['space_posts', spaceId]);
     refetchFilteredPosts();
   };
 
   const handleResetFilteredPosts = () => {
-    // queryClient.invalidateQueries(['filtered_space_posts', spaceId]);
-
     setFilters(DEFAULT_FILTERS);
     refetchPosts();
   };

@@ -3,14 +3,10 @@ import { User } from '../../services/connections';
 // REMOVE ALL OF THIS AND MIGRATE THIS TO REACT QUERY
 export interface UserState {
   user: User | null;
-  // TODO remove username
-  // userName: string | null;
 }
 
 export const DEFAULT_USER_STATE: UserState = {
   user: null,
-
-  // userName: null,
 };
 
 export enum UserActions {
@@ -38,7 +34,6 @@ export const UserReducer = (
 ) => {
   switch (action.type) {
     case UserActions.Login:
-      console.log('should login here', action.payload.user);
       if (action.payload.user) {
         localStorage.setItem('user', JSON.stringify(action.payload.user));
       }
