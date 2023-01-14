@@ -2,13 +2,20 @@ import { ChallengeCreate } from '../components/MainPage/Challenges/CreateChallen
 import { Filters } from '../components/MainPage/Filters/FilterOptions';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 // TODO remove optional fields
+// export type LikedUserInfo = {
+//   id: number;
+//   name: string;
+// };
+
 export type PostContent = {
   id?: number;
   user_id?: number;
   content: string;
   code?: string;
   flair?: string;
+  likes?: number;
   upvotes?: number;
   comments?: number;
   language?: string;
@@ -125,7 +132,6 @@ export class WeCodeApi {
     url.searchParams.set('flairs', csvFlairs);
 
     const response = await axios.get(url.toString());
-
     return response.data;
   }
 
@@ -133,7 +139,17 @@ export class WeCodeApi {
     const response = await axios.get(
       `${this.baseUrl}/post_content/${space_id}`
     );
+    return response.data;
+  }
 
+  public async putLikes(
+    space_id: number,
+    upVotes: number
+  ): Promise<PostContent[]> {
+    const response = await axios.put(
+      `${this.baseUrl}/post_content/${space_id}`,
+      { upVotes }
+    );
     return response.data;
   }
 
