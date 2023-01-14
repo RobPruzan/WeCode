@@ -14,6 +14,7 @@ from .views import (
     UserView,
     UsersView,
     UsernameView,
+    VoteView,
 )
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
     path("api/following/<int:user_id>", FollowingView.as_view()),
     path("api/challenge/<int:space_id>", ChallengeView.as_view()),
     path("api/answer", AnswerView.as_view()),
+    path("api/vote/<str:post_id>", VoteView.as_view()),
 ]
