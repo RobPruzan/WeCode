@@ -4,10 +4,10 @@ from tokenize import Comment
 from rest_framework import generics
 from django.shortcuts import render
 from django.db.models import Q
-
+from enum import Enum
 from .utils import filter_data
 
-from .models import Challenge, Post, Space, User, Answer
+from .models import Challenge, Post, Space, User, Answer, Vote
 from .serializers import (
     AnswerSerializer,
     ChallengeSerializer,
@@ -20,6 +20,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from print_color import print
 
+UPVOTE = "UPVOTE"
+DOWNVOTE = "DOWNVOTE"
+NOVOTE = "NOVOTE"
 # Create your views here.
 class UsersView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
@@ -57,13 +60,77 @@ class PostContentView(APIView):
         space_id = filter_data(kwargs.get("space_id", 1))
         if space_id is None:
             return Response("No Space ID Found")
-        postData = Post.objects.filter(space_id=space_id)
+        postData = Post.objects.filter(space_id=space_id).order_by("-date")[:50]
         serializer = PostSerializer(postData, many=True)
+        # lambda function but with if statement
+
+        # sorted_serializer_data = sorted(
+        #     serializer.data, key=lambda k: k["date"] if k["date"] else "", reverse=True
+        # )
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
         likes_amount = request.data
         return Response()
+
+
+class VoteView(APIView):
+    def put(self, request, *args, **kwargs):
+        post_id = kwargs.get("post_id")
+        user_id = request.data.get("user_id")
+        vote_type = request.data.get("vote_type")
+        if user_id is None or post_id is None or vote_type is None:
+            print(user_id, post_id, vote_type, color="red")
+            return Response("Invalid IDs Provided")
+        vote = Vote.objects.filter(user_id=user_id, post_id=post_id).first()
+        post = Post.objects.filter(id=post_id).first()
+
+        if post is None:
+            print("Post Not Found", color="red")
+            return Response("Post Not Found")
+        if vote is None:
+            Vote.objects.create(user_id=user_id, post_id=post_id, vote_type=vote_type)
+            if vote_type == UPVOTE:
+                post.likes += 1
+            elif vote_type == DOWNVOTE:
+                post.likes -= 1
+
+        else:
+            if vote.vote_type == UPVOTE:
+                if vote_type == DOWNVOTE:
+                    vote.vote_type = DOWNVOTE
+                    post.likes -= 2
+                elif vote_type == NOVOTE:
+                    vote.vote_type = NOVOTE
+                    post.likes -= 1
+                elif vote.vote_type == UPVOTE:
+                    vote.vote_type = NOVOTE
+                    post.likes -= 1
+            elif vote.vote_type == DOWNVOTE:
+                if vote_type == UPVOTE:
+                    vote.vote_type = UPVOTE
+                    post.likes += 2
+                elif vote_type == NOVOTE:
+                    vote.vote_type = NOVOTE
+                    post.likes += 1
+                elif vote.vote_type == DOWNVOTE:
+                    vote.vote_type = NOVOTE
+                    post.likes += 1
+            elif vote.vote_type == NOVOTE:
+                if vote_type == UPVOTE:
+                    vote.vote_type = UPVOTE
+                    post.likes += 1
+                elif vote_type == DOWNVOTE:
+                    vote.vote_type = DOWNVOTE
+                    post.likes -= 1
+
+            print(post.likes, vote_type, color="green")
+            vote.save()
+            print(vote.vote_type, color="green")
+        post.save()
+        serializer = PostSerializer(post)
+        print("the... post?", post, color="green")
+        return Response(serializer.data)
 
 
 class FilteredPostContentView(APIView):
@@ -78,7 +145,7 @@ class FilteredPostContentView(APIView):
         languages = [i.lower() for i in request.GET.get("languages", []).split(",")]
         names = [int(i) for i in request.GET.get("names", []).split(",") if i]
         flairs = [i.lower() for i in request.GET.get("flairs", []).split(",")]
-        postData = Post.objects.filter(space_id=space_id)
+        postData = Post.objects.filter(space_id=space_id).order_by("-date")[:50]
 
         if languages not in NO_FILTER_CASES:
             postData = postData.filter(language__in=languages)
@@ -86,7 +153,10 @@ class FilteredPostContentView(APIView):
             postData = postData.filter(user__in=names)
         if flairs not in NO_FILTER_CASES:
             postData = postData.filter(flair__in=flairs)
+
         serializer = PostSerializer(postData, many=True)
+        # sort by serialize.data['date'] (django date field)
+
         return Response(serializer.data)
 
 
@@ -97,8 +167,9 @@ class UserPostView(APIView):
             return Response("No User ID Found")
         user_id = int(user_id)
         user = User.objects.filter(id=user_id).first()
-        posts = Post.objects.filter(user=user).all()
+        posts = Post.objects.filter(user=user).order_by("-date")[:50]
         serializer = PostSerializer(posts, many=True)
+
         return Response(serializer.data)
 
 
@@ -302,3 +373,6 @@ class AnswerView(APIView):
             challenge.users_that_failed.add(user)
             challenge.save()
             return Response("Incorrect Answer")
+
+
+# this is tied to the VoteType enum in the frontend
