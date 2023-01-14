@@ -28,14 +28,14 @@ export const SendPost = ({
   setPostButtonToggled,
 }: SendPostProps) => {
   // Serves as a snapshot incase the post fails to send (since we are using optimistic updates)
-  const [fallBackPosts, setfallBackPosts] =
+  const [fallBackPosts, setFallBackPosts] =
     useState<PostContent[]>(postedContent);
   const dispatch = useDispatch();
   const space = useSelector(({ spaceState }: RootState) => spaceState);
   const user = useSelector(({ userState }: RootState) => userState.user);
 
   // We update the post data optimistically, assuming it will be successful, but if it fails, we revert back to the previous state
-  const { data, mutate } = useMutation(
+  const sendPostMutation = useMutation(
     ({ currPostInfo, spaceId }: MutatePostParams) =>
       WeCode.sendPost(currPostInfo, spaceId),
 
@@ -45,7 +45,17 @@ export const SendPost = ({
       },
       onSuccess: () => {
         setPostedContent(prev => [currentPostInfo, ...prev]);
-        setCurrentPostInfo(prev => ({ ...prev, content: '', code: '' }));
+        const date = new Date().toLocaleString();
+
+        console.log('should have current time', date);
+
+        setCurrentPostInfo(prev => ({
+          ...prev,
+          content: '',
+          code: '',
+          likes: 0,
+          liked_by: [],
+        }));
       },
       onError: err => {
         console.error(err);
@@ -78,7 +88,7 @@ export const SendPost = ({
       }}
       onClick={_ => {
         setPostButtonToggled && setPostButtonToggled(false);
-        mutate({
+        sendPostMutation.mutate({
           currPostInfo: { ...currentPostInfo, user_id: user?.id },
           spaceId: space.currentSpaceId ?? PUBLIC_SPACE,
         });

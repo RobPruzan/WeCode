@@ -20,8 +20,6 @@ const Account = () => {
   const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
 
   const { userPosts } = useGetUserPosts(currentUser?.id ?? -1);
-  const reversedPosts =
-    userPosts && userPosts.sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0));
 
   const {
     data: followData,

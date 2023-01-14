@@ -57,7 +57,7 @@ const FilterOptions = () => {
     spaceId,
     filters
   );
-  const { refetchPosts } = useGetPosts(spaceId);
+  const { refetchPosts } = useGetPosts();
   const { data, isLoading, isError, isSuccess, error } = useQuery(
     ['users'],
     () => WeCode.getUsers()

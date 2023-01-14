@@ -2,18 +2,21 @@ import WeCode, { PostContent } from '../../services/connections';
 import { useQuery, useQueryClient } from 'react-query';
 
 import { PUBLIC_SPACE } from '../../components/MainPage/Options/JoinSpace/JoinSpace';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
 
-export const useGetPosts = (
-  space_id: number,
-  fn?: (state: PostContent[]) => void
-) => {
+export const useGetPosts = (fn?: (state: PostContent[]) => void) => {
   const queryClient = useQueryClient();
+  const userId = useSelector(({ userState }: RootState) => userState.user?.id);
+  const space_id = useSelector(
+    ({ spaceState }: RootState) => spaceState.currentSpaceId
+  );
   const { data, error, isLoading, isError, refetch } = useQuery(
-    ['space_posts', space_id],
+    ['space_posts', space_id, userId],
     () => WeCode.getPosts(space_id ?? PUBLIC_SPACE),
     {
       onSuccess: data => {
-        fn && fn(data?.reverse());
+        fn && fn(data);
       },
       refetchOnWindowFocus: false,
     }
