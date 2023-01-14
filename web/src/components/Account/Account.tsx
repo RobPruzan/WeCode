@@ -8,6 +8,7 @@ import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { PostedContents } from '../MainPage/FeedView/PostedContents/PostedContents';
 import { RootState } from '../../redux/store';
+import { Spinner } from 'react-bootstrap';
 import UserAccess from './UserAccess';
 import { useFollowUserAction } from '../../hooks/useFollowUserAction';
 import { useGetUserPosts } from '../../hooks/PostHooks/useGetUserPosts';
@@ -18,33 +19,21 @@ const Account = () => {
   const queryClient = useQueryClient();
   const currentUser = useSelector(({ userState }: RootState) => userState.user);
   const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
-
+  const [buttonIndex, setButtonIndex] = useState<number>(0);
   const { userPosts } = useGetUserPosts(currentUser?.id ?? -1);
 
-  const {
-    data: followData,
-    error: followError,
-    isLoading: followIsLoading,
-    isError: followIsError,
-    mutate: followUser,
-  } = useFollowUserAction('follow');
-  const {
-    data: unfollowData,
-    error: unfollowError,
-    isLoading: unfollowIsLoading,
-    isError: unfollowIsError,
-    mutate: unfollowUser,
-  } = useFollowUserAction('unfollow');
+  const followUserMutation = useFollowUserAction('follow');
+  const unfollowMutation = useFollowUserAction('unfollow');
 
   const handleFollow = (user_id: number, user_to_follow_id: number) => {
-    followUser({
+    followUserMutation.mutate({
       user_id: user_id,
       user_id_to_act_on: user_to_follow_id,
     });
   };
 
   const handleUnfollow = (user_id: number, user_to_unfollow_id: number) => {
-    unfollowUser({
+    unfollowMutation.mutate({
       user_id: user_id,
       user_id_to_act_on: user_to_unfollow_id,
     });
@@ -153,22 +142,39 @@ const Account = () => {
                             {following?.find(
                               user => user.id === otherUser.id
                             ) ? (
-                              <button
-                                className="bg-gray-500 p-1 text-white  rounded-md hover:bg-gray-400"
-                                onClick={_ =>
-                                  currentUser &&
-                                  handleUnfollow(currentUser?.id, otherUser.id)
-                                }
-                              >
-                                Unfollow
+                              unfollowMutation.isLoading &&
+                              buttonIndex === index ? (
+                                <button className="bg-sky-500 p-1 text-white  rounded-md ">
+                                  <Spinner size="sm" />
+                                </button>
+                              ) : (
+                                <button
+                                  className="bg-gray-500 p-1 text-white  rounded-md hover:bg-gray-400"
+                                  onClick={_ => {
+                                    setButtonIndex(index);
+                                    currentUser &&
+                                      handleUnfollow(
+                                        currentUser?.id,
+                                        otherUser.id
+                                      );
+                                  }}
+                                >
+                                  Unfollow
+                                </button>
+                              )
+                            ) : followUserMutation.isLoading &&
+                              buttonIndex === index ? (
+                              <button className="bg-sky-500 p-1 text-white  rounded-md ">
+                                <Spinner size="sm" />
                               </button>
                             ) : (
                               <button
                                 className="bg-neon-blue p-1 text-white  rounded-md hover:bg-sky-500 "
-                                onClick={_ =>
+                                onClick={_ => {
+                                  setButtonIndex(index);
                                   currentUser &&
-                                  handleFollow(currentUser?.id, otherUser.id)
-                                }
+                                    handleFollow(currentUser?.id, otherUser.id);
+                                }}
                               >
                                 Follow
                               </button>
