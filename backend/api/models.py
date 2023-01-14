@@ -22,12 +22,12 @@ class Post(models.Model):
     content = models.CharField(max_length=2000, default="", blank=True, null=True)
     code = models.CharField(max_length=2000, default="", blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
     comments = models.IntegerField(default=0, blank=True, null=True)
     language = models.CharField(max_length=200, default="", blank=True, null=True)
     space = models.ForeignKey("Space", on_delete=models.CASCADE, blank=True, null=True)
     flair = models.CharField(max_length=200, default="", blank=True, null=True)
-    voted_users = models.ManyToManyField(User, through="Vote")
+    liked_by = models.ManyToManyField(User, related_name="posts_liked", through="Vote")
+    likes = models.IntegerField(default=0, blank=True, null=True)
 
     def get_user_vote_type(self, user):
         try:
@@ -36,18 +36,18 @@ class Post(models.Model):
         except Vote.DoesNotExist:
             return None
 
+    # a get vote_type method that returns the vote type of the post
+    # if the user has not voted on the post, it will return None
+    # if the user has voted on the post, it will return the vote type
+
     def __str__(self):
-        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, comments: {self.comments}, langauge: {self.language}, room: {self.room}"
+        return f"user: {self.user}, content: {self.content}, code: {self.code}, date: {self.date}, likes: {self.likes}, comments: {self.comments}, langauge: {self.language}"
 
 
 class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    vote_type = models.BooleanField(default=True)
-
-
-class Test(models.Model):
-    test = models.CharField(max_length=200, default="", blank=True, null=True)
+    vote_type = models.CharField(default=None, max_length=20, blank=True, null=True)
 
 
 # Think of the foreign key relationship as each post points to one space
