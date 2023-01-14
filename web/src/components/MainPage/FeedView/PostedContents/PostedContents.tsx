@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 
+import LoadMore from './PostedActions/LoadMore';
 import LoadingPost from './LoadingPost';
 import { PostContent } from '../../../../services/connections';
 import { PostedContent } from './PostedContent';
@@ -16,6 +17,7 @@ export const PostedContents = ({
   isPostLoading,
   setPostedContent,
 }: PostedContentsProps) => {
+  const amountOfPosts = useMemo(() => postedContent.length, [postedContent]);
   console;
   return (
     <>
@@ -40,6 +42,7 @@ export const PostedContents = ({
           {...{ singlePostedContent }}
         />
       ))}
+      {amountOfPosts >= 50 && <LoadMore />}
     </>
   );
 };

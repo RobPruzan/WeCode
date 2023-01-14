@@ -1,4 +1,5 @@
 import { CountReducer, CountState } from './reducers/counts';
+import { PostAmountReducer, PostAmountState } from './reducers/postAmount';
 import { PostLoadingReducer, PostLoadingState } from './reducers/postLoading';
 import { SpaceReducer, SpaceState } from './reducers/spaces';
 import { UserReducer, UserState } from './reducers/user';
@@ -10,11 +11,13 @@ import {
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { count } from 'console';
+
 export interface RootState {
   countState: CountState;
   postLoadingState: PostLoadingState;
   spaceState: SpaceState;
   userState: UserState;
+  postAmountState: PostAmountState;
 }
 
 export const store = createStore(
@@ -26,6 +29,7 @@ export const store = createStore(
     postLoadingState: PostLoadingReducer,
     spaceState: SpaceReducer,
     userState: UserReducer,
+    postAmountState: PostAmountReducer,
   }),
   composeWithDevTools(applyMiddleware())
 );

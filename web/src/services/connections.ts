@@ -152,10 +152,13 @@ export class WeCodeApi {
     return response.data;
   }
 
-  public async getPosts(space_id: number): Promise<PostContent[]> {
-    const response = await axios.get(
-      `${this.baseUrl}/post_content/${space_id}`
-    );
+  public async getPosts(
+    space_id: number,
+    numberOfPosts?: number
+  ): Promise<PostContent[]> {
+    const url = new URL(`${this.baseUrl}/post_content/${space_id}`);
+    url.searchParams.set('number_of_posts', numberOfPosts?.toString() ?? '50');
+    const response = await axios.get(url.toString());
     return response.data;
   }
 

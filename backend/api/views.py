@@ -58,9 +58,12 @@ class PostContentView(APIView):
 
     def get(self, request, *args, **kwargs):
         space_id = filter_data(kwargs.get("space_id", 1))
+        number_of_posts = int(request.GET.get("number_of_posts", 50))
         if space_id is None:
             return Response("No Space ID Found")
-        postData = Post.objects.filter(space_id=space_id).order_by("-date")[:50]
+        postData = Post.objects.filter(space_id=space_id).order_by("-date")[
+            :number_of_posts
+        ]
         serializer = PostSerializer(postData, many=True)
         # lambda function but with if statement
 
@@ -80,7 +83,7 @@ class VoteView(APIView):
         user_id = request.data.get("user_id")
         vote_type = request.data.get("vote_type")
         if user_id is None or post_id is None or vote_type is None:
-            print(user_id, post_id, vote_type, color="red")
+
             return Response("Invalid IDs Provided")
         vote = Vote.objects.filter(user_id=user_id, post_id=post_id).first()
         post = Post.objects.filter(id=post_id).first()
@@ -124,12 +127,11 @@ class VoteView(APIView):
                     vote.vote_type = DOWNVOTE
                     post.likes -= 1
 
-            print(post.likes, vote_type, color="green")
             vote.save()
-            print(vote.vote_type, color="green")
+
         post.save()
         serializer = PostSerializer(post)
-        print("the... post?", post, color="green")
+
         return Response(serializer.data)
 
 
@@ -141,7 +143,7 @@ class FilteredPostContentView(APIView):
             space_id = int(space_id)
         else:
             return Response("No Space ID Found")
-
+        number_of_posts = int(request.GET.get("number_of_posts", 50))
         languages = [i.lower() for i in request.GET.get("languages", []).split(",")]
         names = [int(i) for i in request.GET.get("names", []).split(",") if i]
         flairs = [i.lower() for i in request.GET.get("flairs", []).split(",")]
@@ -157,17 +159,18 @@ class FilteredPostContentView(APIView):
         serializer = PostSerializer(postData, many=True)
         # sort by serialize.data['date'] (django date field)
 
-        return Response(serializer.data[:50])
+        return Response(serializer.data[:number_of_posts])
 
 
 class UserPostView(APIView):
     def get(self, request, *args, **kwargs):
         user_id = filter_data(kwargs.get("user_id"))
+        number_of_posts = int(request.GET.get("number_of_posts", 50))
         if user_id is None:
             return Response("No User ID Found")
         user_id = int(user_id)
         user = User.objects.filter(id=user_id).first()
-        posts = Post.objects.filter(user=user).order_by("-date")[:50]
+        posts = Post.objects.filter(user=user).order_by("-date")[:number_of_posts]
         serializer = PostSerializer(posts, many=True)
 
         return Response(serializer.data)
@@ -267,7 +270,7 @@ class FollowView(APIView):
         followers = user.followers.all()
 
         serializer = UserSerializer(followers, many=True)
-        print(serializer.data, color="blue")
+
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
@@ -281,7 +284,7 @@ class FollowView(APIView):
         user_to_follow.followers.add(user)
         user.save()
         user_to_follow.save()
-        print(user.following, color="blue")
+
         return Response("Follower Added")
 
 
