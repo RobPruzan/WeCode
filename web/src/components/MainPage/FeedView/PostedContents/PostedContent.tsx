@@ -22,6 +22,7 @@ export type PostedContentProps = {
   singlePostedContent: PostContent;
   keyValue: number | string;
 };
+
 export const PostedContent = ({
   className,
   singlePostedContent,

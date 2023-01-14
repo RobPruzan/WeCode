@@ -57,13 +57,13 @@ class PostContentView(APIView):
         space_id = filter_data(kwargs.get("space_id", 1))
         if space_id is None:
             return Response("No Space ID Found")
-        space_id = int(space_id)
         postData = Post.objects.filter(space_id=space_id)
         serializer = PostSerializer(postData, many=True)
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
-        pass
+        likes_amount = request.data
+        return Response()
 
 
 class FilteredPostContentView(APIView):
@@ -77,7 +77,7 @@ class FilteredPostContentView(APIView):
 
         languages = [i.lower() for i in request.GET.get("languages", []).split(",")]
         names = [int(i) for i in request.GET.get("names", []).split(",") if i]
-        flairs = request.GET.get("flairs", []).split(",")
+        flairs = [i.lower() for i in request.GET.get("flairs", []).split(",")]
         postData = Post.objects.filter(space_id=space_id)
 
         if languages not in NO_FILTER_CASES:
