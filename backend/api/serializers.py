@@ -1,6 +1,6 @@
 from tokenize import Comment
 from rest_framework import serializers
-from .models import Post, Space, User, Challenge, Answer
+from .models import Post, Space, User, Challenge, Answer, Vote
 from print_color import print
 
 
@@ -32,8 +32,17 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class VoteSerializer(serializers.ModelSerializer):
+    user = UserSerializerMinimal()
+
+    class Meta:
+        model = Vote
+        fields = ("user", "vote_type")
+
+
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    liked_by = VoteSerializer(source="vote_set", many=True)
 
     class Meta:
         model = Post
