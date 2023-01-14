@@ -30,10 +30,13 @@ export const PostedContents = ({
           <LoadingPost />
         </div>
       )}
+      {console.log(postedContent)}
       {postedContent.map((singlePostedContent, idx) => (
         <PostedContent
           className="mx-5 mb-5 "
           keyValue={idx}
+          setPostedContent={setPostedContent}
+          postedContent={postedContent}
           {...{ singlePostedContent }}
         />
       ))}

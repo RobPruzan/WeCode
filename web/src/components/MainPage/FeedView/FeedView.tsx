@@ -14,7 +14,7 @@ const FeedView = () => {
   const space = useSelector((spaceState: RootState) => spaceState.spaceState);
 
   const { posts, postsError, postsIsLoading, postsIsError, refetchPosts } =
-    useGetPosts(space.currentSpaceId ?? PUBLIC_SPACE, setPostedContent);
+    useGetPosts(setPostedContent);
   const queryClient = useQueryClient();
 
   return (

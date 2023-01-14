@@ -2,33 +2,25 @@ import { Dispatch, SetStateAction } from 'react';
 
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { VoteType } from '../../../../services/connections';
+import { useVoteOnPost } from '../../../../hooks/PostHooks/useVoteOnPost';
+
 export type UpDownVotingProps = {
   upVotes: number;
   setUpVotes: Dispatch<SetStateAction<number>>;
-  disabled?: boolean;
   handleUpVote: VoidFunction;
   handleDownVote: VoidFunction;
-  upOrDownVote: 'up' | 'down' | null;
+  voteType: VoteType;
 };
 
 export const UpDownVoting = ({
   upVotes,
-  setUpVotes,
-  disabled,
   handleUpVote,
   handleDownVote,
-  upOrDownVote,
+  voteType,
 }: UpDownVotingProps) => {
-  const getColor = (direction: 'up' | 'down') => {
-    if (disabled) {
-      if (upOrDownVote === direction) {
-        return 'white';
-      } else {
-        return 'grey';
-      }
-    } else {
-      return 'grey';
-    }
+  const getColor = (direction: VoteType) => {
+    return voteType === direction ? 'white' : 'grey';
   };
   return (
     <>
@@ -36,14 +28,14 @@ export const UpDownVoting = ({
       <div style={{ cursor: 'pointer' }} onClick={handleUpVote}>
         <ThumbUpIcon
           style={{
-            fill: getColor('up'),
+            fill: getColor(VoteType.UPVOTE),
           }}
         />
       </div>
       <div style={{ cursor: 'pointer' }} onClick={handleDownVote}>
         <ThumbDownIcon
           style={{
-            fill: getColor('down'),
+            fill: getColor(VoteType.DOWNVOTE),
           }}
         />
       </div>

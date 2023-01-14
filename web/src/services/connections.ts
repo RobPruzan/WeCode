@@ -3,12 +3,19 @@ import { Filters } from '../components/MainPage/Filters/FilterOptions';
 import { SpaceInfo } from '../components/MainPage/Options/CreateSpace/CreateSpace';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-// TODO remove optional fields
-// export type LikedUserInfo = {
-//   id: number;
-//   name: string;
-// };
 
+// This is tied to the VoteType enum in the backend
+export enum VoteType {
+  UPVOTE = 'UPVOTE',
+  DOWNVOTE = 'DOWNVOTE',
+  NOVOTE = 'NOVOTE',
+}
+
+export type LikedByMinimal = {
+  user: UserMinimal;
+  vote_type: VoteType;
+};
+// TODO remove optional fields
 export type PostContent = {
   id?: number;
   user_id?: number;
@@ -16,10 +23,11 @@ export type PostContent = {
   code?: string;
   flair?: string;
   likes?: number;
-  upvotes?: number;
+  liked_by?: LikedByMinimal[] | null;
   comments?: number;
   language?: string;
   hasCode?: boolean;
+  date?: string;
 };
 
 export type CommentType = {
@@ -107,9 +115,18 @@ export class WeCodeApi {
     postContent?: PostContent,
     space_id = 1
   ): Promise<void> {
+    // TODO remove optional fields
+    const newPostContent: PostContent = {
+      content: postContent?.content ?? '',
+      code: postContent?.code ?? '',
+      flair: postContent?.flair ?? '',
+      language: postContent?.language ?? '',
+      likes: postContent?.likes ?? 0,
+      user_id: postContent?.user_id ?? 0,
+    };
     const response = await axios.post(
       `${this.baseUrl}/post_content/${space_id}`,
-      postContent
+      newPostContent
     );
   }
   // add url parameters
@@ -253,6 +270,17 @@ export class WeCodeApi {
       answer_id: answerId,
     });
 
+    return response.data;
+  }
+  public async updateVote(
+    postId: number,
+    userId: number,
+    vote_type: VoteType
+  ): Promise<PostContent> {
+    const response = await axios.put(`${this.baseUrl}/vote/${postId}`, {
+      user_id: userId,
+      vote_type,
+    });
     return response.data;
   }
 }

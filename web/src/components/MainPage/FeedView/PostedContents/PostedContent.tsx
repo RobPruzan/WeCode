@@ -1,11 +1,14 @@
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { PostContent, VoteType } from '../../../../services/connections';
+
 import { Comment } from './PostedActions/Comment';
-import { PostContent } from '../../../../services/connections';
 import { RootState } from '../../../../redux/store';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { UpDownVoting } from './UpDownVoting';
 import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
+import { useGetPosts } from '../../../../hooks/PostHooks/useGetPosts';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useVoteOnPost } from '../../../../hooks/PostHooks/useVoteOnPost';
 
 const cardStyle = {
   color: 'white',
@@ -21,6 +24,8 @@ export type PostedContentProps = {
   canComment?: boolean;
   singlePostedContent: PostContent;
   keyValue: number | string;
+  postedContent: PostContent[];
+  setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
 };
 
 export const PostedContent = ({
@@ -28,46 +33,93 @@ export const PostedContent = ({
   singlePostedContent,
   canComment = true,
   keyValue,
+  postedContent,
+  setPostedContent,
 }: PostedContentProps) => {
-  const [upVotes, setUpVotes] = useState(0);
-  const [usedVote, setUsedVote] = useState(false);
-  const [upOrDownVote, setUpOrDownVote] = useState<'up' | 'down' | null>(null);
+  const [upVotes, setUpVotes] = useState(singlePostedContent.likes ?? 0);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const user = useSelector(({ userState }: RootState) => userState.user);
+  const voteOnPostMutation = useVoteOnPost(setPostedContent);
+  const getPostsQuery = useGetPosts();
+  useEffect(() => {
+    setUpVotes(singlePostedContent.likes ?? 0);
+    setVoteType(server_vote_type ?? VoteType.NOVOTE);
+  }, [singlePostedContent]);
+
+  const server_vote_type = useMemo(
+    () =>
+      singlePostedContent.liked_by?.find(
+        likedBy => likedBy.user.id === user?.id
+      ),
+    [user, singlePostedContent.liked_by]
+  )?.vote_type;
+
+  const [voteType, setVoteType] = useState<VoteType>(
+    server_vote_type ?? VoteType.NOVOTE
+  );
+
+  const voteOnPostMutationSimple = (vote_type: VoteType) => {
+    if (user && singlePostedContent?.id) {
+      voteOnPostMutation.mutate({
+        post_id: singlePostedContent.id,
+        user_id: user.id,
+        vote_type: vote_type,
+      });
+    }
+  };
+  // TODO put in utils
+
   const handleUpVote = () => {
-    if (usedVote) {
-      if (upOrDownVote === 'up') {
-        setUpVotes(prev => prev - 1);
-        setUsedVote(false);
-        setUpOrDownVote(null);
-      }
-      if (upOrDownVote === 'down') {
-        setUpVotes(prev => prev + 2);
-        setUsedVote(true);
-        setUpOrDownVote('up');
-      }
-    } else {
+    if (voteType === VoteType.UPVOTE) {
+      setUpVotes(prev => prev - 1);
+
+      setVoteType(VoteType.NOVOTE);
+      voteOnPostMutationSimple(VoteType.NOVOTE);
+    }
+    if (voteType === VoteType.DOWNVOTE) {
+      setUpVotes(prev => prev + 2);
+
+      setVoteType(VoteType.UPVOTE);
+      voteOnPostMutationSimple(VoteType.UPVOTE);
+    }
+    if (voteType === VoteType.NOVOTE) {
       setUpVotes(prev => prev + 1);
-      setUsedVote(true);
-      setUpOrDownVote('up');
+
+      setVoteType(VoteType.UPVOTE);
+      voteOnPostMutationSimple(VoteType.UPVOTE);
     }
   };
   const handleDownVote = () => {
-    if (usedVote) {
-      if (upOrDownVote === 'down') {
-        setUpVotes(prev => prev + 1);
-        setUsedVote(false);
-        setUpOrDownVote(null);
-      }
-      if (upOrDownVote === 'up') {
-        setUpVotes(prev => prev - 2);
-        setUsedVote(true);
-        setUpOrDownVote('down');
-      }
-    } else {
-      setUpVotes(prev => prev - 1);
-      setUsedVote(true);
-      setUpOrDownVote('down');
+    if (voteType === VoteType.DOWNVOTE) {
+      setUpVotes(prev => prev + 1);
+
+      setVoteType(VoteType.NOVOTE);
+      voteOnPostMutationSimple(VoteType.NOVOTE);
     }
+    if (voteType === VoteType.UPVOTE) {
+      setUpVotes(prev => prev - 2);
+
+      setVoteType(VoteType.DOWNVOTE);
+      voteOnPostMutationSimple(VoteType.DOWNVOTE);
+    }
+    if (voteType === VoteType.NOVOTE) {
+      setUpVotes(prev => prev - 1);
+
+      setVoteType(VoteType.DOWNVOTE);
+      voteOnPostMutationSimple(VoteType.DOWNVOTE);
+    }
+  };
+  const handleThrottledVote = (handleVote: VoidFunction) => {
+    if (isButtonDisabled) {
+      return;
+    }
+
+    setIsButtonDisabled(true);
+    handleVote();
+
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+    }, 500);
   };
   return (
     <div key={`PostedContent: ${keyValue}`}>
@@ -76,17 +128,15 @@ export const PostedContent = ({
           <UpDownVoting
             upVotes={upVotes}
             setUpVotes={setUpVotes}
-            disabled={!!usedVote}
-            handleUpVote={handleUpVote}
-            handleDownVote={handleDownVote}
-            upOrDownVote={upOrDownVote}
+            handleUpVote={() => handleThrottledVote(handleUpVote)}
+            handleDownVote={() => handleThrottledVote(handleDownVote)}
+            voteType={voteType}
           />
         </div>
         <div style={{ color: 'white' }} className="mx-3">
           {singlePostedContent.content}
           {singlePostedContent.code && singlePostedContent.content && <hr />}
         </div>
-
         {singlePostedContent.code && (
           <div className="m-3">
             <SyntaxHighlighter
@@ -98,7 +148,6 @@ export const PostedContent = ({
             <p>{singlePostedContent.language?.toUpperCase()}</p>
           </div>
         )}
-
         <hr />
         {canComment && <Comment />}
       </div>
