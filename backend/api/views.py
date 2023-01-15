@@ -1,4 +1,5 @@
 from ctypes import Union
+import os
 from pprint import pprint
 from tokenize import Comment
 from rest_framework import generics
@@ -6,14 +7,20 @@ from django.shortcuts import render
 from django.db.models import Q
 from enum import Enum
 from .utils import filter_data
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import status
+from django.http import FileResponse
+from django.conf import settings
 
-from .models import Challenge, Post, Space, User, Answer, Vote
+
+from .models import Challenge, Post, Space, Test, User, Answer, Vote
 from .serializers import (
     AnswerSerializer,
     ChallengeSerializer,
     CommentSerializer,
     PostSerializer,
     SpaceSerializer,
+    TestSerializer,
     UserSerializer,
 )
 from rest_framework.views import APIView
@@ -31,9 +38,27 @@ class UsersView(generics.CreateAPIView):
         return Response(serializer.data)
 
 
+class TestView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        test = Test.objects.all()
+        test_serializer = TestSerializer(test, many=True)
+        return Response(test_serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        test_serializer = TestSerializer(data=request.data)
+        if test_serializer.is_valid():
+            test_serializer.save()
+            return Response(test_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print("error", test_serializer.errors)
+            return Response(test_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
-        user_id = int(filter_data(kwargs.get("user_id")))
+        user_id = kwargs.get("user_id")
         user = User.objects.filter(id=user_id).first()
         serializer = UserSerializer(user)
         return Response(serializer.data)

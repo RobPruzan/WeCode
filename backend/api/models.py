@@ -8,6 +8,17 @@ class User(models.Model):
     following = models.ManyToManyField(
         "self", symmetrical=False, related_name="followers", blank=True
     )
+    photo = models.ImageField(upload_to="images/", blank=True, null=True)
+
+
+class Test(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    image = models.ImageField(upload_to="post_images")
+
+
+class Images(models.Model):
+    image = models.ImageField(upload_to="images")
 
 
 class Post(models.Model):

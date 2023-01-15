@@ -1,6 +1,6 @@
 from tokenize import Comment
 from rest_framework import serializers
-from .models import Post, Space, User, Challenge, Answer, Vote
+from .models import Images, Post, Space, Test, User, Challenge, Answer, Vote
 from print_color import print
 
 
@@ -8,6 +8,18 @@ class UserSerializerMinimal(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "name")
+
+
+class TestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Test
+        fields = "__all__"
+
+
+class ImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Images
+        fields = "__all__"
 
 
 class UserSerializer(serializers.ModelSerializer):
