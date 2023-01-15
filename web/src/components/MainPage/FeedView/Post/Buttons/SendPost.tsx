@@ -47,8 +47,6 @@ export const SendPost = ({
         setPostedContent(prev => [currentPostInfo, ...prev]);
         const date = new Date().toLocaleString();
 
-        console.log('should have current time', date);
-
         setCurrentPostInfo(prev => ({
           ...prev,
           content: '',

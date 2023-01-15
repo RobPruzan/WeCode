@@ -39,7 +39,6 @@ export const SpacesView = () => {
     WeCode.getSpaces(user?.id ?? 0)
   );
 
-  console.log('hello', spaces);
   const shownSpaces = useMemo(
     () =>
       spaces
