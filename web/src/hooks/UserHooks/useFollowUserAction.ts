@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from 'react-query';
 
-import WeCode from '../services/connections';
+import { RootState } from '../../redux/store';
+import WeCode from '../../services/connections';
+import { useSelector } from 'react-redux';
 
 export type FollowType = 'follow' | 'unfollow';
 
@@ -10,6 +12,7 @@ export type FollowActionMutationParams = {
 };
 
 export const useFollowUserAction = (followType: FollowType) => {
+  const userId = useSelector(({ userState }: RootState) => userState.user?.id);
   const queryClient = useQueryClient();
   const handleFollowAction = (user_id: number, user_to_follow_id: number) => {
     if (followType === 'follow') {
@@ -18,22 +21,16 @@ export const useFollowUserAction = (followType: FollowType) => {
       return WeCode.unfollowUser(user_id, user_to_follow_id);
     }
   };
-  const { data, mutate, error, isLoading, isError } = useMutation(
+  const followUserActionMutation = useMutation(
     ({ user_id, user_id_to_act_on }: FollowActionMutationParams) =>
       handleFollowAction(user_id, user_id_to_act_on),
 
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['following']); // if the mutation is successful, refetch the related query
+        queryClient.invalidateQueries(['following', userId]); // if the mutation is successful, refetch the related query
       },
     }
   );
 
-  return {
-    data,
-    error,
-    isLoading,
-    isError,
-    mutate,
-  };
+  return followUserActionMutation;
 };

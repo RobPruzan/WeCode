@@ -16,7 +16,6 @@ export const useVoteOnPost = (
       WeCode.updateVote(post_id, user_id, vote_type),
     {
       onSuccess: data => {
-        console.log('dat data', data);
         successHandler &&
           successHandler(prev =>
             prev.map(post => (post.id === data.id ? data : post))
