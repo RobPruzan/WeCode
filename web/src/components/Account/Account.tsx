@@ -5,6 +5,7 @@ import { DockLocation } from '../Navbars/IconDock';
 import { MainNavbar } from '../Navbars/MainNavbar';
 import { RootState } from '../../redux/store';
 import UserConnections from './UserConnections';
+import { UserMinimal } from '../../services/connections';
 import { useGetFollowers } from '../../hooks/UserHooks/useGetFollowers';
 import { useGetFollowing } from '../../hooks/UserHooks/useGetFollowing';
 import { useGetUserPosts } from '../../hooks/PostHooks/useGetUserPosts';
@@ -17,12 +18,15 @@ const Account = () => {
   const currentUser = useSelector(({ userState }: RootState) => userState.user);
   const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
   const [buttonIndex, setButtonIndex] = useState<number>(0);
-  const { userPosts } = useGetUserPosts(currentUser?.id ?? -1);
-
   const getUsersQuery = useUsersQuery();
 
-  const followersQuery = useGetFollowers(currentUser?.id ?? 0);
-  const followingQuery = useGetFollowing(currentUser?.id ?? 0);
+  const [selectedUser, setSelectedUser] = useState<
+    UserMinimal | null | undefined
+  >({ label: currentUser?.name ?? '', id: currentUser?.id ?? 0 });
+  const getFollowersQuery = useGetFollowers(selectedUser?.id ?? 0);
+  const getFollowingQuery = useGetFollowing(selectedUser?.id ?? 0);
+
+  const { userPosts } = useGetUserPosts(selectedUser?.id ?? -1);
 
   const handleUserSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedUserName(event.target.value);
@@ -48,9 +52,11 @@ const Account = () => {
         <div className=" grid  grid-rows-8 min-h-full w-full p-3">
           <div className="flex justify-center  "></div>
           <UserConnections
+            setSelectedUser={setSelectedUser}
             currentUser={currentUser}
-            followers={followersQuery.data}
-            following={followingQuery.data}
+            followers={getFollowersQuery.data}
+            following={getFollowingQuery.data}
+            selectedUser={selectedUser}
           />
           <div className="row-span-2  ">
             <div className="grid  h-full p-8">
@@ -64,8 +70,8 @@ const Account = () => {
               handleUserSearch={handleUserSearch}
               visibleUsers={visibleUsers}
               currentUser={currentUser}
-              following={followingQuery.data}
-              followers={followersQuery.data}
+              followers={getFollowersQuery.data}
+              following={getFollowingQuery.data}
               selectedUserName={selectedUserName}
               userPosts={userPosts}
             />

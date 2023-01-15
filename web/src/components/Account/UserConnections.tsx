@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { User, UserMinimal } from '../../services/connections';
 
-import { User } from '../../services/connections';
 import UserViewPopup from './UserViewPopup';
 import { useFollowUserAction } from '../../hooks/UserHooks/useFollowUserAction';
 import { useGetFollowers } from '../../hooks/UserHooks/useGetFollowers';
+import { useGetFollowing } from '../../hooks/UserHooks/useGetFollowing';
 
 export type UserConnectionTypes = 'followers' | 'following' | 'friends';
 export type PopupManager = {
@@ -13,12 +14,16 @@ export type UserConnectionsProps = {
   followers?: User[] | null | undefined;
   following?: User[] | null | undefined;
   currentUser?: User | null;
+  setSelectedUser: Dispatch<SetStateAction<UserMinimal | null | undefined>>;
+  selectedUser: UserMinimal | null | undefined;
 };
 
 const UserConnections = ({
   currentUser,
   followers,
   following,
+  setSelectedUser,
+  selectedUser,
 }: UserConnectionsProps) => {
   const [showUserPopUp, setShowUserPopUp] = useState<PopupManager>();
   const [popupX, setPopupX] = useState(0);
@@ -48,6 +53,7 @@ const UserConnections = ({
 
           {showUserPopUp?.followers && (
             <UserViewPopup
+              setSelectedUserId={setSelectedUser}
               users={followers}
               popupX={popupX}
               popupY={popupY}
@@ -59,6 +65,7 @@ const UserConnections = ({
           {followers?.length ?? 0}
         </div>
       </div>
+      <h3>{selectedUser?.label}</h3>
       <div className="flex justify-center items-center w-full h-full text-center ">
         <div className=" text-2xl col-span-1 text-center flex items-center justify-center">
           <button>
@@ -80,6 +87,7 @@ const UserConnections = ({
 
           {showUserPopUp?.following && (
             <UserViewPopup
+              setSelectedUserId={setSelectedUser}
               users={following}
               popupX={popupX}
               popupY={popupY}
