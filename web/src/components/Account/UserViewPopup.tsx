@@ -35,9 +35,7 @@ const UserViewPopup = ({
   WeCode.getFollowers;
   return (
     <div style={{ top: `${popupY}px`, left: `${popupX}px` }}>
-      <div className="bg-custom-dark-gray p-4 absolute rounded-lg shadow-md overflow-auto flex flex-col justify-center items-center z-40 h-56 border-2 border-white ">
-        <p className="text-2xl font-bold">{userType}</p>
-
+      <div className="bg-custom-dark-gray w-60 p-4 absolute rounded-lg shadow-md overflow-auto flex flex-col justify-center items-center z-40 h-56 border-2 border-white ">
         {users?.map(user => (
           <button
             onClick={e => {
