@@ -128,7 +128,22 @@ export const PostedContent = ({
   return (
     <div>
       <div className={`border-2 border-neon-blue rounded-lg p-2 ${className}`}>
-        <p className="h5 ">{singlePostedContent.user?.name}</p>
+        <div className="flex justify-evenly">
+          {' '}
+          <p className="h5 ml-3 mr-auto">{singlePostedContent.user?.name}</p>
+          <div className="flex w-1/2 justify-evenly">
+            <p>{singlePostedContent.flair}</p>
+            {singlePostedContent.language && (
+              <p>{`${singlePostedContent.language
+                .charAt(0)
+                .toUpperCase()}${singlePostedContent.language.slice(
+                1,
+                singlePostedContent.language.length
+              )}`}</p>
+            )}
+          </div>
+        </div>
+
         <hr />
         <div style={{ float: 'right', marginLeft: '1em', marginBottom: '1em' }}>
           <UpDownVoting

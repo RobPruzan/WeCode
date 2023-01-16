@@ -48,7 +48,6 @@ export const PostTabs = ({
   const [currentPostInfo, setCurrentPostInfo] = useState<PostContent>({
     content: '',
     flair: DEFAULT_FLAIR,
-    language: DEFAULT_PROGRAMMING_LANGUAGE,
   });
   const [activeTab, setActiveTab] = useState(0);
   const handleChange = (event: SyntheticEvent, newValue: number) => {

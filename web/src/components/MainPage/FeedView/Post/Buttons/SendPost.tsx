@@ -94,6 +94,7 @@ export const SendPost = ({
             user_id: user?.id,
             user: user,
             likes: 0,
+            language: currentPostInfo.code ? 'javascript' : undefined,
             liked_by: [],
           },
           spaceId: space.currentSpaceId ?? PUBLIC_SPACE,
