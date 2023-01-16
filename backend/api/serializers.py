@@ -1,6 +1,5 @@
-from tokenize import Comment
 from rest_framework import serializers
-from .models import Images, Post, Space, Test, User, Challenge, Answer, Vote
+from .models import Images, Post, Space, Test, User, Challenge, Answer, Vote, Comment
 from print_color import print
 
 
@@ -102,12 +101,12 @@ class CommentSerializer(serializers.ModelSerializer):
             return CommentSerializer(obj.reply_to).data
         return None
 
-    def to_representation(self, instance):
-        # Call the parent class to get the serialized data
-        representation = super().to_representation(instance)
-        # Add the number of members to the serialized data
-        representation["num_replies"] = instance.replies.count()
-        return representation
+    # def to_representation(self, instance):
+    #     # Call the parent class to get the serialized data
+    #     representation = super().to_representation(instance)
+    #     # Add the number of members to the serialized data
+    #     representation["num_replies"] = instance.replies.count()
+    #     return representation
 
 
 class ChallengeSerializerMinimal(serializers.ModelSerializer):

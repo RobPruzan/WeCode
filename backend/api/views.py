@@ -1,7 +1,6 @@
 from ctypes import Union
 import os
 from pprint import pprint
-from tokenize import Comment
 from rest_framework import generics
 from django.shortcuts import render
 from django.db.models import Q
@@ -13,7 +12,7 @@ from django.http import FileResponse
 from django.conf import settings
 
 
-from .models import Challenge, Post, Space, Test, User, Answer, Vote
+from .models import Challenge, Post, Space, Test, User, Answer, Vote, Comment
 from .serializers import (
     AnswerSerializer,
     ChallengeSerializer,
@@ -77,7 +76,7 @@ class UserView(generics.CreateAPIView):
 
 class PostContentView(APIView):
     def post(self, request, *args, **kwargs):
-        space_id = int(filter_data(kwargs.get("space_id")))
+        space_id = kwargs.get("space_id")
         post = Post.objects.create(**request.data, space_id=space_id)
         return Response("Post Created")
 
@@ -90,11 +89,7 @@ class PostContentView(APIView):
             :number_of_posts
         ]
         serializer = PostSerializer(postData, many=True)
-        # lambda function but with if statement
 
-        # sorted_serializer_data = sorted(
-        #     serializer.data, key=lambda k: k["date"] if k["date"] else "", reverse=True
-        # )
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
@@ -242,24 +237,37 @@ class SpacesView(APIView):
 
 class CommentsView(APIView):
     def get(self, request, *args, **kwargs):
-        post_id = filter_data(kwargs.get("post_id"))
+        post_id = kwargs.get("post_id")
+        print("postid", post_id, color="red")
         if post_id is None:
+            print("No Post ID Found", color="red")
             return Response("No Post ID Found")
-        post_id = int(post_id)
-        post = Post.objects.filter(id=post_id).first()
-        comments = post.comments.all()
+
+        comments = Comment.objects.filter(post_id=post_id).order_by("-date")
         serializer = CommentSerializer(comments, many=True)
+
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-        post_id = filter_data(kwargs.get("post_id", 0))
-        reply_to = filter_data(request.data.get("reply_to", 0))
-        if post_id:
-            post = Post.objects.filter(id=post_id).first()
-            reply_to = int(reply_to) if reply_to else None
-            Comment.objects.create(**request.data, post=post, reply_to_id=int(reply_to))
-            post.save()
+        print(request.data)
+        post_id = kwargs.get("post_id")
+        user_id = request.data.get("user_id")
+        content = request.data.get("content")
+        up_votes = request.data.get("up_votes")
+        print(post_id, user_id, content, up_votes)
+        if post_id is not None:
+
+            Comment.objects.create(
+                post_id=post_id,
+                user_id=user_id,
+                content=content,
+                up_votes=up_votes,
+            )
+            print("should have saved")
+
             return Response("Comment Created")
+        else:
+            return Response("No Comment Provided")
 
 
 class FriendsView(APIView):
