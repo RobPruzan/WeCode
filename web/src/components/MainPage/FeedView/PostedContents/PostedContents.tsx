@@ -42,7 +42,7 @@ export const PostedContents = ({
           {...{ singlePostedContent }}
         />
       ))}
-      {amountOfPosts >= 50 && <LoadMore />}
+      {amountOfPosts >= 25 && <LoadMore />}
     </>
   );
 };

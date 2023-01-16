@@ -4,7 +4,7 @@ export interface PostAmountState {
 }
 
 export const DEFAULT_POST_AMOUNT_STATE: PostAmountState = {
-  amount: 50,
+  amount: 25,
   addingPostIsLoading: false,
 };
 

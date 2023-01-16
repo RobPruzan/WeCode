@@ -7,6 +7,7 @@ export type Space = {
   members: User[];
   createdAt: string;
   updatedAt: string;
+  is_public?: boolean;
 };
 export interface SpaceState {
   currentSpaceId: number | null;

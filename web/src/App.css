@@ -14,8 +14,8 @@
   height: 0px;
   background-color: #131313;
 }
-body:not(.loaded) #slider img {
-  display: none;
+body:not(.loaded) {
+  background-color: #131313;
 }
 html {
   -webkit-font-smoothing: antialiased;
@@ -49,7 +49,6 @@ html {
 
 body {
   overflow: hidden;
-
   /* shadow */
 }
 
