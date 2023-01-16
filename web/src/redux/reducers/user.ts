@@ -3,16 +3,19 @@ import { User } from '../../services/connections';
 // REMOVE ALL OF THIS AND MIGRATE THIS TO REACT QUERY
 export interface UserState {
   user: User | null;
+  registerError: string | null;
 }
 
 export const DEFAULT_USER_STATE: UserState = {
   user: null,
+  registerError: null,
 };
 
 export enum UserActions {
   Login = 'user/LOGIN',
   Logout = 'user/LOGOUT',
   SignUp = 'user/SIGN_UP',
+  RegisterError = 'user/REGISTER_ERROR',
 }
 
 interface LoginAction {
@@ -28,9 +31,14 @@ interface SignUpAction {
   payload: { user: User };
 }
 
+interface RegisterErrorAction {
+  type: UserActions.RegisterError;
+  payload: { error: string | null };
+}
+
 export const UserReducer = (
   state: UserState = DEFAULT_USER_STATE,
-  action: LoginAction | LogoutAction | SignUpAction
+  action: LoginAction | LogoutAction | SignUpAction | RegisterErrorAction
 ) => {
   switch (action.type) {
     case UserActions.Login:
@@ -55,6 +63,12 @@ export const UserReducer = (
         ...state,
         // userName: action.payload.userName,
         user: action.payload.user,
+      };
+
+    case UserActions.RegisterError:
+      return {
+        ...state,
+        registerError: action.payload.error,
       };
 
     default:

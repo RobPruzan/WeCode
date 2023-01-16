@@ -4,12 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@mui/material';
 import { CustomTextField } from '../CustomTextField';
+import RegisterUser from './RegisterUser';
 import { RootState } from '../../redux/store';
 import { UserActions } from '../../redux/reducers/user';
 import { useMutation } from 'react-query';
 
+export type RegisterType = 'Login' | 'Signup';
 const UserAccess = () => {
   const [userName, setUserName] = useState('');
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+  const [registerType, setRegisterType] = useState<'Login' | 'Signup'>();
   const dispatch = useDispatch();
   const user = useSelector(({ userState }: RootState) => userState.user);
   // TODO
@@ -20,28 +24,23 @@ const UserAccess = () => {
   const handleLogout = () => {
     dispatch({ type: UserActions.Logout });
   };
-  const { mutate, data } = useMutation(
-    async (userName: string) => {
-      return WeCode.createUser(userName);
-    },
-    {
-      onSuccess: data => {
-        handleSignin(data);
-      },
-    }
-  );
+
   return (
     <>
       {user ? (
         <div className="flex justify-evenly items-center w-full   p-2">
-          <p className="h4 m-0 ">{user.name}</p>
-          <Button variant="contained" onClick={handleLogout}>
+          <p className=" text-2xl font-semibold m-0 ">{user.name}</p>
+          <Button
+            className="text-white"
+            variant="contained"
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </div>
       ) : (
-        <div className="flex  justify-evenly items-center bg-opacity-50  mt-1">
-          <CustomTextField
+        <div className="flex w-full justify-evenly items-center bg-opacity-50 p-2 mt-1">
+          {/* <CustomTextField
             focused={true}
             variant={'filled'}
             label="User Name"
@@ -53,10 +52,40 @@ const UserAccess = () => {
           <Button
             className="m-2"
             variant="contained"
-            onClick={() => mutate(userName)}
+            onClick={() => loginMutation.mutate(userName)}
           >
             Login
-          </Button>
+          </Button> */}
+          {showRegisterPopup && registerType ? (
+            <RegisterUser
+              registerType={registerType}
+              setShowRegisterPopup={setShowRegisterPopup}
+            />
+          ) : (
+            <div className="flex w-full">
+              {' '}
+              <Button
+                className="m-2 text-white w-1/2 "
+                variant="contained"
+                onClick={() => {
+                  setRegisterType('Login');
+                  setShowRegisterPopup(true);
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                className="m-2 text-white w-1/2 "
+                variant="contained"
+                onClick={() => {
+                  setRegisterType('Signup');
+                  setShowRegisterPopup(true);
+                }}
+              >
+                Signup
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </>

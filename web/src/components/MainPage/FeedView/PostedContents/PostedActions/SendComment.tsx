@@ -45,7 +45,6 @@ export const SendComment = ({
       });
     }
   };
-  console.log('AN id', singlePostedContent.id);
 
   return (
     <Collapsible

@@ -45,7 +45,7 @@ export const SendPost = ({
       },
       onSuccess: (_, params) => {
         setPostedContent(prev => [params.currPostInfo, ...prev]);
-        console.log('Posted content opt', currentPostInfo);
+
         const date = new Date().toLocaleString();
 
         setCurrentPostInfo(prev => ({
@@ -94,7 +94,10 @@ export const SendPost = ({
             user_id: user?.id,
             user: user,
             likes: 0,
-            language: currentPostInfo.code ? 'javascript' : undefined,
+            language:
+              currentPostInfo.code?.length === 0 && !currentPostInfo.language
+                ? 'javascript'
+                : currentPostInfo.language,
             liked_by: [],
           },
           spaceId: space.currentSpaceId ?? PUBLIC_SPACE,

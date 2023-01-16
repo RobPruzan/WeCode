@@ -11,6 +11,7 @@ export type CustomTextFieldProps = {
   type?: string;
   variant?: 'outlined' | 'standard' | 'filled';
   focused?: boolean;
+  autoComplete?: string;
 };
 export const CustomTextField = ({
   label,
@@ -21,6 +22,7 @@ export const CustomTextField = ({
   value,
   type,
   focused,
+  autoComplete,
   variant = 'outlined',
 }: CustomTextFieldProps) => {
   return (
@@ -33,6 +35,7 @@ export const CustomTextField = ({
       multiline={isMultiline}
       focused={focused}
       rows={rows}
+      autoComplete={autoComplete}
       variant={variant}
       InputProps={{
         style: {

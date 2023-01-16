@@ -124,7 +124,6 @@ export const PostedContent = ({
     }, 500);
   };
 
-  console.log(singlePostedContent);
   return (
     <div>
       <div className={`border-2 border-neon-blue rounded-lg p-2 ${className}`}>
