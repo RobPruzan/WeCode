@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Images, Post, Space, Test, User, Challenge, Answer, Vote, Comment
+from .models import Images, Post, Space, User, Challenge, Answer, Vote, Comment
 from print_color import print
 
 
@@ -7,12 +7,6 @@ class UserSerializerMinimal(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "name")
-
-
-class TestSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Test
-        fields = "__all__"
 
 
 class ImagesSerializer(serializers.ModelSerializer):

@@ -13,47 +13,26 @@ from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
 
 
-from .models import Challenge, Post, Space, Test, User, Answer, Vote, Comment
+from .models import Challenge, Post, Space, User, Answer, Vote, Comment
 from .serializers import (
     AnswerSerializer,
     ChallengeSerializer,
     CommentSerializer,
     PostSerializer,
     SpaceSerializer,
-    TestSerializer,
     UserSerializer,
 )
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from print_color import print
 
-UPVOTE = "UPVOTE"
-DOWNVOTE = "DOWNVOTE"
-NOVOTE = "NOVOTE"
+
 # Create your views here.
 class UsersView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-
-
-class TestView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
-
-    def get(self, request, *args, **kwargs):
-        test = Test.objects.all()
-        test_serializer = TestSerializer(test, many=True)
-        return Response(test_serializer.data)
-
-    def post(self, request, *args, **kwargs):
-        test_serializer = TestSerializer(data=request.data)
-        if test_serializer.is_valid():
-            test_serializer.save()
-            return Response(test_serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            print("error", test_serializer.errors)
-            return Response(test_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SignUpView(APIView):
@@ -144,7 +123,7 @@ class PostContentView(APIView):
 
     def get(self, request, *args, **kwargs):
         space_id = filter_data(kwargs.get("space_id", 1))
-        number_of_posts = int(request.GET.get("number_of_posts", 50))
+        number_of_posts = int(request.GET.get("number_of_posts", 25))
         if space_id is None:
             return Response("No Space ID Found")
         postData = Post.objects.filter(space_id=space_id).order_by("-date")[
@@ -160,6 +139,10 @@ class PostContentView(APIView):
 
 
 class VoteView(APIView):
+    UPVOTE = "UPVOTE"
+    DOWNVOTE = "DOWNVOTE"
+    NOVOTE = "NOVOTE"
+
     def put(self, request, *args, **kwargs):
         post_id = kwargs.get("post_id")
         user_id = request.data.get("user_id")
@@ -175,38 +158,38 @@ class VoteView(APIView):
             return Response("Post Not Found")
         if vote is None:
             Vote.objects.create(user_id=user_id, post_id=post_id, vote_type=vote_type)
-            if vote_type == UPVOTE:
+            if vote_type == self.UPVOTE:
                 post.likes += 1
-            elif vote_type == DOWNVOTE:
+            elif vote_type == self.DOWNVOTE:
                 post.likes -= 1
 
         else:
-            if vote.vote_type == UPVOTE:
-                if vote_type == DOWNVOTE:
-                    vote.vote_type = DOWNVOTE
+            if vote.vote_type == self.UPVOTE:
+                if vote_type == self.DOWNVOTE:
+                    vote.vote_type = self.DOWNVOTE
                     post.likes -= 2
-                elif vote_type == NOVOTE:
-                    vote.vote_type = NOVOTE
+                elif vote_type == self.NOVOTE:
+                    vote.vote_type = self.NOVOTE
                     post.likes -= 1
-                elif vote.vote_type == UPVOTE:
-                    vote.vote_type = NOVOTE
+                elif vote.vote_type == self.UPVOTE:
+                    vote.vote_type = self.NOVOTE
                     post.likes -= 1
-            elif vote.vote_type == DOWNVOTE:
-                if vote_type == UPVOTE:
-                    vote.vote_type = UPVOTE
+            elif vote.vote_type == self.DOWNVOTE:
+                if vote_type == self.UPVOTE:
+                    vote.vote_type = self.UPVOTE
                     post.likes += 2
-                elif vote_type == NOVOTE:
-                    vote.vote_type = NOVOTE
+                elif vote_type == self.NOVOTE:
+                    vote.vote_type = self.NOVOTE
                     post.likes += 1
-                elif vote.vote_type == DOWNVOTE:
-                    vote.vote_type = NOVOTE
+                elif vote.vote_type == self.DOWNVOTE:
+                    vote.vote_type = self.NOVOTE
                     post.likes += 1
-            elif vote.vote_type == NOVOTE:
-                if vote_type == UPVOTE:
-                    vote.vote_type = UPVOTE
+            elif vote.vote_type == self.NOVOTE:
+                if vote_type == self.UPVOTE:
+                    vote.vote_type = self.UPVOTE
                     post.likes += 1
-                elif vote_type == DOWNVOTE:
-                    vote.vote_type = DOWNVOTE
+                elif vote_type == self.DOWNVOTE:
+                    vote.vote_type = self.DOWNVOTE
                     post.likes -= 1
 
             vote.save()
@@ -225,7 +208,7 @@ class FilteredPostContentView(APIView):
             space_id = int(space_id)
         else:
             return Response("No Space ID Found")
-        number_of_posts = int(request.GET.get("number_of_posts", 50))
+        number_of_posts = int(request.GET.get("number_of_posts", 25))
         languages = [i.lower() for i in request.GET.get("languages", []).split(",")]
         names = [int(i) for i in request.GET.get("names", []).split(",") if i]
         flairs = request.GET.get("flairs", []).split(",")
@@ -252,7 +235,7 @@ class FilteredPostContentView(APIView):
 class UserPostView(APIView):
     def get(self, request, *args, **kwargs):
         user_id = filter_data(kwargs.get("user_id"))
-        number_of_posts = int(request.GET.get("number_of_posts", 50))
+        number_of_posts = int(request.GET.get("number_of_posts", 25))
         if user_id is None:
             return Response("No User ID Found")
         user_id = int(user_id)
@@ -276,13 +259,22 @@ class UsernameView(APIView):
 
 
 class SpacesView(APIView):
+    MAIN_PUBLIC_SPACE = 1
+
     def get(self, request, *args, **kwargs):
         member_Id = kwargs.get("member_id")
         if member_Id is None:
             print("No Member ID Found", color="red")
             return Response("No Member ID Found")
         user = User.objects.filter(id=member_Id).first()
-        spaces = Space.objects.filter(members=user)
+        spaces = (
+            Space.objects.filter(
+                Q(members__in=[user]) | Q(is_public=True) | Q(id=self.MAIN_PUBLIC_SPACE)
+            )
+            .distinct()
+            .order_by("-date")
+        )
+        print("what the", spaces)
         serializer = SpaceSerializer(spaces, many=True)
         return Response(serializer.data)
 
@@ -290,12 +282,15 @@ class SpacesView(APIView):
         description = request.data.get("description", "")
         name = request.data.get("name", "")
         members = request.data.get("members")
+        is_public = request.data.get("is_public", False)
         user_id = kwargs.get("member_id")
         members = [*members, {"id": user_id}]
         members = [
             User.objects.filter(id=member.get("id")).first() for member in members
         ]
-        space = Space.objects.create(description=description, name=name)
+        space = Space.objects.create(
+            description=description, name=name, is_public=is_public
+        )
         space.members.set(members)
         space.save()
 

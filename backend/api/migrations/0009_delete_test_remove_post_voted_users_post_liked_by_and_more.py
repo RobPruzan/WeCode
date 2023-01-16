@@ -6,30 +6,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0008_remove_post_likes'),
+        ("api", "0008_remove_post_likes"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Test',
+            name="Test",
         ),
         migrations.RemoveField(
-            model_name='post',
-            name='voted_users',
+            model_name="post",
+            name="voted_users",
         ),
         migrations.AddField(
-            model_name='post',
-            name='liked_by',
-            field=models.ManyToManyField(related_name='posts_liked', through='api.Vote', to='api.user'),
+            model_name="post",
+            name="liked_by",
+            field=models.ManyToManyField(
+                related_name="posts_liked", through="api.Vote", to="api.user"
+            ),
         ),
         migrations.AddField(
-            model_name='post',
-            name='likes',
+            model_name="post",
+            name="likes",
             field=models.IntegerField(blank=True, default=0, null=True),
         ),
         migrations.AlterField(
-            model_name='vote',
-            name='vote_type',
+            model_name="vote",
+            name="vote_type",
             field=models.CharField(blank=True, default=None, max_length=20, null=True),
         ),
     ]
