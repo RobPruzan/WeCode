@@ -26,7 +26,7 @@ export const SendComment = ({
   const user = useSelector(({ userState }: RootState) => userState.user);
   const [isExpanded, setExpanded] = useState(false);
   const sendCommentMutation = useSendComment(singlePostedContent.id ?? 0);
-  const [commentInfo, setCommentInfo] = useState<CommentContent>();
+  const [commentInfo, setCommentInfo] = useState<CommentContent | null>();
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (user?.id && singlePostedContent.id) {
@@ -86,7 +86,10 @@ export const SendComment = ({
         <SendIcon
           className="cursor-pointer hover:scale-105 hover:fill-sky-300"
           onClick={() => {
-            commentInfo && sendCommentMutation.mutate(commentInfo);
+            if (commentInfo) {
+              sendCommentMutation.mutate(commentInfo);
+              setCommentInfo(null);
+            }
           }}
         />
       </PrimaryCard>
