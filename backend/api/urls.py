@@ -7,7 +7,9 @@ from .views import (
     FilteredPostContentView,
     FollowView,
     FollowingView,
+    LoginView,
     PostContentView,
+    SignUpView,
     SpacesView,
     TestView,
     UnfollowView,
@@ -40,4 +42,6 @@ urlpatterns = [
     path("api/vote/<str:post_id>", VoteView.as_view()),
     path("api/test", TestView.as_view()),
     path("api/consume_image", TestView.as_view()),
+    path("api/login", LoginView.as_view()),
+    path("api/signup", SignUpView.as_view()),
 ]

@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     name = models.CharField(max_length=200, default="")
+    password = models.CharField(max_length=200, default="")
     friends = models.ManyToManyField("self", blank=True)
     is_admin = models.BooleanField(default=False, blank=True)
     following = models.ManyToManyField(
