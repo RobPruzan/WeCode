@@ -19,7 +19,7 @@ export type LikedByMinimal = {
 export type PostContent = {
   id?: number;
   user_id?: number;
-  user?: User;
+  user?: User | null;
   content: string;
   code?: string;
   flair?: string;

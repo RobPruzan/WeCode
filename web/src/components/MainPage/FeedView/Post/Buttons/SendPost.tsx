@@ -43,8 +43,9 @@ export const SendPost = ({
       onMutate: ({ currPostInfo, spaceId }: MutatePostParams) => {
         dispatch({ type: PostLoadingActions.SetIsLoading });
       },
-      onSuccess: () => {
-        setPostedContent(prev => [currentPostInfo, ...prev]);
+      onSuccess: (_, params) => {
+        setPostedContent(prev => [params.currPostInfo, ...prev]);
+        console.log('Posted content opt', currentPostInfo);
         const date = new Date().toLocaleString();
 
         setCurrentPostInfo(prev => ({
@@ -86,8 +87,15 @@ export const SendPost = ({
       }}
       onClick={_ => {
         setPostButtonToggled && setPostButtonToggled(false);
+
         sendPostMutation.mutate({
-          currPostInfo: { ...currentPostInfo, user_id: user?.id },
+          currPostInfo: {
+            ...currentPostInfo,
+            user_id: user?.id,
+            user: user,
+            likes: 0,
+            liked_by: [],
+          },
           spaceId: space.currentSpaceId ?? PUBLIC_SPACE,
         });
       }}
