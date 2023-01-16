@@ -1,9 +1,9 @@
+import { PopupManager, UserConnectionTypes } from './UserConnections';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import WeCode, { User, UserMinimal } from '../../services/connections';
 
 import { BsXCircle } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
-import { UserConnectionTypes } from './UserConnections';
 import { useGetFollowers } from '../../hooks/UserHooks/useGetFollowers';
 import { useGetFollowing } from '../../hooks/UserHooks/useGetFollowing';
 import { useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ export type UserViewPopupProps = {
   popupX: number;
   popupY: number;
   setSelectedUserId: Dispatch<SetStateAction<UserMinimal | null | undefined>>;
+  setShowUserPopUp: Dispatch<SetStateAction<PopupManager | undefined>>;
 };
 
 const UserViewPopup = ({
@@ -22,15 +23,11 @@ const UserViewPopup = ({
   popupX,
   popupY,
   setSelectedUserId,
+  setShowUserPopUp,
 }: UserViewPopupProps) => {
   const currUserId = useSelector(
     ({ userState }: RootState) => userState.user?.id
   );
-  // const [selectedUserId, setSelectedUserId] = useState<
-  //   number | null | undefined
-  // >(currUserId);
-  // const getFollowersQuery = useGetFollowers(selectedUserId ?? 0);
-  // const getFollowingQuery = useGetFollowing(selectedUserId ?? 0);
 
   WeCode.getFollowers;
   return (
@@ -39,6 +36,7 @@ const UserViewPopup = ({
         {users?.map(user => (
           <button
             onClick={e => {
+              setShowUserPopUp(undefined);
               setSelectedUserId({ id: user.id, label: user.name });
             }}
             className="w-full"
@@ -49,9 +47,6 @@ const UserViewPopup = ({
           </button>
         ))}
       </div>
-      {/* <button className="w-full z-50 rounded-lg bg-red-500 text-white text-xl p-2 hover:bg-red-400 shadow-lg">
-        Close
-      </button> */}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { BsXCircle, BsXLg } from 'react-icons/bs';
+import { CodeTab, DEFAULT_PROGRAMMING_LANGUAGE } from './CodeTab/CodeTab';
 import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 import {
   QueryObserverResult,
@@ -8,7 +9,6 @@ import {
 
 import { AiFillEdit } from 'react-icons/ai';
 import CodeIcon from '@mui/icons-material/Code';
-import { CodeTab } from './CodeTab/CodeTab';
 import { InputText } from './TextTab/InputText';
 import { PostContent } from '../../../../../services/connections';
 import PostPopup from './PostPopup';
@@ -30,6 +30,8 @@ export const FLAIRS = [
   'Announcement',
   'News',
 ];
+
+export const DEFAULT_FLAIR = 'Discussion';
 export type TabsProps = {
   className?: string;
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
@@ -45,6 +47,8 @@ export const PostTabs = ({
   const [postButtonToggled, setPostButtonToggled] = useState(false);
   const [currentPostInfo, setCurrentPostInfo] = useState<PostContent>({
     content: '',
+    flair: DEFAULT_FLAIR,
+    language: DEFAULT_PROGRAMMING_LANGUAGE,
   });
   const [activeTab, setActiveTab] = useState(0);
   const handleChange = (event: SyntheticEvent, newValue: number) => {
