@@ -24,7 +24,7 @@ const LoadMore = ({}: LoadMoreProps) => {
         onClick={() =>
           dispatch({
             type: PostAmountActions.SetAmount,
-            payload: { amount: postAmountState.amount + 50 },
+            payload: { amount: postAmountState.amount + 25 },
           })
         }
         className="bg-neon-blue w-1/4 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded"

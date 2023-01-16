@@ -45,6 +45,7 @@ export const UserReducer = (
       if (action.payload.user) {
         localStorage.setItem('user', JSON.stringify(action.payload.user));
       }
+      console.log('action.payload.user', action.payload.user);
 
       return {
         ...state,

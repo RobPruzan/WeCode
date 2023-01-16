@@ -31,16 +31,15 @@ export const CreateSpaceButton = ({
   }, [isLoading, isSuccess]);
   return (
     <>
-      <Button
+      <button
         onClick={() => {
           submitHandler();
         }}
-        className={className}
-        variant="outlined"
         disabled={isLoading}
+        className="bg-neon-blue hover:bg-sky-300 text-white font-bold  w-full py-2 px-3 rounded-md"
       >
         Add Space
-      </Button>
+      </button>
     </>
   );
 };

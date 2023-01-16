@@ -164,7 +164,7 @@ export class WeCodeApi {
     numberOfPosts?: number
   ): Promise<PostContent[]> {
     const url = new URL(`${this.baseUrl}/post_content/${space_id}`);
-    url.searchParams.set('number_of_posts', numberOfPosts?.toString() ?? '50');
+    url.searchParams.set('number_of_posts', numberOfPosts?.toString() ?? '25');
     const response = await axios.get(url.toString());
     return response.data;
   }
@@ -224,7 +224,10 @@ export class WeCodeApi {
     spaceInfo: SpaceInfo,
     user_id: number
   ): Promise<void> {
-    await axios.post(`${this.baseUrl}/spaces/${user_id}`, spaceInfo);
+    await axios.post(`${this.baseUrl}/spaces/${user_id}`, {
+      ...spaceInfo,
+      is_public: spaceInfo.isPublic,
+    });
   }
 
   public async getComments(postId: number): Promise<CommentContent[]> {

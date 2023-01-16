@@ -1,4 +1,10 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -6,6 +12,7 @@ import { BsXLg } from 'react-icons/bs';
 import { CreateSpaceButton } from './CreateSpaceButton';
 import { CustomTextField } from '../../../CustomTextField';
 import { Filters } from '../../Filters/FilterOptions';
+import IsSpacePublic from './IsSpacePublic';
 import { RootState } from '../../../../redux/store';
 import { SpaceActions } from '../../../../redux/reducers/spaces';
 import { SpaceDescription } from './SpaceDescription';
@@ -14,14 +21,14 @@ import { TypeAheadOption } from '../../../utils/TypeAhead';
 import WeCode from '../../../../services/connections';
 
 export type FilterChangeHandler = (
-  event: React.SyntheticEvent<Element, Event>,
+  event: SyntheticEvent<Element, Event>,
   newValue: TypeAheadOption[],
   // only takes key of Filters (names or languages)
   filterChoice: keyof Filters
 ) => void;
 
 export type TypAheadChangeHandler = (
-  event: React.SyntheticEvent<Element, Event>,
+  event: SyntheticEvent<Element, Event>,
   newValue: TypeAheadOption[]
   // only takes key of Filters (names or languages)
 ) => void;
@@ -33,12 +40,14 @@ export type SpaceInfo = {
   name: string;
   members: TypeAheadOption[];
   description: string;
+  isPublic: boolean;
 };
 
 export const DEFAULT_SPACE_INFO = {
   name: '',
   members: [],
   description: '',
+  isPublic: false,
 };
 
 export type CreateSpaceProps = {
@@ -46,6 +55,7 @@ export type CreateSpaceProps = {
 };
 const CreateSpace = ({ setAddSpace }: CreateSpaceProps) => {
   const [spaceInfo, setSpaceInfo] = useState<SpaceInfo>(DEFAULT_SPACE_INFO);
+
   const user = useSelector(({ userState }: RootState) => userState.user);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -69,7 +79,9 @@ const CreateSpace = ({ setAddSpace }: CreateSpaceProps) => {
       },
     }
   );
-
+  const handleIsPublic = () => {
+    setSpaceInfo(prev => ({ ...prev, isPublic: !prev.isPublic }));
+  };
   const handleNameChange: ChangeHandler = event => {
     if (event.target.value.length > 20) {
       setSpaceInfo(prev => ({
@@ -125,11 +137,15 @@ const CreateSpace = ({ setAddSpace }: CreateSpaceProps) => {
         isMultiline={true}
         rows={6}
       />
+      <IsSpacePublic
+        className="mt-2 mb-3 "
+        isPublic={spaceInfo.isPublic}
+        setIsPublic={handleIsPublic}
+      />
       <CreateSpaceButton
         isLoading={isLoading}
         isSuccess={isSuccess}
         isError={isError}
-        className="my-2"
         spaceInfo={spaceInfo}
         submitHandler={submitHandler}
       />

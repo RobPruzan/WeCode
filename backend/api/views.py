@@ -89,7 +89,8 @@ class LoginView(APIView):
                 data="Username not found", status=status.HTTP_411_LENGTH_REQUIRED
             )
         if check_password(password, user.password):
-            return Response("Login Successful")
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
         else:
             return Response(
                 data="Password incorrect", status=status.HTTP_401_UNAUTHORIZED
