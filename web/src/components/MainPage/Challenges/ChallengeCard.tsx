@@ -166,7 +166,7 @@ const ChallengeCard = ({
 
                 <div className="flex justify-evenly items-center border-t-2 my-3 border-neon-blue pt-3">
                   <div>
-                    <p className="inline">Challengers:</p>{' '}
+                    <p className="inline">Respondents:</p>{' '}
                     <p className="inline">
                       {challenge.users_that_attempted.length}
                     </p>

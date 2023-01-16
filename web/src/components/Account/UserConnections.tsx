@@ -29,7 +29,6 @@ const UserConnections = ({
   const [popupX, setPopupX] = useState(0);
   const [popupY, setPopupY] = useState(0);
 
-  console.log('da state', showUserPopUp);
   return (
     <div className="flex justify-evenly items-center h-full border-x-2 border-y-2 border-neon-blue rounded-lg p-4">
       <div className="flex justify-center items-center w-full h-full text-center ">

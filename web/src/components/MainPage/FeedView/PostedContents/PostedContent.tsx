@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { PostContent, VoteType } from '../../../../services/connections';
 
-import { Comment } from './PostedActions/Comment';
+import Comments from './PostedActions/Comments';
 import { RootState } from '../../../../redux/store';
+import { SendComment } from './PostedActions/SendComment';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { UpDownVoting } from './UpDownVoting';
 import atomDark from 'react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark';
@@ -23,7 +24,7 @@ export type PostedContentProps = {
   className?: string;
   canComment?: boolean;
   singlePostedContent: PostContent;
-  keyValue: number | string;
+
   postedContent: PostContent[];
   setPostedContent: Dispatch<SetStateAction<PostContent[]>>;
 };
@@ -32,7 +33,7 @@ export const PostedContent = ({
   className,
   singlePostedContent,
   canComment = true,
-  keyValue,
+
   postedContent,
   setPostedContent,
 }: PostedContentProps) => {
@@ -40,6 +41,7 @@ export const PostedContent = ({
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const user = useSelector(({ userState }: RootState) => userState.user);
   const voteOnPostMutation = useVoteOnPost(setPostedContent);
+  const [comments, setComments] = useState(singlePostedContent.comments ?? []);
   const getPostsQuery = useGetPosts();
   useEffect(() => {
     setUpVotes(singlePostedContent.likes ?? 0);
@@ -121,9 +123,13 @@ export const PostedContent = ({
       setIsButtonDisabled(false);
     }, 500);
   };
+
+  console.log(singlePostedContent);
   return (
-    <div key={`PostedContent: ${keyValue}`}>
+    <div>
       <div className={`border-2 border-neon-blue rounded-lg p-2 ${className}`}>
+        <p className="h5 ">{singlePostedContent.user?.name}</p>
+        <hr />
         <div style={{ float: 'right', marginLeft: '1em', marginBottom: '1em' }}>
           <UpDownVoting
             upVotes={upVotes}
@@ -149,7 +155,9 @@ export const PostedContent = ({
           </div>
         )}
         <hr />
-        {canComment && <Comment />}
+        {canComment && (
+          <SendComment singlePostedContent={singlePostedContent} />
+        )}
       </div>
     </div>
   );

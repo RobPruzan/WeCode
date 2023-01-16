@@ -19,6 +19,7 @@ export type LikedByMinimal = {
 export type PostContent = {
   id?: number;
   user_id?: number;
+  user?: User;
   content: string;
   code?: string;
   flair?: string;
@@ -30,13 +31,14 @@ export type PostContent = {
   date?: string;
 };
 
-export type CommentType = {
-  id: number;
-  user: string;
+export type CommentContent = {
+  id?: number;
+  user: User;
   content: string;
-  reply_to?: PostContent;
+  reply_to?: PostContent | null;
+  postId: number;
   upVotes?: number;
-  comments?: CommentType[];
+  comments?: CommentContent[];
 };
 
 export type User = {
@@ -45,7 +47,7 @@ export type User = {
   followers: User[];
   following: User[];
   friends: User[];
-  photo: Blob;
+  photo?: Blob;
 };
 
 export type UserMinimal = {
@@ -210,9 +212,18 @@ export class WeCodeApi {
     await axios.post(`${this.baseUrl}/spaces/${user_id}`, spaceInfo);
   }
 
-  public async getComments(postId: number): Promise<CommentType[]> {
+  public async getComments(postId: number): Promise<CommentContent[]> {
     const response = await axios.get(`${this.baseUrl}/comments/${postId}`);
+
     return response.data;
+  }
+
+  public async sendComment(comment: CommentContent): Promise<void> {
+    await axios.post(`${this.baseUrl}/comments/${comment.postId}`, {
+      user_id: comment.user.id,
+      content: comment.content,
+      up_votes: 0,
+    });
   }
 
   public async followerUser(

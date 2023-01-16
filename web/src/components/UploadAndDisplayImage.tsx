@@ -24,7 +24,7 @@ const UploadAndDisplayImage = () => {
       form_data.append('image', imageStuff.image);
       form_data.append('title', imageStuff.title);
       form_data.append('content', imageStuff.content);
-      console.log('should be seding something');
+
       let url = 'http://localhost:8000/api/test';
       axios
         .post(url, form_data, {

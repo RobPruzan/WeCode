@@ -1,17 +1,22 @@
-import { Comment } from './Comment';
-import { CommentType } from '../../../../../services/connections';
+import {
+  CommentContent,
+  PostContent,
+} from '../../../../../services/connections';
+
+import Comment from './Comment';
 import React from 'react';
+import { SendComment } from './SendComment';
+import { useGetComments } from '../../../../../hooks/PostHooks/useGetComments';
 
 export type CommentsProps = {
-  comments: CommentType[];
+  postId: number;
 };
 
-const Comments = ({ comments }: CommentsProps) => {
+const Comments = ({ postId }: CommentsProps) => {
+  const getCommentsQuery = useGetComments(postId);
   return (
     <div className="flex flex-col">
-      {comments.map(comment => (
-        <Comment key={comment.id} />
-      ))}
+      <Comment getCommentsQuery={getCommentsQuery} />
     </div>
   );
 };
