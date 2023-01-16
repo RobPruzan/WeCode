@@ -14,6 +14,9 @@
   height: 0px;
   background-color: #131313;
 }
+body:not(.loaded) #slider img {
+  display: none;
+}
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
