@@ -38,7 +38,10 @@ export const CodeTab = ({
 }: CodeTabProps) => {
   const codeChangeHandler = (newValue?: string) => {
     const newCodeValue = newValue ? newValue : '';
-    props.setCurrentPostInfo({ ...props.currentPostInfo, code: newCodeValue });
+    props.setCurrentPostInfo({
+      ...props.currentPostInfo,
+      code: newCodeValue,
+    });
   };
 
   return (

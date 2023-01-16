@@ -54,6 +54,7 @@ const UserConnections = ({
             <UserViewPopup
               setSelectedUserId={setSelectedUser}
               users={followers}
+              setShowUserPopUp={setShowUserPopUp}
               popupX={popupX}
               popupY={popupY}
               userType="followers"
@@ -86,6 +87,7 @@ const UserConnections = ({
 
           {showUserPopUp?.following && (
             <UserViewPopup
+              setShowUserPopUp={setShowUserPopUp}
               setSelectedUserId={setSelectedUser}
               users={following}
               popupX={popupX}
