@@ -10,6 +10,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from django.http import FileResponse
 from django.conf import settings
+from django.contrib.auth.hashers import make_password, check_password
 
 
 from .models import Challenge, Post, Space, Test, User, Answer, Vote, Comment
@@ -55,6 +56,67 @@ class TestView(APIView):
             return Response(test_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class SignUpView(APIView):
+    def post(self, request, *args, **kwargs):
+        password = request.data.get("password")
+        user_name = request.data.get("name")
+        print("password ", password)
+        print("user_name", user_name)
+
+        if not user_name:
+            return Response(
+                data="Username is required", status=status.HTTP_411_LENGTH_REQUIRED
+            )
+        if password is None:
+            return Response(
+                data="Password is required", status=status.HTTP_411_LENGTH_REQUIRED
+            )
+        if len(password) < 4:
+            return Response(
+                data="Password must be greater than 4 characters",
+                status=status.HTTP_411_LENGTH_REQUIRED,
+            )
+        if User.objects.filter(name=user_name).first():
+            return Response(data="Username taken", status=status.HTTP_409_CONFLICT)
+        if User.objects.filter(password=password).first():
+            return Response(
+                data="Password taken", status=status.HTTP_412_PRECONDITION_FAILED
+            )
+        password = make_password(password)
+        request.data["password"] = password
+        user = User.objects.create(**request.data)
+        user = UserSerializer(user)
+        return Response(user.data)
+
+
+class LoginView(APIView):
+    def post(self, request, *args, **kwargs):
+        name = request.data.get("name")
+        password = request.data.get("password")
+        if name is None:
+            return Response(
+                data="Username required to login",
+                status=status.HTTP_411_LENGTH_REQUIRED,
+            )
+        if password is None:
+            return Response(
+                data="Password required to login",
+                status=status.HTTP_411_LENGTH_REQUIRED,
+            )
+
+        user = User.objects.filter(name=name).first()
+        if user is None:
+            return Response(
+                data="Username not found", status=status.HTTP_411_LENGTH_REQUIRED
+            )
+        if check_password(password, user.password):
+            return Response("Login Successful")
+        else:
+            return Response(
+                data="Password incorrect", status=status.HTTP_401_UNAUTHORIZED
+            )
+
+
 class UserView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get("user_id")
@@ -62,16 +124,16 @@ class UserView(generics.CreateAPIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
-        name = request.data.get("name", None)
-        if name is not None:
-            user = User.objects.get(name=name)
-            if user:
-                serializer = UserSerializer(user)
-                return Response(serializer.data)
-        user = User.objects.create(**request.data)
-        user = UserSerializer(user)
-        return Response(user.data)
+    # def post(self, request, *args, **kwargs):
+    #     name = request.data.get("name", None)
+    #     if name is not None:
+    #         user = User.objects.get(name=name)
+    #         if user:
+    #             serializer = UserSerializer(user)
+    #             return Response(serializer.data)
+    #     user = User.objects.create(**request.data)
+    #     user = UserSerializer(user)
+    #     return Response(user.data)
 
 
 class PostContentView(APIView):
