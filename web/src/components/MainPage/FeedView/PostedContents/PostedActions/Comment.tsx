@@ -7,7 +7,6 @@ type Props = {
 };
 
 const Comment = ({ getCommentsQuery }: Props) => {
-  console.log('getCommentsQuery', getCommentsQuery.data);
   return (
     <>
       {getCommentsQuery.isSuccess &&

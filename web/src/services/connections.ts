@@ -55,6 +55,11 @@ export type UserMinimal = {
   label: string;
 };
 
+export type UserAuthState = {
+  name: string;
+  password: string;
+};
+
 export type Space = {
   id: number;
   name: string;
@@ -180,9 +185,19 @@ export class WeCodeApi {
     return response.data;
   }
 
-  public async createUser(name: string): Promise<User> {
-    const response = await axios.post(`${this.baseUrl}/user`, { name });
-    return response.data;
+  // public async createUser(name: string): Promise<User> {
+  //   const response = await axios.post(`${this.baseUrl}/user`, { name });
+  //   return response.data;
+  // }
+
+  public async login(user: UserAuthState) {
+    const response = await axios.post(`${this.baseUrl}/login`, user);
+    return response;
+  }
+
+  public async signup(user: UserAuthState) {
+    const response = await axios.post(`${this.baseUrl}/signup`, user);
+    return response;
   }
 
   public async getUser(id: number): Promise<User> {
