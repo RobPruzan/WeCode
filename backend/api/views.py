@@ -166,7 +166,7 @@ class FilteredPostContentView(APIView):
         number_of_posts = int(request.GET.get("number_of_posts", 50))
         languages = [i.lower() for i in request.GET.get("languages", []).split(",")]
         names = [int(i) for i in request.GET.get("names", []).split(",") if i]
-        flairs = [i.lower() for i in request.GET.get("flairs", []).split(",")]
+        flairs = request.GET.get("flairs", []).split(",")
         postData = Post.objects.filter(space_id=space_id).order_by("-date")
 
         if languages not in NO_FILTER_CASES:
@@ -175,7 +175,12 @@ class FilteredPostContentView(APIView):
             postData = postData.filter(user__in=names)
         if flairs not in NO_FILTER_CASES:
             postData = postData.filter(flair__in=flairs)
-
+        print(
+            postData,
+            Post.objects.filter(space_id=space_id, flair__in=flairs).order_by("-date"),
+            flairs,
+            color="red",
+        )
         serializer = PostSerializer(postData, many=True)
         # sort by serialize.data['date'] (django date field)
 
