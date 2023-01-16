@@ -40,7 +40,6 @@ const UserViewPopup = ({
           <button
             onClick={e => {
               setSelectedUserId({ id: user.id, label: user.name });
-              console.log(user.id);
             }}
             className="w-full"
           >

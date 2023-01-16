@@ -1,66 +1,25 @@
-import React, { useState } from 'react';
+import { CommentContent } from '../../../../../services/connections';
+import React from 'react';
+import { UseQueryResult } from 'react-query';
 
-import Collapsible from 'react-collapsible';
-import CommentIcon from '@mui/icons-material/Comment';
-import { CommentType } from '../../../../../services/connections';
-import { InputText } from '../../Post/Tabs/TextTab/InputText';
-import { PrimaryCard } from '../../../../PrimaryCard';
-import SendIcon from '@mui/icons-material/Send';
-
-export type CommentProps = {
-  className?: string;
+type Props = {
+  getCommentsQuery: UseQueryResult<CommentContent[], unknown>;
 };
-export const Comment = ({ className }: CommentProps) => {
-  const [isExpanded, setExpanded] = useState(false);
 
-  const [dummyContent, setDummyContent] = useState<CommentType>({
-    id: 0,
-    user: 'Frank',
-    content: 'some dummy content',
-    upVotes: 10,
-  });
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDummyContent(prev => ({ ...prev, content: event.target.value }));
-  };
-
+const Comment = ({ getCommentsQuery }: Props) => {
+  console.log('getCommentsQuery', getCommentsQuery.data);
   return (
-    <Collapsible
-      className={className}
-      overflowWhenOpen="visible"
-      onOpen={() => setExpanded(true)}
-      onClose={() => setExpanded(false)}
-      trigger={
-        <PrimaryCard
-          className="d-flex justify-content-center p-1 "
-          style={{
-            maxWidth: '93%',
-          }}
-        >
-          <CommentIcon
-            style={{
-              fill: isExpanded ? 'gray' : '#43bbff',
-            }}
-          />
-        </PrimaryCard>
-      }
-      transitionTime={150}
-    >
-      <br />
-      <PrimaryCard
-        style={{
-          width: '100% !important',
-          maxWidth: '93%',
-        }}
-        className="d-flex justify-content-center p-3"
-      >
-        <InputText
-          changeHandler={changeHandler}
-          value={dummyContent.content}
-          rows={7}
-          style={{ width: '100% !important' }}
-        />
-        <SendIcon style={{ cursor: 'pointer' }} />
-      </PrimaryCard>
-    </Collapsible>
+    <>
+      {getCommentsQuery.isSuccess &&
+        getCommentsQuery.data.map(comment => (
+          <div className="p-3 mt-4 border-2 border-neon-blue rounded-lg shadow-xl ">
+            <p className="h5">{comment.user.name}</p>
+            <hr />
+            {comment.content}
+          </div>
+        ))}
+    </>
   );
 };
+
+export default Comment;

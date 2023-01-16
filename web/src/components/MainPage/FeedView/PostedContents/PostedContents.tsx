@@ -23,20 +23,20 @@ export const PostedContents = ({
     <>
       {isPostLoading && (
         <div className="flex flex-col items-center">
-          <LoadingPost />
-          <LoadingPost />
-          <LoadingPost />
-          <LoadingPost />
-          <LoadingPost />
-          <LoadingPost />
-          <LoadingPost />
+          <LoadingPost key="loading post 1" />
+          <LoadingPost key="loading post 2" />
+          <LoadingPost key="loading post 3" />
+          <LoadingPost key="loading post 4" />
+          <LoadingPost key="loading post 5" />
+          <LoadingPost key="loading post 6" />
+          <LoadingPost key="loading post 7" />
         </div>
       )}
 
       {postedContent.map((singlePostedContent, idx) => (
         <PostedContent
           className="mx-5 mb-5 "
-          keyValue={idx}
+          key={`PostedContent: ${idx}`}
           setPostedContent={setPostedContent}
           postedContent={postedContent}
           {...{ singlePostedContent }}
