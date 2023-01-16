@@ -12,12 +12,6 @@ class User(models.Model):
     photo = models.ImageField(upload_to="images/", blank=True, null=True)
 
 
-class Test(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    image = models.ImageField(upload_to="post_images")
-
-
 class Images(models.Model):
     image = models.ImageField(upload_to="images")
 
@@ -71,6 +65,7 @@ class Space(models.Model):
     name = models.CharField(max_length=200, default="")
     description = models.CharField(max_length=2000, default="", blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    is_public = models.BooleanField(default=False, blank=True)
     # Many to many relationship creates a new table which holds the relationship between all the spaces al users
     # This table is called space_user
     # The space_user table has two columns, one for the space Primary Keys (PKs) and one for the user PKs

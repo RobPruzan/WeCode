@@ -11,7 +11,6 @@ from .views import (
     PostContentView,
     SignUpView,
     SpacesView,
-    TestView,
     UnfollowView,
     UserPostView,
     UserView,
@@ -40,8 +39,6 @@ urlpatterns = [
     path("api/challenge/<int:space_id>", ChallengeView.as_view()),
     path("api/answer", AnswerView.as_view()),
     path("api/vote/<str:post_id>", VoteView.as_view()),
-    path("api/test", TestView.as_view()),
-    path("api/consume_image", TestView.as_view()),
     path("api/login", LoginView.as_view()),
     path("api/signup", SignUpView.as_view()),
 ]
