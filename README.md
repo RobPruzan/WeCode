@@ -2,7 +2,7 @@
 
 This social media app specifically designed for coders to connect and share ideas.
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/97781863/212740179-5cc3403f-bab8-45f3-8d9e-19da4995fee5.png">
-
+Link- https://main.dlj9861zt9mlo.amplifyapp.com/
 
 
 ## Setup
