@@ -21,12 +21,16 @@ const LoadMore = ({}: LoadMoreProps) => {
   ) : (
     <div className="flex justify-center items-center mb-4">
       <button
-        onClick={() =>
+        onClick={() => {
+          // dispatch({
+          //   type: PostAmountActions.SetIsLoading,
+          //   payload: { addingPostIsLoading: true },
+          // });
           dispatch({
             type: PostAmountActions.SetAmount,
             payload: { amount: postAmountState.amount + 25 },
-          })
-        }
+          });
+        }}
         className="bg-neon-blue w-1/4 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded"
       >
         Load More

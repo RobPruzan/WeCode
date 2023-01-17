@@ -41,13 +41,6 @@ export const SendPost = ({
 
     {
       onMutate: ({ currPostInfo, spaceId }: MutatePostParams) => {
-        dispatch({ type: PostLoadingActions.SetIsLoading });
-      },
-      onSuccess: (_, params) => {
-        setPostedContent(prev => [params.currPostInfo, ...prev]);
-
-        const date = new Date().toLocaleString();
-
         setCurrentPostInfo(prev => ({
           ...prev,
           content: '',
@@ -55,6 +48,12 @@ export const SendPost = ({
           likes: 0,
           liked_by: [],
         }));
+        dispatch({ type: PostLoadingActions.SetIsLoading });
+      },
+      onSuccess: (_, params) => {
+        setPostedContent(prev => [params.currPostInfo, ...prev]);
+
+        const date = new Date().toLocaleString();
       },
       onError: err => {
         console.error(err);

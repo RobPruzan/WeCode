@@ -23,16 +23,17 @@ export const useGetFilterPosts = (
     ['space_posts', space_id, userId, numberOfPosts],
     () => {
       queryClient.invalidateQueries(['space_posts', space_id]);
-      dispatch({ type: PostAmountActions.SetIsLoading });
+
       return WeCode.getFilteredPosts(
         space_id ?? PUBLIC_SPACE,
         filteredChoices ?? DEFAULT_FILTERS
       );
     },
     {
-      onSuccess: data => {
+      onSettled: data => {
         dispatch({ type: PostAmountActions.SetIsNotLoading });
       },
+      enabled: !!space_id && !!userId && !!numberOfPosts,
     }
   );
   return {

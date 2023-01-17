@@ -4,6 +4,8 @@ import LoadMore from './PostedActions/LoadMore';
 import LoadingPost from './LoadingPost';
 import { PostContent } from '../../../../services/connections';
 import { PostedContent } from './PostedContent';
+import { RootState } from '../../../../redux/store';
+import { useSelector } from 'react-redux';
 
 export type PostedContentsProps = {
   className?: string;
@@ -18,7 +20,10 @@ export const PostedContents = ({
   setPostedContent,
 }: PostedContentsProps) => {
   const amountOfPosts = useMemo(() => postedContent.length, [postedContent]);
-  console;
+  const postLoadingState = useSelector(
+    ({ postLoadingState }: RootState) => postLoadingState
+  );
+
   return (
     <>
       {isPostLoading && (
@@ -32,7 +37,11 @@ export const PostedContents = ({
           <LoadingPost key="loading post 7" />
         </div>
       )}
-
+      {postLoadingState.loading && (
+        <div className="flex justify-center items-center mx-2 ">
+          <LoadingPost key="loading post top" />
+        </div>
+      )}
       {postedContent.map((singlePostedContent, idx) => (
         <PostedContent
           className="mx-5 mb-5 "

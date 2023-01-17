@@ -19,15 +19,17 @@ export const useGetPosts = (fn?: (state: PostContent[]) => void) => {
   const { data, error, isLoading, isError, refetch } = useQuery(
     ['space_posts', space_id, userId, numberOfPosts],
     () => {
-      dispatch({ type: PostAmountActions.SetIsLoading });
       return WeCode.getPosts(space_id ?? PUBLIC_SPACE, numberOfPosts);
     },
     {
       onSuccess: data => {
-        dispatch({ type: PostAmountActions.SetIsNotLoading });
         fn && fn(data);
       },
+      onSettled: () => {
+        dispatch({ type: PostAmountActions.SetIsNotLoading });
+      },
       refetchOnWindowFocus: false,
+      enabled: !!space_id && !!userId && !!numberOfPosts,
     }
   );
   return {
