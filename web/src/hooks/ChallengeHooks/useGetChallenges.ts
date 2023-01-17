@@ -7,7 +7,10 @@ export const useGetChallenges = (spaceId: number) => {
   const userId = useSelector(({ userState }: RootState) => userState.user?.id);
   const { data, error, isLoading, isError, refetch } = useQuery(
     ['challenges', userId, spaceId],
-    () => WeCode.getChallengeAndAnswers(spaceId)
+    () => WeCode.getChallengeAndAnswers(spaceId),
+    {
+      enabled: !!userId && !!spaceId,
+    }
   );
   return {
     challengesData: data,

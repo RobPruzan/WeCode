@@ -3,6 +3,7 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import CreateAnswers from './CreateAnswers';
 import { CustomTextField } from '../../../CustomTextField';
+import { Spinner } from 'react-bootstrap';
 import { useCreateChallenge } from '../../../../hooks/ChallengeHooks/useCreateChallenge';
 
 export type CreateChallengeProps = {
@@ -140,7 +141,7 @@ const CreateChallenge = ({
                 createChallenge(challengeInfo);
               }}
             >
-              Create
+              {createChallengeIsLoading ? '...' : 'Create Challenge'}
             </button>
           </div>
         </div>

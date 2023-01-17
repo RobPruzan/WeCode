@@ -5,7 +5,10 @@ import WeCode from '../../services/connections';
 export const useGetUserPosts = (userId: number) => {
   const { data, error, isLoading, isError, refetch } = useQuery(
     ['user_posts', userId],
-    () => WeCode.getUserPosts(userId)
+    () => WeCode.getUserPosts(userId),
+    {
+      enabled: !!userId,
+    }
   );
   return {
     userPosts: data,
